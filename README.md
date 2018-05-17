@@ -21,9 +21,7 @@ Data Source :-
 Social Media platforms like Facebook, twitter.
 Kaggle.com
 
-      
-
-
+     
 2. Internet Foodie Database
 
 
