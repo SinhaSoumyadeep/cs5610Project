@@ -14,7 +14,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BookPreview.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BookPreview.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BookPreview.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="600">
@@ -32,7 +32,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Login.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Login.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Login.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
@@ -86,7 +86,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1280" />
     <option name="height" value="723" />
@@ -141,15 +141,15 @@
       <option name="presentableId" value="Default" />
       <updated>1528483992742</updated>
       <workItem from="1528483998579" duration="7860000" />
-      <workItem from="1528562805535" duration="4589000" />
+      <workItem from="1528562805535" duration="4924000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12449000" />
+    <option name="totallyTimeSpent" value="12784000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="723" extended-state="1" />
+    <frame x="0" y="22" width="1280" height="723" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
@@ -223,13 +223,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -241,6 +234,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
           <caret line="40" column="6" lean-forward="true" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
         </state>
       </provider>
     </entry>
