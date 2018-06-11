@@ -8,8 +8,9 @@ export default class Register
     render(){
     return(
         <div className="container-fluid">
-            <h4 className="display-4" align="center">Welcome to BOOKWORMS</h4>
+            <h4 className="display-4" align="center" style="color:white;">Welcome to BOOKWORMS</h4>
             <hr/>
+            <br/>
             <form className="form-horizontal" role="form">
                 <h3 className="display-5" align="center">Register</h3><hr/>
                 <div className="form-row">
@@ -75,6 +76,7 @@ export default class Register
                     </div>
                 </div>
             </form>
+            <br/>
         <hr/>
         </div>
 
