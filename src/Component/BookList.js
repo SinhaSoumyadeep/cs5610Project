@@ -174,7 +174,7 @@ export default class BookList extends React.Component
                                     <h6> FICTION FEATURED BOOKS</h6>
                                 </div>
 
-                                <div className="card-deck" style={{margin: "0px"}}>
+                                <div className="card-deck" style={{paddingLeft: "31px"}}>
                                     {this.displayFictionBooks()}
                                 </div>
 
@@ -184,7 +184,7 @@ export default class BookList extends React.Component
                                     <h6>NON FICTION FEATURED BOOKS</h6>
                                 </div>
 
-                                <div className="card-deck" style={{margin: "0px"}}>
+                                <div className="card-deck" style={{paddingLeft: "31px"}}>
                                     {this.displayNonFictionBooks()}
                                 </div>
 
