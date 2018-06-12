@@ -1,20 +1,4 @@
-body {
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: relative;
-}
-body::after {
-    content: "";
-    background-image: url("Screenshot (65).png");
-    opacity: 0.4;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
-}
+
 
 [role="form"] {
     max-width: 550px;
