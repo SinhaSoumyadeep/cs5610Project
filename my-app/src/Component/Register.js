@@ -2,13 +2,12 @@ import React,{Component} from 'react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import styles from '../Style/Register.css';
 
-
 export default class Register
     extends Component{
     render(){
     return(
         <div className="container-fluid">
-            <h4 className="display-4" align="center" style="color:white;">Welcome to BOOKWORMS</h4>
+            <h4 className="display-4" align="center">Welcome to BOOKWORMS</h4>
             <hr/>
             <br/>
             <form className="form-horizontal" role="form">
