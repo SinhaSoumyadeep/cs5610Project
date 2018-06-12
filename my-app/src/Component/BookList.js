@@ -178,7 +178,6 @@ export default class BookList extends React.Component
                                     {this.displayFictionBooks()}
                                 </div>
 
-
                             </div>
                             <div className="featuredBooks">
                                 <div id="SectionHeading">
@@ -188,7 +187,6 @@ export default class BookList extends React.Component
                                 <div className="card-deck" style={{margin: "0px"}}>
                                     {this.displayNonFictionBooks()}
                                 </div>
-                                
 
                             </div>
 
