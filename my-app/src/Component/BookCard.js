@@ -22,7 +22,7 @@ export default class BookCard extends React.Component
         return (
 
 
-            <div className="card" style={{width: "12rem",height: "18rem",margin: "5px"}}>
+            <div className="card" style={{width: "13rem",height: "18rem",margin: "5px"}}>
                 <div className="card-img booksimg">
                 <img className="card-img-top" src="https://media.giphy.com/media/12cfPQIOSlNj8Y/giphy.gif" alt="Card image cap" height="286rem"/>
                 </div>

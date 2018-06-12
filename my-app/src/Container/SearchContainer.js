@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 
 
 
@@ -35,7 +36,13 @@ export default class SearchContainer
                     </button>
                 </div>
                 <div className="login">
-                    <a href="#">Login</a>
+                    <Link to={`/login`}>
+                    <a>Login</a>
+                    </Link>
+                    &nbsp;&nbsp;
+                    <Link to={`/register`}>
+                    <a>SignUp</a>
+                    </Link>
                 </div>
                 <div className="extra">
 

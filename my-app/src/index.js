@@ -11,11 +11,11 @@ import './CSS/style.css'
 
 
 
-
 ReactDOM.render(
 
     <div className="container-fluid">
         <BookStore/>
+
     </div>
     ,
     document.getElementById('root')
