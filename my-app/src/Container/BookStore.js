@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import BookList from '../Component/BookList'
 import Login from '../Component/Login'
 import Register from '../Component/Register'
+import BookDetails from './BookDetails'
 
 
 
@@ -23,6 +24,9 @@ export default class BookStore
                     </Route>
                     <Route path="/register"
                            component={Register}>
+                    </Route>
+                    <Route path="/bookDetails/:id"
+                           component={BookDetails}>
                     </Route>
 
                 </div>
