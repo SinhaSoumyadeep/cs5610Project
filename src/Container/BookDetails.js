@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchContainer from './SearchContainer'
 import Advertisement from './Advertisement'
+import { Link } from 'react-router-dom'
 import $ from "jquery";
 
 
@@ -11,6 +12,7 @@ export default class BookDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            isbn: '',
             imgthumb: ''
         };
 
@@ -18,14 +20,8 @@ export default class BookDetails extends React.Component {
 
     componentDidMount() {
         var id = this.props.match.params.id;
+        this.setState({isbn: id})
         this.find_preview(id)
-        window.google.books.load();
-        function initialize() {
-            var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-            viewer.load('ISBN:'+id);
-        }
-        window.google.books.setOnLoadCallback(initialize);
-
 
     }
 
@@ -53,11 +49,12 @@ export default class BookDetails extends React.Component {
 
     displayImage()
     {
-
+            var link = '/bookPreview/'+this.state.isbn
         return(
             <div style={{margin: "12px"}}>
+                <a href={link} style={{textDecoration: "none"}}>
                 <img id="prviewImg" src={this.state.imgthumb} style={{width: "220px", height: "300px"}} onClick={this.displayPreview}/>
-
+                </a>
             </div>
         )
     }
@@ -82,10 +79,6 @@ export default class BookDetails extends React.Component {
                         <div className="col-sm-8 mainSec">
 
                             {this.displayImage()}
-
-                                <div id="viewerCanvas" style={{width: "300px", height: "400px"}}></div>
-
-
 
                         </div>
 

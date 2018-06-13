@@ -4,6 +4,7 @@ import BookList from '../Component/BookList'
 import Login from '../Component/Login'
 import Register from '../Component/Register'
 import BookDetails from './BookDetails'
+import BookPreview from "./BookPreview";
 
 
 
@@ -27,6 +28,9 @@ export default class BookStore
                     </Route>
                     <Route path="/bookDetails/:id"
                            component={BookDetails}>
+                    </Route>
+                    <Route path="/bookPreview/:id"
+                           component={BookPreview}>
                     </Route>
 
                 </div>

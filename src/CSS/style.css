@@ -201,22 +201,11 @@ a:hover{
     overflow:scroll;
     overflow-x:hidden;
 }
-.previewer
-{
-    width: 619px;
-    height: 586px;
-    background-color: black;
-    margin-left: 158px;
-    position: absolute;
-    top: 55px;
-    left: 0;
-    z-index: 30;
-    border-radius: 24px;
 
-}
 #viewerCanvas{
-    margin-left: 153px;
-    margin-top: 91px;
-
+    margin-left: 60px;
+    margin-top: 50px;
 }
+
+
 
