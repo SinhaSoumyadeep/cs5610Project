@@ -202,9 +202,23 @@ a:hover{
     overflow-x:hidden;
 }
 
+#nopreview
+{
+    padding-left: 110px;
+    padding-top: 113px;
+}
+
+#nopreview,
+#viewerCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 #viewerCanvas{
     margin-left: 60px;
     margin-top: 50px;
+    z-index: 10;
 }
 
 
