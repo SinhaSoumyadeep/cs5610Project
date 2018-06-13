@@ -49,20 +49,7 @@ export default class BookDetails extends React.Component {
 
     }
 
-    displayPreview()
-    {
-        if($('.previewer').css('display') == 'none')
-        {
 
-            $('.previewer').css('display','')
-
-
-        }
-        else
-        {
-            $('.previewer').css('display','none')
-        }
-    }
 
     displayImage()
     {
@@ -95,9 +82,9 @@ export default class BookDetails extends React.Component {
                         <div className="col-sm-8 mainSec">
 
                             {this.displayImage()}
-                            <div className="previewer" style={{display: "none"}}>
+
                                 <div id="viewerCanvas" style={{width: "300px", height: "400px"}}></div>
-                            </div>
+
 
 
                         </div>

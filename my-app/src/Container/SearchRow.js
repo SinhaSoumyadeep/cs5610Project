@@ -20,11 +20,7 @@ export default class SearchRow extends React.Component
     render(){
 
         return (
-
-            <div>
-                <h1>{this.props.book}</h1>
-            </div>
-
+                <h1>hello</h1>
         )
 
 

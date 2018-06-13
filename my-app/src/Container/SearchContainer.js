@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import $ from 'jquery';
-import SearchRow from './SearchRow'
+import SearchRow from "./SearchRow";
+
 
 export default class SearchContainer
     extends Component {
@@ -27,6 +28,9 @@ export default class SearchContainer
             $('#searchResults').css('display','none')
         }
     }
+
+
+
 
     Search()
     {
@@ -90,6 +94,8 @@ export default class SearchContainer
 
 
 
+
+
     render() {
         return (
             <div className="titleBar">
@@ -105,11 +111,12 @@ export default class SearchContainer
                     <input id="myInput" className="form-control" ref="searchInput" placeholder="Find Books" ref="searchKey" onChange={this.hidesearch}/>
 
                     <div id="searchResults" style={{display: "none"}}>
-                        <table className="table">
+                        <table>
                             <tbody>
 
                             </tbody>
                         </table>
+
 
                     </div>
 
