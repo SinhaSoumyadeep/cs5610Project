@@ -18,7 +18,7 @@ export default class DummyTitle
                 <div className="logo">
                     <a href="/books">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg" height="45px" width="121px"
-                    />
+                         onClick={this.goBack}/>
                     </a>
 
                 </div>

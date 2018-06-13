@@ -8,6 +8,7 @@ import bufferImg from "../Style/tenor.gif"
 
 
 
+
 export default class BookPreview extends React.Component {
 
 
@@ -48,7 +49,7 @@ export default class BookPreview extends React.Component {
 
                     <div className="row" style={{marginTop: "81px"}}>
                         <div className="col-sm-8 mainSec">
-                            <div id="nopreview"><img src={bufferImg} /></div>
+                            <div id="nopreview"><img id="buffer" src={bufferImg} height="320px" width="480px"/></div>
 
                             <div id="viewerCanvas" style={{width: "600px", height: "800px"}}></div>
 
@@ -69,6 +70,16 @@ export default class BookPreview extends React.Component {
     }
 
 }
+
+$(document).ready(function () {
+
+    setTimeout(function() {
+
+
+        $("#buffer").attr("src","http://2016.foodhawkers.co.uk/img/not_available.jpg")
+        }, 5000);
+
+})
 
 
 

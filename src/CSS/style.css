@@ -74,10 +74,12 @@ a:hover{
 }
 .featuredBooks
 {
+    padding-left: 8px;
     background-color: #404040;
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 3px;
+    margin-right: -12px;
 
 
 }
@@ -193,7 +195,7 @@ a:hover{
 #searchResults
 {
     width: 544px;
-    height: 298px;
+    height: 352px;
     position: relative;
     background-color: white;
     z-index: 99;
