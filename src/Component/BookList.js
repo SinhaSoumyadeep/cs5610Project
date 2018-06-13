@@ -15,7 +15,7 @@ export default class BookList extends React.Component
 
 
         this.state = {
-
+            thumb:[],
             fictionBooks: [],
             nonFiction:[],
             paperback:[],
@@ -57,11 +57,6 @@ export default class BookList extends React.Component
         }).then(function(response) {return response.json()}).then((books) => {
             this.setState({fictionBooks: books.results});
 
-            this.state.fictionBooks.map((book)=>{
-                console.log(book.isbns[1].isbn10)
-            })
-
-
         });
 
 
@@ -70,18 +65,21 @@ export default class BookList extends React.Component
 
 
 
-    find_preview(isbn)
+    find_preview(books)
     {
-
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM", {
+            var isbn = books.isbns[1].isbn10
+        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn, {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
-
-           console.log(books)
+            this.setState({imgthumb: books.items[0].volumeInfo.imageLinks.thumbnail});
 
 
         });
+
+
+            console.log(this.state.imgthumb)
+
 
 
     }
@@ -90,14 +88,15 @@ export default class BookList extends React.Component
     {
 
 
-        var grid = this.state.fictionBooks.slice(0, 3).map((book)=>{
+        var grid = this.state.fictionBooks.slice(0, 3).map((book,index)=>{
 
 
 
             return(
 
                     <div>
-                        <BookCard title={book.book_details[0].title} description={book.book_details[0].description}/>
+
+                        <BookCard key={index}  title={book.book_details[0].title} description={book.book_details[0].description}/>
                     </div>
 
 
@@ -167,7 +166,7 @@ export default class BookList extends React.Component
 
                 <div>
 
-                    <div className="row">
+                    <div className="row" style={{marginTop: "81px"}}>
                         <div className="col-sm-8 mainSec">
                             <div className="featuredBooks">
                                 <div id="SectionHeading">
