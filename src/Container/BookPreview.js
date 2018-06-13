@@ -3,7 +3,7 @@ import SearchContainer from './SearchContainer'
 import Advertisement from './Advertisement'
 import $ from "jquery";
 import DummyTitle from "./DummyTitle";
-
+import bufferImg from "../Style/tenor.gif"
 
 
 
@@ -47,6 +47,7 @@ export default class BookPreview extends React.Component {
 
                     <div className="row" style={{marginTop: "81px"}}>
                         <div className="col-sm-8 mainSec">
+                            <div id="nopreview"><img src={bufferImg} /></div>
 
                             <div id="viewerCanvas" style={{width: "600px", height: "800px"}}></div>
 
