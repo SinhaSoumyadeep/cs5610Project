@@ -7,6 +7,7 @@ import bufferImg from "../Style/tenor.gif"
 
 
 
+
 export default class BookPreview extends React.Component {
 
 

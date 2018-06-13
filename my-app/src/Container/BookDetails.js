@@ -69,7 +69,7 @@ export default class BookDetails extends React.Component {
             <div className="pageView">
 
 
-                <div>
+                <div className="container-fluid">
                     <SearchContainer/>
                 </div>
 
