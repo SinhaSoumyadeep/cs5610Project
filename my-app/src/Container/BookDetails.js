@@ -35,7 +35,7 @@ export default class BookDetails extends React.Component {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
-            this.setState({imgthumb: books.items[0].volumeInfo.imageLinks.thumbnail});
+            this.setState({imgthumb: books.items[0].id});
 
 
         });
@@ -50,10 +50,11 @@ export default class BookDetails extends React.Component {
     displayImage()
     {
             var link = '/bookPreview/'+this.state.isbn
+            var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb)
         return(
             <div style={{margin: "12px"}}>
                 <a href={link} style={{textDecoration: "none"}}>
-                <img id="prviewImg" src={this.state.imgthumb} style={{width: "220px", height: "300px"}} onClick={this.displayPreview}/>
+                <img id="prviewImg" src={img} style={{width: "220px", height: "300px"}} onClick={this.displayPreview}/>
                 </a>
             </div>
         )

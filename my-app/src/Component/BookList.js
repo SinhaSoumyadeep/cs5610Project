@@ -2,6 +2,7 @@ import React from 'react'
 import BookCard from "./BookCard";
 import SearchContainer from "../Container/SearchContainer";
 import Advertisement from "../Container/Advertisement";
+import $ from 'jquery'
 
 
 export default class BookList extends React.Component
@@ -15,7 +16,8 @@ export default class BookList extends React.Component
 
 
         this.state = {
-            thumb:[],
+            ficthumb:[],
+            nonficthumb:[],
             fictionBooks: [],
             nonFiction:[],
             paperback:[],
@@ -29,6 +31,7 @@ export default class BookList extends React.Component
     componentWillMount() {
 
         this.fetchAllFictionBooks();
+
         this.fetchAllNonFictionBooks();
 
 
@@ -38,9 +41,11 @@ export default class BookList extends React.Component
 
     fetchAllNonFictionBooks()
     {
+
         fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-nonfiction&api-key=8e08852c66f845fbae14cb660487234e', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
+            this.find_nonfictionpreview(books)
             this.setState({nonFiction: books.results});
 
         });
@@ -52,9 +57,11 @@ export default class BookList extends React.Component
 
     fetchAllFictionBooks()
     {
+
         fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=8e08852c66f845fbae14cb660487234e', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
+            this.find_fictionpreview(books)
             this.setState({fictionBooks: books.results});
 
         });
@@ -65,21 +72,61 @@ export default class BookList extends React.Component
 
 
 
-    find_preview(books)
+    find_fictionpreview(books)
     {
-            var isbn = books.isbns[1].isbn10
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn, {
-            method: 'get',
-        }).then(function(response) {return response.json()}).then((books) => {
 
-            this.setState({imgthumb: books.items[0].volumeInfo.imageLinks.thumbnail});
+            books.results.slice(0, 3).map((book)=>{
 
 
-        });
+                console.log(book)
+
+                var isbn = book.isbns[1].isbn10
+
+                $.ajax({
+                    async: false,
+                    type:"GET",
+                    url: "https://www.googleapis.com/books/v1/volumes?q="+isbn,
+                    success: (result)=>{
+
+                        console.log(result)
+                        var joined = this.state.ficthumb.concat(result.items[0].id);
+                        this.setState({ ficthumb: joined })
+
+                    }
 
 
-            console.log(this.state.imgthumb)
+                })
 
+
+
+
+            })
+
+
+    }
+    find_nonfictionpreview(books)
+    {
+
+        books.results.slice(0, 3).map((book)=>{
+
+
+            var isbn = book.isbns[1].isbn10
+            $.ajax({
+                async: false,
+                type:"GET",
+                url: "https://www.googleapis.com/books/v1/volumes?q="+isbn,
+                success: (result)=>{
+
+                    console.log(result)
+                    var joined = this.state.nonficthumb.concat(result.items[0].id);
+                    this.setState({ nonficthumb: joined })
+
+                }
+
+
+            })
+
+        })
 
 
     }
@@ -88,19 +135,31 @@ export default class BookList extends React.Component
     {
 
 
+
+
         var grid = this.state.fictionBooks.slice(0, 3).map((book,index)=>{
+
+            var isbn = book.isbns[1].isbn10
+
+            var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.ficthumb[index])
+
+
 
 
 
             return(
 
-                    <div>
+                <div>
 
-                        <BookCard key={index}  title={book.book_details[0].title} description={book.book_details[0].description}/>
-                    </div>
+                    <BookCard key={index} isbn={isbn} book={book} id={img}  title={book.book_details[0].title} description={book.book_details[0].description}/>
+                </div>
 
 
             )
+
+
+
+
 
 
 
@@ -118,14 +177,18 @@ export default class BookList extends React.Component
     {
 
 
-        var grid = this.state.nonFiction.slice(0, 3).map((book)=>{
+        var grid = this.state.nonFiction.slice(0, 3).map((book,index)=>{
+            var isbn = book.isbns[1].isbn10
+            console.log(book.isbns[1].isbn10)
+            var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.nonficthumb[index])
+
 
 
 
             return(
 
                 <div>
-                    <BookCard title={book.book_details[0].title} description={book.book_details[0].description}/>
+                    <BookCard key={index} isbn={isbn} id={img} title={book.book_details[0].title} description={book.book_details[0].description}/>
                 </div>
 
 
