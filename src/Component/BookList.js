@@ -143,6 +143,10 @@ export default class BookList extends React.Component
 
             var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.ficthumb[index])
 
+
+
+
+
             return(
 
                 <div>
