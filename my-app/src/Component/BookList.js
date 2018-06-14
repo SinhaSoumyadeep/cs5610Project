@@ -3,6 +3,8 @@ import BookCard from "./BookCard";
 import SearchContainer from "../Container/SearchContainer";
 import Advertisement from "../Container/Advertisement";
 import $ from 'jquery'
+import NewOpenings from "../Container/NewOpenings";
+import FooterPage from "../Container/FooterPage";
 
 
 export default class BookList extends React.Component
@@ -254,10 +256,21 @@ export default class BookList extends React.Component
 
                         <div className="col-sm-4 asideSec">
                             <Advertisement/>
+                            <hr width="300px"/>
+                            <div id="topPicks">
+                                <h5>Our Top Picks </h5>
+                                <NewOpenings/>
+                            </div>
+
                         </div>
 
                     </div>
                 </div>
+
+                <div>
+                    <FooterPage/>
+                </div>
+                <div style={{height: "126px"}}></div>
 
             </div>
 
