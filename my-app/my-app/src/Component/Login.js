@@ -12,22 +12,17 @@ export default class Login extends React.Component
   constructor(props) {
     super(props);
 
-     this.state = {
-            user : {
-                firstName: "",
-                lastName: "",
-                username: "",
-                password: "",
-                role: "",
-                gender: "",
-                dateOfBirth: "",
-                email: ""
-            }
-        }
+    this.state = {
+      email: "",
+      password: ""
+    };
   }
 
   responseFacebook(facebookUser){
     console.log(facebookUser);
+
+    console.log("email"+ facebookUser.email);
+
   }
 
   responseGoogle (googleUser) {
@@ -39,12 +34,18 @@ export default class Login extends React.Component
   }
 
 
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
   handleSubmit = event => {
-    alert("In submit function")
-    var email = "Hello"
-    var password = this.refs.password.value
-    alert(email)
-    alert(" " + password)
+    event.preventDefault();
   }
 
   render() {
@@ -55,19 +56,26 @@ export default class Login extends React.Component
       </div>
       <div id="loginPage">
             <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
-           <div className="form-group row">
-                <label className="col-sm-3 col-form-label"><b>EMAIL</b></label>
-                <div className="col-sm-9">
-                    <input className = "form-control"  placeholder = "Email" ref="email"
-                    />
-                </div></div>
-            <div className="form-group row">
-                <label className="col-sm-3 col-form-label"><b>PASSWORD</b></label>
-                <div className="col-sm-9">
-                    <input className = "form-control" type="password" placeholder = "Password" ref="password"/>
-                </div></div>      
+                 <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
           <Button
             className = "btn btn-block btn-primary"           
+            disabled={!this.validateForm()}
             type="submit">
             Login
           </Button>

@@ -1,0 +1,227 @@
+body{
+    background-color: black;
+    /*background-image: url("http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781501180989/the-outsider-9781501180989_hr.jpg");*/
+    background-image: url("https://images8.alphacoders.com/370/370799.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.pageView{
+
+    margin-top: 10%;
+    margin-left: 10%;
+    background-color: white;
+    position: relative;
+    width: 1059px;
+    height: 1024px;
+    border: 1px solid black;
+
+
+}
+
+
+
+.booksimg,
+.booksbdy {
+
+    position: absolute;
+
+}
+.booksbdy {
+    z-index: 1;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    color: white;
+    font-size: 13px;
+    height: 67px;
+    margin-top: 208px;
+}
+
+.Adimg,
+.Adbdy,
+.Adbtn{
+
+    position: absolute;
+
+}
+.Adbdy {
+    z-index: 10;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    color: white;
+    font-size: 13px;
+    height: 67px;
+    margin-top: 208px;
+}
+.Adbtn{
+    z-index: 10;
+    background-color: rgba(255,255,255,0.4);
+    width: 100%;
+    color: white;
+    font-size: 13px;
+    height: 67px;
+    margin-top: 208px;
+
+}
+
+a{
+    color: white;
+}
+
+a:hover{
+    color: white;
+}
+.featuredBooks
+{
+    padding-left: 8px;
+    background-color: #404040;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 3px;
+    margin-right: -12px;
+
+
+}
+#SectionHeading
+{
+    padding: 13px;
+    color: white;
+    font-size: 4px;
+
+}
+
+
+.titleBar
+{
+    width: 1058px;
+    height: 81px;
+    border: 1px solid black;
+    padding: 15px;
+    background-color: black;
+
+}
+
+.logo
+{
+    float: left;
+    width: 15%;
+    height: 38px;
+    border-radius: 7px;
+
+}
+.searchBar
+{
+    float: left;
+    width: 53%;
+    margin-right: 1px;
+}
+
+
+.pageView,
+.titleBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.titleBar {
+    z-index: 10;
+}
+
+
+
+
+
+.searchBtn
+{
+    float: left;
+    width: 5%;
+    margin-right: 18px;
+}
+.login
+{
+    float: left;
+    width: 10%;
+    height: 38px;
+    border: 1px solid black;
+    padding-top: 5px;
+    margin-right: 13px;
+}
+.extra
+{
+    float: left;
+    width: 13%;
+    height: 38px;
+    border: 1px solid black;
+}
+.social{
+
+    border-radius: 9.25rem;
+    width: 40px;
+}
+
+.socialFace{
+    float: left;
+    margin-right: 2px;
+
+}
+.socialTwitter
+{
+    float: left;
+    margin-right: 2px;
+}
+.socialInsta
+{
+    float: left;
+}
+.Advert
+{
+    margin-top: 12px;
+}
+
+.asideSec
+{
+    border-left: 1px solid #8b8b8b;
+    height: 941px;
+
+}
+
+.mainSec
+{
+    border-right: 1px solid #8b8b8b;
+    height: 941px;
+}
+
+#searchResults
+{
+    width: 544px;
+    height: 352px;
+    position: relative;
+    background-color: white;
+    z-index: 99;
+    border: 1px solid black;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+#nopreview
+{
+    padding-left: 110px;
+    padding-top: 113px;
+}
+
+#nopreview,
+#viewerCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#viewerCanvas{
+    margin-left: 60px;
+    margin-top: 50px;
+    z-index: 10;
+}
+
+
+
