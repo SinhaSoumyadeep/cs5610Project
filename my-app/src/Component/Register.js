@@ -22,16 +22,7 @@ export default class Register
         this.createUser = this.createUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
-        /*this.onChangeValue = this.onChangeValue.bind(this);*/
-
     }
-
-    /*setFirstName(event){
-        this.setState({user: {firstName: event.target.value}})
-    }
-    setLastName(event){
-        this.setState({user: {lastName: event.target.value}})
-    }*/
 
     handleChange(event){
         const { name, value} = event.target;
@@ -43,18 +34,6 @@ export default class Register
             }
         });
     }
-
-    /*onChangeValue = (e) => {
-        if (e.target.name === 'isAdmin') {
-            this.setState({
-                [e.target.name]: e.target.checked,
-            });
-        } else {
-            this.setState({
-                [e.target.name]: e.target.value,
-            });
-        }
-    }*/
 
     createUser(){
 
