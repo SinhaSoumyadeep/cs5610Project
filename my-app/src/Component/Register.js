@@ -26,12 +26,6 @@ export default class Register
 
     }
 
-    /*setFirstName(event){
-        this.setState({user: {firstName: event.target.value}})
-    }
-    setLastName(event){
-        this.setState({user: {lastName: event.target.value}})
-    }*/
 
     handleChange(event){
         const { name, value} = event.target;
@@ -44,17 +38,7 @@ export default class Register
         });
     }
 
-    /*onChangeValue = (e) => {
-        if (e.target.name === 'isAdmin') {
-            this.setState({
-                [e.target.name]: e.target.checked,
-            });
-        } else {
-            this.setState({
-                [e.target.name]: e.target.value,
-            });
-        }
-    }*/
+
 
     createUser(){
 
@@ -79,7 +63,7 @@ export default class Register
 
 
 
-        return fetch("http://localhost:8080/api/user", {
+        return fetch("http://book-worms-server.herokuapp.com/api/user", {
             body: JSON.stringify(this.state.user),
             headers: {
                 'Content-Type': 'application/json'
