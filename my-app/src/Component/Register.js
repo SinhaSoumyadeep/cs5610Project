@@ -63,7 +63,7 @@ export default class Register
 
 
 
-        return fetch("http://book-worms-server.herokuapp.com/api/user", {
+        return fetch("https://book-worms-server.herokuapp.com/api/user", {
             body: JSON.stringify(this.state.user),
             headers: {
                 'Content-Type': 'application/json'
