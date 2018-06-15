@@ -1,23 +1,38 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
-import logo from "../Style/logo.png"
+import logo from "../Style/IMDB_Logo_2016.svg"
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 
-export default class SearchContainer
+
+class SearchContainer
     extends Component {
 
-
-    constructor() {
-        super()
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+    constructor(props) {
+        super(props)
         this.hidesearch = this.hidesearch.bind(this);
         this.Search = this.Search.bind(this);
         this.state = {
 
-            books: []
+            books: [],
+            err: false,
+            profile: '',
+            isLoggedIn: false
+
 
         };
+    }
+
+    componentWillMount() {
+        const { cookies } = this.props;
+        this.setState({profile: cookies.get('profile')||{imageUrl: ''}})
+        this.setState({isLoggedIn: cookies.get('isLoggedIn')})
     }
 
     hidesearch(event)
@@ -48,38 +63,42 @@ export default class SearchContainer
         $("tbody").empty();
         $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey,function (response) {
 
-            console.log(response)
-            response.items.slice(0, 20).map((item,index)=>{
+
+            try {
+                console.log(response)
+                response.items.slice(0, 20).map((item,index)=>{
 
 
-                //console.log(item.volumeInfo.industryIdentifiers[0].identifier)
-                //console.log(item.volumeInfo.industryIdentifiers[0].identifier)
-                var keys = Object.keys(item.volumeInfo);
-                //console.log(keys)
+                    //console.log(item.volumeInfo.industryIdentifiers[0].identifier)
+                    //console.log(item.volumeInfo.industryIdentifiers[0].identifier)
+                    var keys = Object.keys(item.volumeInfo);
+                    //console.log(keys)
 
-                if(keys.indexOf("imageLinks")<0||keys.indexOf("industryIdentifiers")<0)
-                {
+                    if(keys.indexOf("imageLinks")<0||keys.indexOf("industryIdentifiers")<0)
+                    {
 
-                }
-                else
-                {
+                    }
+                    else
+                    {
 
-                    var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
+                        var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
 
-                        '<div style="height: 12px"></div>'+
-                        '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black"><img src='+item.volumeInfo.imageLinks.thumbnail+' height="82"/></a></td>'+
-                        '<td style="padding: 20px" id="title['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black">'+item.volumeInfo.title+'</a></td>'+
-                        '</tr>');
+                            '<div style="height: 12px"></div>'+
+                            '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black"><img src='+item.volumeInfo.imageLinks.thumbnail+' height="82"/></a></td>'+
+                            '<td style="padding: 20px" id="title['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black">'+item.volumeInfo.title+'</a></td>'+
+                            '</tr>');
 
-                    $('table> tbody:last').append($row);
+                        $('table> tbody:last').append($row);
 
-                }
+                    }
 
+                })
+            }
+            catch(err) {
+                alert("error4")
+                this.setState({ err: true })
+            }
 
-
-
-
-            })
 
         })
 
@@ -98,13 +117,18 @@ export default class SearchContainer
 
 
     render() {
+
+        if (this.state.err) {
+            return <Redirect to='/error'/>;
+        }
         return (
             <div className="titleBar">
                 <div className="logo">
                     <a href="/books">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"
+                    <img src={logo}
                     height="45px" width="121px"
                     />
+
                     </a>
 
                 </div>
@@ -129,13 +153,31 @@ export default class SearchContainer
                     </button>
                 </div>
                 <div className="login">
+                    <a href="" hidden={!this.state.isLoggedIn} onClick={()=>{
+
+                        const { cookies } = this.props;
+                        cookies.remove('profile',{ path: '/' });
+                        cookies.remove('isLoggedIn',{ path: '/' });
+                        cookies.remove('isReader',{ path: '/' });
+
+
+                    }}>LogOut</a>
                     <Link to={`/login`}>
-                    <a>Login</a>
+                    <a hidden={this.state.isLoggedIn}>Login</a>
+
                     </Link>
                     &nbsp;&nbsp;
                     <Link to={`/register`}>
-                    <a>SignUp</a>
+                    <a hidden={this.state.isLoggedIn}>SignUp</a>
                     </Link>
+                    <Link to={`/profile`}>
+                    <img className="loggedInUsr" src={this.state.profile.imageUrl}
+                         height="40px"
+                         hidden={!this.state.isLoggedIn}
+                    />
+                    </Link>
+
+
                 </div>
                 <div className="extra">
 
@@ -198,4 +240,5 @@ $(document).ready(function () {
 
 
 })
+export default withCookies(SearchContainer);
 

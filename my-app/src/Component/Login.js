@@ -5,29 +5,56 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import '../Style/LoginStyle.css'
+import UserProfile from '../Container/UserProfile';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
-export default class Login extends React.Component
+class Login extends React.Component
 {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
 
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+        profile: '',
+        name:''
     };
   }
+
+    componentWillMount() {
+        const { cookies } = this.props;
+
+        this.setState({name: cookies.get('name') || 'Default user'})
+
+
+    }
+
+    handleNameChange(profile) {
+        const { cookies } = this.props;
+
+        cookies.set('profile', profile, { path: '/' });
+        cookies.set('isLoggedIn', true, { path: '/' });
+        cookies.set('isReader',true, { path: '/' });
+        this.setState({ profile });
+    }
 
   responseFacebook(facebookUser){
     console.log(facebookUser);
   }
 
-  responseGoogle (googleUser) {
+  responseGoogle=(googleUser)=>{
     var id_token = googleUser.getAuthResponse().id_token;
     var googleId = googleUser.getId();
     
     console.log(googleUser);
+      this.handleNameChange(googleUser.profileObj)
     console.log({accessToken: id_token});
+      window.location.replace("/books")
   }
 
 
@@ -46,10 +73,12 @@ export default class Login extends React.Component
   }
 
   render() {
+
+      const { name } = this.state;
     return (
       <div className = 'container-fluid'>
       <div id = "login-header">
-      <h1 align = "center">LOGIN</h1>
+      <img className="loginProfileImage" src={this.state.profile.imageUrl}/>
       </div>
       <div id="loginPage">
             <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
@@ -111,3 +140,4 @@ export default class Login extends React.Component
 
 
 }
+export default withCookies(Login);

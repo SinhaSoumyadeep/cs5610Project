@@ -16,7 +16,7 @@ export default class Advertisement
                         <h6>Advertisement</h6>
 
                     </div>
-                    <div className="card-body Adbtn" style={{paddingLeft: "85px"}}>
+                    <div className="card-body Adbtn" style={{paddingLeft: "99px"}}>
                         <button className="btn btn-primary">
                            More Info
                         </button>

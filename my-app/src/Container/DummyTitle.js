@@ -22,12 +22,12 @@ export default class DummyTitle
                     </a>
 
                 </div>
-                <div className="searchBar" id="dummysearch" style={{color: "black"}}>
+                <div className="searchBar" id="dummysearch" style={{color: "white"}}>
+                    <h1 style={{paddingLeft: "245px"}}>Preview</h1>
 
-                <h1>hsjdfkdshfkshfkhbjbjhgjhgjhggjgjgj</h1>
                 </div>
                 <div className="searchBtn" id="dummysearch" style={{color: "black"}}>
-                        <h1>dsjhgfjsdh</h1>
+
                 </div>
                 <div className="login">
                     <Link to={`/login`}>

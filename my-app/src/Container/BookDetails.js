@@ -1,28 +1,41 @@
 import React from 'react'
 import SearchContainer from './SearchContainer'
 import Advertisement from './Advertisement'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import $ from "jquery";
 import StarRatings from 'react-star-ratings';
 import bookmark from '../Style/bookmark-icon.png'
+import ErrorPage from "./ErrorPage";
+import ReviewWidget from "./ReviewWidget";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 
 
 
-export default class BookDetails extends React.Component {
+class BookDetails extends React.Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
 
     constructor(props) {
         super(props)
         this.state = {
             isbn: '',
             imgthumb: '',
-            books:''
+            books:'',
+            isReader: false,
+            isReviewer: false,
+            err: false,
+            redirectToLogin: false
         };
 
     }
 
     componentDidMount() {
+        const { cookies } = this.props;
         var id = this.props.match.params.id;
+        this.setState({isReader: cookies.get('isReader')})
         this.setState({isbn: id})
         this.find_preview(id)
 
@@ -39,8 +52,14 @@ export default class BookDetails extends React.Component {
         }).then(function(response) {return response.json()}).then((books) => {
 
             console.log(books)
-            this.setState({books: books.items[0].volumeInfo})
-            this.setState({imgthumb: books.items[0].id});
+            try {
+                this.setState({books: books.items[0].volumeInfo})
+                this.setState({imgthumb: books.items[0].id});
+                }
+            catch(err) {
+                this.setState({ err: true })
+
+            }
 
 
         });
@@ -50,6 +69,12 @@ export default class BookDetails extends React.Component {
 
     }
 
+    changeRating( newRating, name ) {
+        alert(newRating+" for "+name)
+
+    }
+
+
 
 
     displayImage()
@@ -58,16 +83,52 @@ export default class BookDetails extends React.Component {
             var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb)
         return(
             <div style={{margin: "12px"}}>
-                <a href={link} style={{textDecoration: "none"}}>
+
 
                     <div className="parent">
-                        <img className="image1" id="prviewImg" src={img} style={{width: "220px", height: "300px"}} onClick={this.displayPreview}/>
+
+                        <img className="image1" id="prviewImg" src={img} style={{width: "220px", height: "300px", cursor: "pointer"}} onClick={()=>{
+
+
+                            if(this.state.isReader||this.state.isReviewer)
+                            {
+                                window.location.replace(link)
+                                return
+
+                            }
+
+                            else
+                            {
+
+                                this.infoMsgs("Log In To Read Books ")
+                                this.setState({redirectToLogin: true })
+                            }
+
+                        }
+                        }/>
                         <img className="image2" src="https://media.giphy.com/media/puRciSJdfGCd2/giphy.gif"/>
+
                     </div>
 
-                </a>
+
             </div>
         )
+    }
+
+    infoMsgs(msg)
+    {
+        var x = document.getElementById("info")
+        x.className = "show";
+
+        if(!msg.startsWith("SUCCESSFULLY")){
+            x.style.backgroundColor = "rgb(217, 56, 26)";
+        }
+        else
+        {
+            x.style.backgroundColor = "rgba(113, 217, 41, 1)";
+        }
+        x.innerHTML=msg;
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2600);
     }
 
 
@@ -76,6 +137,15 @@ export default class BookDetails extends React.Component {
 
         console.log(this.state.books.averageRating)
         let des = String(this.state.books.description);
+        console.log(this.state.redirectToLogin)
+        if (this.state.redirectToLogin) {
+            return <Redirect to='/login'/>;
+        }
+
+
+        if (this.state.err) {
+            return <Redirect to='/error'/>;
+        }
 
         return(
 
@@ -104,8 +174,13 @@ export default class BookDetails extends React.Component {
                                             </div>
                                         </div>
                                         <div className="bookRating">
-                                            <StarRatings starDimension="30px" starSpacing="2px" rating={this.state.books.averageRating} starRatedColor="#DAA520" changeRating={4} numberOfStars={5} name='rating' />
-                                        </div>
+                                            <div hidden={this.state.isReviewer}>
+                                                <StarRatings starDimension="30px" starSpacing="2px" rating={this.state.books.averageRating} starRatedColor="#DAA520"  numberOfStars={5} name={this.state.isbn}/>
+                                            </div>
+                                            <div hidden={!this.state.isReviewer}>
+                                                <StarRatings starDimension="30px" starSpacing="2px" rating={this.state.books.averageRating} starRatedColor="#DAA520" changeRating={this.changeRating} numberOfStars={5} name={this.state.isbn}/>
+                                            </div>
+                                            </div>
                                     </div>
 
 
@@ -132,9 +207,14 @@ export default class BookDetails extends React.Component {
 
                                     </div>
 
+                                </div>
+                                <div className="reviewWidget" hidden={!this.state.isReviewer}>
 
+                                    <ReviewWidget/>
 
                                 </div>
+
+
 
 
 
@@ -159,7 +239,7 @@ export default class BookDetails extends React.Component {
     }
 
 }
-
+export default withCookies(BookDetails);
 
 
 
