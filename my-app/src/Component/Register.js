@@ -22,9 +22,11 @@ export default class Register
         this.createUser = this.createUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
+
         /*this.onChangeValue = this.onChangeValue.bind(this);*/
 
     }
+
 
 
     handleChange(event){
@@ -37,7 +39,6 @@ export default class Register
             }
         });
     }
-
 
 
     createUser(){
