@@ -35,7 +35,20 @@ class BookDetails extends React.Component {
     componentDidMount() {
         const { cookies } = this.props;
         var id = this.props.match.params.id;
-        this.setState({isReader: cookies.get('isReader')})
+
+
+
+        if(cookies.get('isReader')!= undefined){
+            //alert("is reader"+cookies.get('isReader'))
+            this.setState({isReader: cookies.get('isReader')})
+        }
+        if(cookies.get('isReviewer')!= undefined)
+        {
+            //alert("is reviewer"+cookies.get('isReviewer'))
+            this.setState({isReviewer: cookies.get('isReviewer')})
+        }
+
+
         this.setState({isbn: id})
         this.find_preview(id)
 

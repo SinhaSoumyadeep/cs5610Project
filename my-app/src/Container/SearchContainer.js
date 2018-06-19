@@ -23,7 +23,9 @@ class SearchContainer
             books: [],
             err: false,
             profile: '',
-            isLoggedIn: false
+            isLoggedIn: false,
+            picture:'',
+            loggedInFrom: 'BW'
 
 
         };
@@ -31,8 +33,19 @@ class SearchContainer
 
     componentWillMount() {
         const { cookies } = this.props;
-        this.setState({profile: cookies.get('profile')||{imageUrl: ''}})
+
+        this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
+        if(cookies.get('loggedInFrom') == 'GL')
+        {
+            this.setState({loggedInFrom: 'GL'})
+        }
+        if(cookies.get('loggedInFrom') == 'FB')
+        {
+            this.setState({loggedInFrom: 'FB'})
+        }
+
+
     }
 
     hidesearch(event)
@@ -153,13 +166,14 @@ class SearchContainer
                     </button>
                 </div>
                 <div className="login">
-                    <a href="" hidden={!this.state.isLoggedIn} onClick={()=>{
+                    <a href="/books" hidden={!this.state.isLoggedIn} onClick={()=>{
 
                         const { cookies } = this.props;
                         cookies.remove('profile',{ path: '/' });
                         cookies.remove('isLoggedIn',{ path: '/' });
+                        cookies.remove('loggedInFrom',{ path: '/' });
+                        cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
-
 
                     }}>LogOut</a>
                     <Link to={`/login`}>
@@ -171,10 +185,25 @@ class SearchContainer
                     <a hidden={this.state.isLoggedIn}>SignUp</a>
                     </Link>
                     <Link to={`/profile`}>
-                    <img className="loggedInUsr" src={this.state.profile.imageUrl}
-                         height="40px"
-                         hidden={!this.state.isLoggedIn}
-                    />
+
+
+                        {this.state.loggedInFrom == 'GL'&&
+                            <img className="loggedInUsr" src={this.state.profile.imageUrl}
+                            height="40px"
+                            hidden={!this.state.isLoggedIn}
+                            />
+                        }
+                        {this.state.loggedInFrom == 'FB'&&
+                        <img className="loggedInUsr" src={this.state.profile.picture.data.url}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
+
+
+
+
+
                     </Link>
 
 

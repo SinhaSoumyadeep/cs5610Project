@@ -34,17 +34,34 @@ class Login extends React.Component
 
     }
 
-    handleNameChange(profile) {
+    handleNameChange(profile, loggedInFrom) {
         const { cookies } = this.props;
 
+        console.log(profile);
         cookies.set('profile', profile, { path: '/',maxAge: (1800)});
         cookies.set('isLoggedIn', true, { path: '/',maxAge: (1800) });
-        cookies.set('isReader',true, { path: '/',maxAge: (1800) });
+
+        if(loggedInFrom == 'GL')
+        {
+            cookies.set('loggedInFrom','GL', { path: '/',maxAge: (1800) });
+            cookies.set('isReader',true, { path: '/',maxAge: (1800) });
+        }
+        if (loggedInFrom == 'FB')
+        {
+            cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
+            cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
+        }
         this.setState({ profile });
     }
 
-  responseFacebook(facebookUser){
+
+
+  responseFacebook = (facebookUser)=>{
     console.log(facebookUser);
+      this.handleNameChange(facebookUser, "FB")
+      console.log({accessToken: facebookUser.accessToken});
+      window.location.replace("/books")
+
   }
 
   responseGoogle=(googleUser)=>{
@@ -52,7 +69,7 @@ class Login extends React.Component
     var googleId = googleUser.getId();
     
     console.log(googleUser);
-      this.handleNameChange(googleUser.profileObj)
+      this.handleNameChange(googleUser.profileObj, "GL")
     console.log({accessToken: id_token});
       window.location.replace("/books")
   }
@@ -123,7 +140,7 @@ class Login extends React.Component
           <div>
            <FacebookLogin
     appId="202947930333909"
-    autoLoad={true}
+    autoLoad={false}
     button className = "btn btn-block btn-primary"
     buttonText="Login With Facebook"
     fields="name,email,picture"

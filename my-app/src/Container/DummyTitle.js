@@ -17,8 +17,12 @@ class DummyTitle
 
         this.state = {
 
+            books: [],
+            err: false,
             profile: '',
-            isLoggedIn: false
+            isLoggedIn: false,
+            picture:'',
+            loggedInFrom: 'BW'
 
 
         };
@@ -26,9 +30,21 @@ class DummyTitle
 
     componentWillMount() {
         const { cookies } = this.props;
-        this.setState({profile: cookies.get('profile')||{imageUrl: ''}})
+
+        this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
+        if(cookies.get('loggedInFrom') == 'GL')
+        {
+            this.setState({loggedInFrom: 'GL'})
+        }
+        if(cookies.get('loggedInFrom') == 'FB')
+        {
+            this.setState({loggedInFrom: 'FB'})
+        }
+
+
     }
+
 
 
 
@@ -70,10 +86,18 @@ class DummyTitle
                         <a hidden={this.state.isLoggedIn}>SignUp</a>
                     </Link>
                     <Link to={`/profile`}>
+                        {this.state.loggedInFrom == 'GL'&&
                         <img className="loggedInUsr" src={this.state.profile.imageUrl}
                              height="40px"
                              hidden={!this.state.isLoggedIn}
                         />
+                        }
+                        {this.state.loggedInFrom == 'FB'&&
+                        <img className="loggedInUsr" src={this.state.profile.picture.data.url}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
                     </Link>
 
 

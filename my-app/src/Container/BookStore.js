@@ -7,6 +7,7 @@ import BookDetails from './BookDetails'
 import BookPreview from "./BookPreview";
 import ErrorPage from "./ErrorPage";
 import ReviewWidget from "./ReviewWidget";
+import Profile from "./Profile";
 
 
 
@@ -37,6 +38,9 @@ export default class BookStore
                     </Route>
                     <Route path="/error"
                            component={ErrorPage}>
+                    </Route>
+                    <Route path="/profile"
+                           component={Profile}>
                     </Route>
 
                 </div>
