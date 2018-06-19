@@ -37,9 +37,9 @@ class Login extends React.Component
     handleNameChange(profile) {
         const { cookies } = this.props;
 
-        cookies.set('profile', profile, { path: '/' });
-        cookies.set('isLoggedIn', true, { path: '/' });
-        cookies.set('isReader',true, { path: '/' });
+        cookies.set('profile', profile, { path: '/',maxAge: (1800)});
+        cookies.set('isLoggedIn', true, { path: '/',maxAge: (1800) });
+        cookies.set('isReader',true, { path: '/',maxAge: (1800) });
         this.setState({ profile });
     }
 

@@ -2,11 +2,33 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 
-export default class DummyTitle
+class DummyTitle
     extends Component {
 
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+    constructor(props) {
+        super(props)
+
+        this.state = {
+
+            profile: '',
+            isLoggedIn: false
+
+
+        };
+    }
+
+    componentWillMount() {
+        const { cookies } = this.props;
+        this.setState({profile: cookies.get('profile')||{imageUrl: ''}})
+        this.setState({isLoggedIn: cookies.get('isLoggedIn')})
+    }
 
 
 
@@ -30,13 +52,31 @@ export default class DummyTitle
 
                 </div>
                 <div className="login">
+                    <a href="/books" hidden={!this.state.isLoggedIn} onClick={()=>{
+
+                        const { cookies } = this.props;
+                        cookies.remove('profile',{ path: '/' });
+                        cookies.remove('isLoggedIn',{ path: '/' });
+                        cookies.remove('isReader',{ path: '/' });
+
+
+                    }}>LogOut</a>
                     <Link to={`/login`}>
-                        <a>Login</a>
+                        <a hidden={this.state.isLoggedIn}>Login</a>
+
                     </Link>
                     &nbsp;&nbsp;
                     <Link to={`/register`}>
-                        <a>SignUp</a>
+                        <a hidden={this.state.isLoggedIn}>SignUp</a>
                     </Link>
+                    <Link to={`/profile`}>
+                        <img className="loggedInUsr" src={this.state.profile.imageUrl}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                    </Link>
+
+
                 </div>
                 <div className="extra">
 
@@ -99,4 +139,5 @@ $(document).ready(function () {
 
 
 })
+export default withCookies(DummyTitle);
 
