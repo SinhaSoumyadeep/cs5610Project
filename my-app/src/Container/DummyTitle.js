@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
+import logo from "../Style/BookWorm_Logo_2016_small.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -55,7 +56,7 @@ class DummyTitle
             <div className="titleBar">
                 <div className="logo">
                     <a href="/books">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg" height="45px" width="121px"
+                    <img src={logo} height="45px" width="121px"
                          onClick={this.goBack}/>
                     </a>
 
@@ -107,17 +108,17 @@ class DummyTitle
 
                     <div className="socialFace">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-facebook"></i>
+                            <i style={{color: "black"}} className="fa fa-facebook"></i>
                         </button>
                     </div>
                     <div className="socialTwitter">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-twitter"></i>
+                            <i style={{color: "black"}} className="fa fa-twitter"></i>
                         </button>
                     </div>
                     <div className="socialInsta">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-instagram"></i>
+                            <i style={{color: "black"}} className="fa fa-instagram"></i>
                         </button>
                     </div>
 
@@ -131,37 +132,6 @@ class DummyTitle
     }
 }
 
-$(document).ready(function () {
 
-
-
-
-    $("body > *").not("body > .titleBar").click(function(e) {
-
-        $("#searchResults").css('display','none')
-
-    });
-
-
-    var input = document.getElementById("myInput");
-
-    if(input!=null){
-        input.addEventListener("keyup", function(event) {
-
-            event.preventDefault();
-            // Number 13 is the "Enter" key on the keyboard
-            if (event.keyCode === 13) {
-                // Trigger the button element with a click
-                document.getElementById("myBtn").click();
-            }
-
-        })
-
-    }
-
-
-
-
-})
 export default withCookies(DummyTitle);
 

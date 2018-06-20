@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
-import logo from "../Style/IMDB_Logo_2016.svg"
+import logo from "../Style/BookWorm_Logo_2016_small.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import Trigger from "./Trigger";
 
 
 
@@ -161,7 +162,7 @@ class SearchContainer
 
                 </div>
                 <div className="searchBtn">
-                    <button className="btn btn-warning btn-block" id="myBtn" onClick={this.Search}>
+                    <button className="btn btn-warning btn-block" id="srchBtnhit" onClick={this.Search}>
                         <i className="fa fa-search"></i>
                     </button>
                 </div>
@@ -176,14 +177,10 @@ class SearchContainer
                         cookies.remove('isReader',{ path: '/' });
 
                     }}>LogOut</a>
-                    <Link to={`/login`}>
-                    <a hidden={this.state.isLoggedIn}>Login</a>
 
-                    </Link>
-                    &nbsp;&nbsp;
-                    <Link to={`/register`}>
-                    <a hidden={this.state.isLoggedIn}>SignUp</a>
-                    </Link>
+                       <span style={{float: "left", marginRight: "5px"}} hidden={this.state.isLoggedIn}><Trigger buttonLabel={"Login"} type={"login"}/></span>
+                    <span style={{float: "left"}} hidden={this.state.isLoggedIn}><Trigger buttonLabel={"SignUp"} type={"register"}/></span>
+
                     <Link to={`/profile`}>
 
 
@@ -213,17 +210,17 @@ class SearchContainer
 
                     <div className="socialFace">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-facebook"></i>
+                            <i style={{color: "black"}} className="fa fa-facebook"></i>
                         </button>
                     </div>
                     <div className="socialTwitter">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-twitter"></i>
+                            <i style={{color: "black"}} className="fa fa-twitter"></i>
                         </button>
                     </div>
                     <div className="socialInsta">
                         <button className="btn btn-warning btn-block social">
-                            <i className="fa fa-instagram"></i>
+                            <i style={{color: "black"}} className="fa fa-instagram"></i>
                         </button>
                     </div>
 
@@ -258,7 +255,7 @@ $(document).ready(function () {
             // Number 13 is the "Enter" key on the keyboard
             if (event.keyCode === 13) {
                 // Trigger the button element with a click
-                document.getElementById("myBtn").click();
+                document.getElementById("srchBtnhit").click();
             }
 
         })

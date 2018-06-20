@@ -4,7 +4,6 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import '../Style/LoginStyle.css'
 import UserProfile from '../Container/UserProfile';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -60,7 +59,7 @@ class Login extends React.Component
     console.log(facebookUser);
       this.handleNameChange(facebookUser, "FB")
       console.log({accessToken: facebookUser.accessToken});
-      window.location.replace("/books")
+      window.location.reload()
 
   }
 
@@ -71,7 +70,7 @@ class Login extends React.Component
     console.log(googleUser);
       this.handleNameChange(googleUser.profileObj, "GL")
     console.log({accessToken: id_token});
-      window.location.replace("/books")
+      window.location.reload()
   }
 
 
@@ -93,12 +92,9 @@ class Login extends React.Component
 
       const { name } = this.state;
     return (
-      <div className = 'container-fluid'>
-      <div id = "login-header">
-      <img className="loginProfileImage" src={this.state.profile.imageUrl}/>
-      </div>
-      <div id="loginPage">
-            <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
+      <div>
+
+            <form   onSubmit={this.handleSubmit}>
                  <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
@@ -117,7 +113,7 @@ class Login extends React.Component
             />
           </FormGroup>
           <Button
-            className = "btn btn-block btn-primary"           
+            className = "btn btn-block btn-primary"
             disabled={!this.validateForm()}
             type="submit">
             Login
@@ -149,7 +145,7 @@ class Login extends React.Component
           </div>
             </form>
             </div>
-      </div>
+
     );
   }
 
