@@ -2,33 +2,45 @@ import React from 'react'
 import BookCard from "./BookCard";
 import SearchContainer from "../Container/SearchContainer";
 import Advertisement from "../Container/Advertisement";
+import $ from 'jquery'
+import NewOpenings from "../Container/NewOpenings";
+import FooterPage from "../Container/FooterPage";
+import { Redirect } from 'react-router-dom';
+import UserProfile from '../Container/UserProfile';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
-
-export default class BookList extends React.Component
+class BookList extends React.Component
 {
 
 
 
-
-    constructor() {
-        super()
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+    constructor(props) {
+        super(props)
 
 
         this.state = {
-
+            ficthumb:[],
+            nonficthumb:[],
             fictionBooks: [],
             nonFiction:[],
             paperback:[],
-
-            count: 0
+            err: false,
+            count: 0,
+            profile: ''
 
         };
 
     }
 
     componentWillMount() {
-
+        const { cookies } = this.props;
+        this.setState({profile: cookies.get('profile')})
         this.fetchAllFictionBooks();
+
         this.fetchAllNonFictionBooks();
 
 
@@ -38,10 +50,20 @@ export default class BookList extends React.Component
 
     fetchAllNonFictionBooks()
     {
+
         fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-nonfiction&api-key=8e08852c66f845fbae14cb660487234e', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
-            this.setState({nonFiction: books.results});
+
+            try {
+                this.find_nonfictionpreview(books)
+                this.setState({nonFiction: books.results});
+            }
+            catch(err) {
+                alert("error1")
+                this.setState({ err: true })
+            }
+
 
         });
 
@@ -52,14 +74,19 @@ export default class BookList extends React.Component
 
     fetchAllFictionBooks()
     {
+
         fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=8e08852c66f845fbae14cb660487234e', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
-            this.setState({fictionBooks: books.results});
 
-            this.state.fictionBooks.map((book)=>{
-                console.log(book.isbns[1].isbn10)
-            })
+            try {
+                this.find_fictionpreview(books)
+                this.setState({fictionBooks: books.results});
+            }
+            catch(err) {
+                alert("error2")
+                this.setState({ err: true })
+            }
 
 
         });
@@ -70,18 +97,79 @@ export default class BookList extends React.Component
 
 
 
-    find_preview(isbn)
+    find_fictionpreview(books)
     {
 
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM", {
-            method: 'get',
-        }).then(function(response) {return response.json()}).then((books) => {
+            books.results.slice(0, 3).map((book)=>{
 
 
-           console.log(books)
+                console.log(book)
+
+                var isbn = book.isbns[1].isbn10
+
+                $.ajax({
+                    async: false,
+                    type:"GET",
+                    url: "https://www.googleapis.com/books/v1/volumes?q="+isbn,
+                    success: (result)=>{
+
+                        try {
+                            console.log(result)
+                            var joined = this.state.ficthumb.concat(result.items[0].id);
+                            this.setState({ ficthumb: joined })
+                        }
+                        catch(err) {
+                            alert("error3")
+                            this.setState({ err: true })
+                        }
 
 
-        });
+                    },
+                    error:(XMLHttpRequest, textStatus, errorThrown) =>{
+
+                    }
+
+
+                })
+
+
+
+
+            })
+
+
+    }
+    find_nonfictionpreview(books)
+    {
+
+        books.results.slice(0, 3).map((book)=>{
+
+
+            var isbn = book.isbns[1].isbn10
+            $.ajax({
+                async: false,
+                type:"GET",
+                url: "https://www.googleapis.com/books/v1/volumes?q="+isbn,
+                success: (result)=>{
+
+                    try {
+                        console.log(result)
+                        var joined = this.state.nonficthumb.concat(result.items[0].id);
+                        this.setState({ nonficthumb: joined })
+                    }
+                    catch(err) {
+                        alert("error4")
+                        this.setState({ err: true })
+                    }
+
+
+
+                }
+
+
+            })
+
+        })
 
 
     }
@@ -90,18 +178,27 @@ export default class BookList extends React.Component
     {
 
 
-        var grid = this.state.fictionBooks.slice(0, 3).map((book)=>{
 
 
+        var grid = this.state.fictionBooks.slice(0, 3).map((book,index)=>{
+
+            var isbn = book.isbns[1].isbn10
+
+            var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.ficthumb[index])
 
             return(
 
-                    <div>
-                        <BookCard title={book.book_details[0].title} description={book.book_details[0].description}/>
-                    </div>
+                <div>
+
+                    <BookCard key={index} isbn={isbn} book={book} id={img}  title={book.book_details[0].title} description={book.book_details[0].description}/>
+                </div>
 
 
             )
+
+
+
+
 
 
 
@@ -119,14 +216,18 @@ export default class BookList extends React.Component
     {
 
 
-        var grid = this.state.nonFiction.slice(0, 3).map((book)=>{
+        var grid = this.state.nonFiction.slice(0, 3).map((book,index)=>{
+            var isbn = book.isbns[1].isbn10
+            console.log(book.isbns[1].isbn10)
+            var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.nonficthumb[index])
+
 
 
 
             return(
 
                 <div>
-                    <BookCard title={book.book_details[0].title} description={book.book_details[0].description}/>
+                    <BookCard key={index} isbn={isbn} id={img} title={book.book_details[0].title} description={book.book_details[0].description}/>
                 </div>
 
 
@@ -155,6 +256,9 @@ export default class BookList extends React.Component
 
 
     render(){
+        if (this.state.err) {
+            return <Redirect to='/error'/>;
+        }
 
         return(
 
@@ -167,11 +271,11 @@ export default class BookList extends React.Component
 
                 <div>
 
-                    <div className="row">
+                    <div className="row" style={{marginTop: "81px"}}>
                         <div className="col-sm-8 mainSec">
                             <div className="featuredBooks">
                                 <div id="SectionHeading">
-                                    <h6> FICTION FEATURED BOOKS</h6>
+                                    <h6>FICTION FEATURED BOOKS</h6>
                                 </div>
 
                                 <div className="card-deck" style={{paddingLeft: "31px"}}>
@@ -196,10 +300,21 @@ export default class BookList extends React.Component
 
                         <div className="col-sm-4 asideSec">
                             <Advertisement/>
+                            <hr width="300px"/>
+                            <div id="topPicks">
+                                <h5>Our Top Picks </h5>
+                                <NewOpenings/>
+                            </div>
+
                         </div>
 
                     </div>
                 </div>
+
+                <div>
+                    <FooterPage/>
+                </div>
+                <div style={{height: "126px"}}></div>
 
             </div>
 
@@ -215,3 +330,4 @@ export default class BookList extends React.Component
 
 
 }
+export default withCookies(BookList);

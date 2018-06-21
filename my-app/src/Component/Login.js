@@ -4,38 +4,74 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import '../Style/LoginStyle.css'
+import UserProfile from '../Container/UserProfile';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
-export default class Login extends React.Component
+class Login extends React.Component
 {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
 
   constructor(props) {
     super(props);
 
-     this.state = {
-            user : {
-                firstName: "",
-                lastName: "",
-                username: "",
-                password: "",
-                role: "",
-                gender: "",
-                dateOfBirth: "",
-                email: ""
-            }
+    this.state = {
+      email: "",
+      password: "",
+        profile: '',
+        name:''
+    };
+
+  }
+
+    componentWillMount() {
+        const { cookies } = this.props;
+
+        this.setState({name: cookies.get('name') || 'Default user'})
+
+
+    }
+
+    handleNameChange(profile, loggedInFrom) {
+        const { cookies } = this.props;
+
+        console.log(profile);
+        cookies.set('profile', profile, { path: '/',maxAge: (1800)});
+        cookies.set('isLoggedIn', true, { path: '/',maxAge: (1800) });
+
+        if(loggedInFrom == 'GL')
+        {
+            cookies.set('loggedInFrom','GL', { path: '/',maxAge: (1800) });
+            cookies.set('isReader',true, { path: '/',maxAge: (1800) });
         }
-  }
+        if (loggedInFrom == 'FB')
+        {
+            cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
+            cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
+        }
+        this.setState({ profile });
+    }
 
-  responseFacebook(facebookUser){
+
+
+  responseFacebook = (facebookUser)=>{
     console.log(facebookUser);
+      this.handleNameChange(facebookUser, "FB")
+      console.log({accessToken: facebookUser.accessToken});
+      window.location.reload()
+
   }
 
-  responseGoogle (googleUser) {
+  responseGoogle=(googleUser)=>{
     var id_token = googleUser.getAuthResponse().id_token;
     var googleId = googleUser.getId();
     
     console.log(googleUser);
+      this.handleNameChange(googleUser.profileObj, "GL")
     console.log({accessToken: id_token});
+      window.location.reload()
   }
 
 
@@ -48,26 +84,33 @@ export default class Login extends React.Component
   }
 
   render() {
+
+      const { name } = this.state;
     return (
-      <div className = 'container-fluid'>
-      <div id = "login-header">
-      <h1 align = "center">LOGIN</h1>
-      </div>
-      <div id="loginPage">
-            <form className="form-horizontal" role="form" onSubmit={this.handleSubmit}>
-           <div className="form-group row">
-                <label className="col-sm-3 col-form-label"><b>EMAIL</b></label>
-                <div className="col-sm-9">
-                    <input className = "form-control"  placeholder = "Email" ref="email"
-                    />
-                </div></div>
-            <div className="form-group row">
-                <label className="col-sm-3 col-form-label"><b>PASSWORD</b></label>
-                <div className="col-sm-9">
-                    <input className = "form-control" type="password" placeholder = "Password" ref="password"/>
-                </div></div>      
+
+      <div>
+
+            <form   onSubmit={this.handleSubmit}>
+                 <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
           <Button
-            className = "btn btn-block btn-primary"           
+            className = "btn btn-block btn-primary"
+            disabled={!this.validateForm()}
             type="submit">
             Login
           </Button>
@@ -89,7 +132,7 @@ export default class Login extends React.Component
           <div>
            <FacebookLogin
     appId="202947930333909"
-    autoLoad={true}
+    autoLoad={false}
     button className = "btn btn-block btn-primary"
     buttonText="Login With Facebook"
     fields="name,email,picture"
@@ -98,7 +141,7 @@ export default class Login extends React.Component
           </div>
             </form>
             </div>
-      </div>
+
     );
   }
 
@@ -106,3 +149,4 @@ export default class Login extends React.Component
 
 
 }
+export default withCookies(Login);
