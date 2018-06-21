@@ -81,9 +81,7 @@ class Profile extends React.Component {
 
 
                                 <div className="container">
-                                    <header>
-
-                                    </header>
+                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
                                     <div className="row">
                                         <div className="left col-lg-4">
                                             <div className="photo-left">

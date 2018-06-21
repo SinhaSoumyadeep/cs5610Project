@@ -7,18 +7,3 @@
 	margin-top: 80px;
 }
 
-[role="form"] {
-    max-width: 550px;
-    padding: 15px;
-    margin: 0 auto;
-    background-color:#FFFF;
-    border-radius: 0.3em;
-    box-shadow: 3px 3px 10px 3px #888888;
-}
-
-.loginProfileImage
-{
-    border: 1px solid black;
-    border-radius: 93px;
-    margin-left: 534px;
-}

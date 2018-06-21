@@ -9,6 +9,7 @@ import ErrorPage from "./ErrorPage";
 import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import Trigger from "./Trigger";
 
 
 
@@ -151,10 +152,6 @@ class BookDetails extends React.Component {
         console.log(this.state.books.averageRating)
         let des = String(this.state.books.description);
         console.log(this.state.redirectToLogin)
-        if (this.state.redirectToLogin) {
-            return <Redirect to='/login'/>;
-        }
-
 
         if (this.state.err) {
             return <Redirect to='/error'/>;

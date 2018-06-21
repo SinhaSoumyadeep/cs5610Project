@@ -22,12 +22,16 @@ export default class Register
         this.createUser = this.createUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
-
         /*this.onChangeValue = this.onChangeValue.bind(this);*/
 
     }
 
-
+    /*setFirstName(event){
+        this.setState({user: {firstName: event.target.value}})
+    }
+    setLastName(event){
+        this.setState({user: {lastName: event.target.value}})
+    }*/
 
     handleChange(event){
         const { name, value} = event.target;
@@ -40,6 +44,17 @@ export default class Register
         });
     }
 
+    /*onChangeValue = (e) => {
+        if (e.target.name === 'isAdmin') {
+            this.setState({
+                [e.target.name]: e.target.checked,
+            });
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value,
+            });
+        }
+    }*/
 
     createUser(){
 
@@ -64,7 +79,7 @@ export default class Register
 
 
 
-        return fetch("https://book-worms-server.herokuapp.com/api/user", {
+        return fetch("http://localhost:8080/api/user", {
             body: JSON.stringify(this.state.user),
             headers: {
                 'Content-Type': 'application/json'
@@ -76,6 +91,9 @@ export default class Register
     render(){
     return(
         <div className="container-fluid">
+            <h4 className="display-4" align="center">Welcome to BOOKWORMS</h4>
+            <hr/>
+            <br/>
             <form className="form-horizontal" role="form">
                 <h3 className="display-5" align="center">Register</h3><hr/>
                 <div className="form-row">
@@ -141,7 +159,7 @@ export default class Register
                 </div>
             </form>
             <br/>
-
+        <hr/>
         </div>
     )
     }

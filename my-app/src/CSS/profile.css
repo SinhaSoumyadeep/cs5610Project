@@ -12,16 +12,16 @@ html,body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
 }
 
-header {
+.header {
     background: #eee;
-    background-image: url("https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     height: 250px;
+    width: 951px;
 }
 
-header i {
+.header i {
     position: relative;
     cursor: pointer;
     right: -96%;
@@ -131,7 +131,7 @@ main {
     margin: 5px 0 12px 0;
     text-align: center;
     display: inline-block;
-    
+
 }
 
 
