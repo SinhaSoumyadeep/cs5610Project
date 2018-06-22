@@ -35,7 +35,7 @@ class Profile extends React.Component {
             redirectToLogin: false,
             isAdmin: false,
             isAuthor: false,
-            isPublisher: false
+            isPublisher: false,
             likedBooks: true,
             readBooks: false,
             wishlist: false
