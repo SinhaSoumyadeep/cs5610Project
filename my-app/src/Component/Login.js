@@ -110,7 +110,6 @@ class Login extends React.Component
           </FormGroup>
           <Button
             className = "btn btn-block btn-primary"
-            disabled={!this.validateForm()}
             type="submit">
             Login
           </Button>

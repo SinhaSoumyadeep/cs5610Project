@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Login from '../Component/Login'
 import Register from "../Component/Register";
+import Settings from "./Settings";
 
 class Trigger extends React.Component {
     constructor(props) {
@@ -27,8 +28,10 @@ class Trigger extends React.Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}></ModalHeader>
                     <ModalBody>
+
                         {this.props.type == 'login' && <Login/>}
                         {this.props.type == 'register' && <Register/>}
+                        {this.props.type == 'settings' && <Settings profile={this.state.profile}/>}
 
                     </ModalBody>
 

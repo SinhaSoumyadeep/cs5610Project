@@ -9,8 +9,9 @@ import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import '../CSS/profile.css'
-
-
+import {Link} from 'react-router-dom'
+import Trigger from "./Trigger";
+import Settings from "./Settings";
 
 
 class Profile extends React.Component {
@@ -60,10 +61,6 @@ class Profile extends React.Component {
 
 
 
-
-
-
-
     render() {
 
         return(
@@ -95,7 +92,10 @@ class Profile extends React.Component {
                                                 />
                                                 }
 
-                                                <div className="active"></div><a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
+                                                <div className="profileActive"></div>
+                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
+                                                    <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profile={this.state.profile}/>
+                                               {/* <Link to="/settings">Settings</Link>*/}
 
                                             </div>
                                             {this.state.loggedInFrom == 'FB' &&
@@ -130,7 +130,8 @@ class Profile extends React.Component {
                                                     <p className="desc-stat">Uploads</p>
                                                 </div>
                                             </div>
-                                            <p className="desc">Hi ! My name is Jane Doe. I'm a UI/UX Designer from
+                                            <p className="desc">
+                                                Hi ! My name is Jane Doe. I'm a UI/UX Designer from
                                                 Paris, in France. I really enjoy photography and mountains.</p>
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
@@ -173,34 +174,12 @@ class Profile extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
-
-
-
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
         )
     }
