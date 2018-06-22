@@ -10,6 +10,10 @@ import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Trigger from "./Trigger";
+import HeartButton from "./HeartButton";
+import ReviewContainer from "./ReviewContainer"
+import FooterPage from "./FooterPage"
+import ReviewService from "../Services/ReviewService";
 
 
 
@@ -21,6 +25,8 @@ class BookDetails extends React.Component {
 
     constructor(props) {
         super(props)
+        this.changeRating = this.changeRating.bind(this);
+        this.reviewService = ReviewService.instance;
         this.state = {
             isbn: '',
             imgthumb: '',
@@ -28,7 +34,8 @@ class BookDetails extends React.Component {
             isReader: false,
             isReviewer: false,
             err: false,
-            redirectToLogin: false
+            redirectToLogin: false,
+            profile:''
         };
 
     }
@@ -38,7 +45,7 @@ class BookDetails extends React.Component {
         var id = this.props.match.params.id;
 
 
-
+        this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         if(cookies.get('isReader')!= undefined){
             //alert("is reader"+cookies.get('isReader'))
             this.setState({isReader: cookies.get('isReader')})
@@ -61,7 +68,7 @@ class BookDetails extends React.Component {
     find_preview(id)
     {
         var isbn = id
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn, {
+        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM", {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
@@ -84,8 +91,10 @@ class BookDetails extends React.Component {
     }
 
     changeRating( newRating, name ) {
-        alert(newRating+" for "+name)
 
+        var review = {isbn: String(name), reviewerId: String(this.state.profile.googleId), reviewerName: this.state.profile.name, reviewerImageUrl: this.state.profile.imageUrl+'?sz=550', rating: newRating }
+
+        this.reviewService.createReview(review,name).then((response)=>{window.location.reload()})
     }
 
 
@@ -204,11 +213,14 @@ class BookDetails extends React.Component {
                                         <p >{des.substring(0,550)}...</p>
                                     </div>
                                     <div className="bookInfor">
+                                        {this.state.isReader && <HeartButton userId={this.state.profile.name} bookId={this.state.isbn} ImgUrl={'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb)}/>}
                                         <b>Book Information</b><br/>
                                         <b>Page Count:</b>&nbsp;{this.state.books.pageCount}<br/>
                                         <b>Published Date:</b>&nbsp;{this.state.books.publishedDate}
 
+
                                     </div>
+
 
                                     <div className="bookInfo form-control" >
 
@@ -219,9 +231,10 @@ class BookDetails extends React.Component {
 
                                 </div>
                                 <div className="reviewWidget" hidden={!this.state.isReviewer}>
-
-                                    <ReviewWidget/>
-
+                                    <ReviewWidget isbn={this.state.isbn} reviewerId={this.state.profile.googleId}/>
+                                </div>
+                                <div>
+                                    <ReviewContainer isbn={this.state.isbn}/>
                                 </div>
 
 
@@ -240,6 +253,11 @@ class BookDetails extends React.Component {
 
                     </div>
                 </div>
+                <div>
+                    <FooterPage/>
+                </div>
+                <div style={{height: "126px"}}></div>
+
 
             </div>
 

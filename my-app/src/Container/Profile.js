@@ -9,6 +9,9 @@ import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import '../CSS/profile.css'
+import LikedBooksContainer from "./LikedBooksContainer";
+import ReadBooksContainer from "./ReadBooksContainer";
+import WishListContainer from "./WishListContainer";
 
 
 
@@ -33,6 +36,10 @@ class Profile extends React.Component {
             isAdmin: false,
             isAuthor: false,
             isPublisher: false
+            likedBooks: true,
+            readBooks: false,
+            wishlist: false
+
         };
 
     }
@@ -174,37 +181,27 @@ class Profile extends React.Component {
                                         </div>
                                         <div className="right col-lg-8">
                                             <ul className="nav">
-                                                <li>Gallery</li>
-                                                <li>Collections</li>
-                                                <li>Groups</li>
-                                                <li>About</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: true,readBooks: false, wishlist: false})}}>Liked Books</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(2)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,readBooks: true, wishlist: false})}}>Read Books</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
+
                                             </ul>
                                             <span className="follow">Follow</span>
-                                            <div className="row gallery">
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774813-photo4.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo5.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo6.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774817-photo1.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774815-photo2.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774816-photo3.jpg"/>
-                                                </div>
+                                            <div className="hideScroll">
+
+                                                {this.state.likedBooks == true && <LikedBooksContainer/>}
+                                                {this.state.readBooks == true && <ReadBooksContainer/>}
+                                                {this.state.wishlist == true && <WishListContainer/>}
+
                                             </div>
                                         </div>
                                     </div>
