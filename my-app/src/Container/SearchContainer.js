@@ -26,7 +26,8 @@ class SearchContainer
             profile: '',
             isLoggedIn: false,
             picture:'',
-            loggedInFrom: 'BW'
+            loggedInFrom: 'BW',
+            picture: {data: {url: ''}}
 
 
         };
@@ -148,7 +149,7 @@ class SearchContainer
                 </div>
                 <div className="searchBar">
 
-                    <input id="myInput" className="form-control" ref="searchInput" placeholder="Find Books" ref="searchKey" onChange={this.hidesearch}/>
+                    <input id="myInput" className="form-control"  placeholder="Find Books" ref="searchKey" onChange={this.hidesearch}/>
 
                     <div id="searchResults" style={{display: "none"}}>
                         <table className="table">
