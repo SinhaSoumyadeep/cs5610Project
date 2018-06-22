@@ -9,15 +9,21 @@ import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import '../CSS/profile.css'
+import LikedBooksContainer from "./LikedBooksContainer";
+import ReadBooksContainer from "./ReadBooksContainer";
+import WishListContainer from "./WishListContainer";
 import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
+
 
 
 class Profile extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
+
+
 
     constructor(props) {
         super(props)
@@ -28,7 +34,14 @@ class Profile extends React.Component {
             isReader: false,
             isReviewer: false,
             err: false,
-            redirectToLogin: false
+            redirectToLogin: false,
+            isAdmin: false,
+            isAuthor: false,
+            isPublisher: false,
+            likedBooks: true,
+            readBooks: false,
+            wishlist: false
+
         };
 
     }
@@ -37,15 +50,30 @@ class Profile extends React.Component {
         const { cookies } = this.props;
 
         console.log(cookies.get('profile'))
+        
         if(cookies.get('isReader')!= undefined){
             //alert("is reader"+cookies.get('isReader'))
             this.setState({isReader: cookies.get('isReader')})
         }
+        
         if(cookies.get('isReviewer')!= undefined)
         {
             //alert("is reviewer"+cookies.get('isReviewer'))
             this.setState({isReviewer: cookies.get('isReviewer')})
         }
+
+         if(cookies.get('isAuthor')!= undefined)
+        {
+            alert("is reviewer"+cookies.get('isAuthor'))
+            this.setState({isAuthor: cookies.get('isAuthor')})
+        }
+
+        // if(cookies.get('isPublisher')!= undefined)
+        // {
+        //     //alert("is reviewer"+cookies.get('isReviewer'))
+        //     this.setState({isPublisher: cookies.get('isPublisher')})
+        // }
+
         this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
 
@@ -56,6 +84,10 @@ class Profile extends React.Component {
         if(cookies.get('loggedInFrom') == 'FB')
         {
             this.setState({loggedInFrom: 'FB'})
+        }
+
+        if (cookies.get('loggedInFrom') == 'NU'){
+            this.setState({loggedInFrom: 'NU'})
         }
     }
 
@@ -92,10 +124,17 @@ class Profile extends React.Component {
                                                 />
                                                 }
 
+
+                                                {this.state.loggedInFrom == 'NU' &&
+                                                <img className="photo" src={this.state.profile.imageURL}
+                                                     hidden={!this.state.isLoggedIn}
+                                                />
+                                                }
                                                 <div className="profileActive"></div>
                                                 <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
                                                     <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profile={this.state.profile}/>
                                                {/* <Link to="/settings">Settings</Link>*/}
+
 
                                             </div>
                                             {this.state.loggedInFrom == 'FB' &&
@@ -104,10 +143,15 @@ class Profile extends React.Component {
                                             {this.state.loggedInFrom == 'GL'&&
                                             <h4 className="name">{this.state.profile.name}</h4>
                                             }
+                                            {this.state.loggedInFrom == 'NU'&&
+                                            <h4 className="name">{this.state.profile.first_name}</h4>
+                                            }
                                             <div></div>
 
-                                             <p className="info" hidden={!this.state.isReader}>Reader</p>
+                                            <p className="info" hidden={!this.state.isReader}>Reader</p>
                                             <p className="info" hidden={!this.state.isReviewer}>Reviewer</p>
+                                            <p>{this.state.isAuthor}</p>
+
 
                                             {this.state.loggedInFrom == 'FB' &&
                                             <p className="info">{this.state.profile.email}</p>
@@ -140,37 +184,27 @@ class Profile extends React.Component {
                                         </div>
                                         <div className="right col-lg-8">
                                             <ul className="nav">
-                                                <li>Gallery</li>
-                                                <li>Collections</li>
-                                                <li>Groups</li>
-                                                <li>About</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: true,readBooks: false, wishlist: false})}}>Liked Books</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(2)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,readBooks: true, wishlist: false})}}>Read Books</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
+
                                             </ul>
                                             <span className="follow">Follow</span>
-                                            <div className="row gallery">
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774813-photo4.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo5.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo6.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774817-photo1.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774815-photo2.jpg"/>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src="https://image.noelshack.com/fichiers/2017/38/2/1505774816-photo3.jpg"/>
-                                                </div>
+                                            <div className="hideScroll">
+
+                                                {this.state.likedBooks == true && <LikedBooksContainer/>}
+                                                {this.state.readBooks == true && <ReadBooksContainer/>}
+                                                {this.state.wishlist == true && <WishListContainer/>}
+
                                             </div>
                                         </div>
                                     </div>

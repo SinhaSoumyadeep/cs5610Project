@@ -7,6 +7,8 @@ import FacebookLogin from 'react-facebook-login';
 import UserProfile from '../Container/UserProfile';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import UserService from '../Services/UserService';
+
 
 class Login extends React.Component
 {
@@ -18,11 +20,18 @@ class Login extends React.Component
     super(props);
 
     this.state = {
+      user: {
+        email : "",
+        password : ""
+      },
       email: "",
       password: "",
         profile: '',
         name:''
     };
+    this.userService = UserService.instance;
+    this.emailChanged = this.emailChanged.bind(this);
+    this.passwordChanged = this.passwordChanged.bind(this);
 
   }
 
@@ -41,16 +50,44 @@ class Login extends React.Component
         cookies.set('profile', profile, { path: '/',maxAge: (1800)});
         cookies.set('isLoggedIn', true, { path: '/',maxAge: (1800) });
 
+        if(loggedInFrom == 'NU'){
+          console.log("Hello");
+          cookies.set('loggedInFrom','NU', { path: '/',maxAge: (1800) });
+          if(profile.role == 'Reader')
+          {
+            cookies.set('isReader',true,{path: '/', maxAge: (1800)});
+          }
+
+          else if (profile.role == 'Reviewer'){
+            cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
+          }
+
+          else if(profile.role == 'Author'){
+            alert("Here I am")
+            cookies.set('isAuthor',true,{path: '/', maxAge: (1800)});
+          }
+
+          // else if(profile.role == 'Publisher'){
+          //   cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
+          // }
+
+
+
+
+        }
+
         if(loggedInFrom == 'GL')
         {
             cookies.set('loggedInFrom','GL', { path: '/',maxAge: (1800) });
             cookies.set('isReader',true, { path: '/',maxAge: (1800) });
         }
+        
         if (loggedInFrom == 'FB')
         {
             cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
             cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
         }
+
         this.setState({ profile });
     }
 
@@ -74,13 +111,58 @@ class Login extends React.Component
       window.location.reload()
   }
 
+  handleLogin(email,password){
+    var userEmail = email
+    var userPassword = password
+    this.state.user = {
+      email: userEmail,
+      password: userPassword   
 
-  handleSubmit = event => {
-    alert("In submit function")
-    var email = "Hello"
-    var password = this.refs.password.value
-    alert(email)
-    alert(" " + password)
+    }
+    console.log("Handle Login")
+    console.log("Email: " + userEmail)
+    console.log("Password: " + userPassword)
+    this.userService.loginUser(this.state.user).then((response)=>{
+      if(response.id == 0){
+        alert("Invalid Credentials.")
+
+      }
+      else{
+
+        var user = {
+          date_of_birth: response.dateOfBirth,
+          email: response.email,
+          first_name: response.firstName,
+          last_name: response.lastName,
+          password: response.password,
+          role: response.role,
+          username: response.username,
+          gender: response.gender,
+          imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
+        }
+
+        console.log(user);
+
+      
+      this.handleNameChange(user, "NU")
+      window.location.reload()
+
+      
+        }
+      });
+
+  }
+
+  emailChanged(event){
+   this.setState({
+      email: event.target.value
+    });
+  }
+
+  passwordChanged(event){
+    this.setState({
+     password: event.target.value
+    })
   }
 
   render() {
@@ -89,33 +171,29 @@ class Login extends React.Component
     return (
 
       <div>
-
-            <form   onSubmit={this.handleSubmit}>
-                 <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
+      <form>
+      <label>
+      Email
+      </label>
+      <input onChange={this.emailChanged}
+                         className="form-control" 
+                         id="emailFld"
+                         placeholder="Email"/>
+      <label>
+      Password
+      </label>
+      <input onChange = {this.passwordChanged}
+             className = "form-control"
+             id= "passwordFld"
+             type = "password"
+             placeholder =  "Password"/>
+          <br/>
           <Button
             className = "btn btn-block btn-primary"
-            type="submit">
+            onClick = {()=> {this.handleLogin(this.state.email,this.state.password)}}>
+
             Login
           </Button>
-
-          <br/>
-
           <div>
 
            <GoogleLogin
