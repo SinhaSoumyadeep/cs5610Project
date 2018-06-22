@@ -27,4 +27,13 @@ export default class UserService{
         }).then(function(response){
             return response.json();
         })}
+
+    loginUser(user){
+        console.log(user.email)
+        console.log("Inside Login")
+        // console.log(email);
+        console.log(user.password);
+        var postObject = {method: 'post',body: JSON.stringify(user),headers: {'content-Type': 'application/json','dataType':'json'} }
+         return fetch('http://localhost:8080/api/login', postObject).then(function (response) {return response.json();});
+    }
 }
