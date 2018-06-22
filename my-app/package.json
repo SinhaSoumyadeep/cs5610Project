@@ -9,7 +9,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
-    "react-cookie": "^2.1.6",
+    "react-cookie": "^2.2.0",
     "react-dom": "^16.4.0",
     "react-facebook-login": "^4.0.1",
     "react-google-login": "^3.2.1",
