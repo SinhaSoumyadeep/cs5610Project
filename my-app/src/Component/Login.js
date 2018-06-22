@@ -50,16 +50,44 @@ class Login extends React.Component
         cookies.set('profile', profile, { path: '/',maxAge: (1800)});
         cookies.set('isLoggedIn', true, { path: '/',maxAge: (1800) });
 
+        if(loggedInFrom == 'NU'){
+          console.log("Hello");
+          cookies.set('loggedInFrom','NU', { path: '/',maxAge: (1800) });
+          if(profile.role == 'Reader')
+          {
+            cookies.set('isReader',true,{path: '/', maxAge: (1800)});
+          }
+
+          else if (profile.role == 'Reviewer'){
+            cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
+          }
+
+          else if(profile.role == 'Author'){
+            alert("Here I am")
+            cookies.set('isAuthor',true,{path: '/', maxAge: (1800)});
+          }
+
+          // else if(profile.role == 'Publisher'){
+          //   cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
+          // }
+
+
+
+
+        }
+
         if(loggedInFrom == 'GL')
         {
             cookies.set('loggedInFrom','GL', { path: '/',maxAge: (1800) });
             cookies.set('isReader',true, { path: '/',maxAge: (1800) });
         }
+        
         if (loggedInFrom == 'FB')
         {
             cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
             cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
         }
+
         this.setState({ profile });
     }
 
@@ -96,13 +124,32 @@ class Login extends React.Component
     console.log("Password: " + userPassword)
     this.userService.loginUser(this.state.user).then((response)=>{
       if(response.id == 0){
-        alert("Invalid User")
+        alert("Invalid Credentials.")
 
       }
       else{
-        alert("Valid User")
-      }
-    });
+
+        var user = {
+          date_of_birth: response.dateOfBirth,
+          email: response.email,
+          first_name: response.firstName,
+          last_name: response.lastName,
+          password: response.password,
+          role: response.role,
+          username: response.username,
+          gender: response.gender,
+          imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
+        }
+
+        console.log(user);
+
+      
+      this.handleNameChange(user, "NU")
+      window.location.reload()
+
+      
+        }
+      });
 
   }
 

@@ -46,6 +46,10 @@ class SearchContainer
             this.setState({loggedInFrom: 'FB'})
         }
 
+        if(cookies.get('loggedInFrom') == 'NU'){
+            this.setState({loggedInFrom: 'NU'})
+        }
+
 
     }
 
@@ -190,8 +194,21 @@ class SearchContainer
                             hidden={!this.state.isLoggedIn}
                             />
                         }
+                        {this.state.loggedInFrom == 'NU'&&
+                            <img className="loggedInUsr" src={this.state.profile.imageURL}
+                            height="40px"
+                            hidden={!this.state.isLoggedIn}
+                            />
+                        }
                         {this.state.loggedInFrom == 'FB'&&
                         <img className="loggedInUsr" src={this.state.profile.picture.data.url}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
+
+                        {this.state.loggedInFrom == 'NU'&&
+                        <img className="loggedInUsr" src={this.state.profile.imageUrl}
                              height="40px"
                              hidden={!this.state.isLoggedIn}
                         />
