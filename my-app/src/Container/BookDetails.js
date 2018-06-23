@@ -33,9 +33,13 @@ class BookDetails extends React.Component {
             books:'',
             isReader: false,
             isReviewer: false,
+            isAdmin: false,
+            isAuthor: false,
+            isPublisher: false,
             err: false,
             redirectToLogin: false,
-            profile:''
+            profile:'',
+            userId:''
         };
 
     }
@@ -44,7 +48,7 @@ class BookDetails extends React.Component {
         const { cookies } = this.props;
         var id = this.props.match.params.id;
 
-
+        console.log(cookies.get('profile'));
         this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         if(cookies.get('isReader')!= undefined){
             //alert("is reader"+cookies.get('isReader'))
@@ -55,10 +59,44 @@ class BookDetails extends React.Component {
             //alert("is reviewer"+cookies.get('isReviewer'))
             this.setState({isReviewer: cookies.get('isReviewer')})
         }
+        if(cookies.get('profile')!= undefined)
+        {
+
+            if(cookies.get('profile').role == 'Publisher')
+            {
+                this.setState({isPublisher: true})
+            }
+            if(cookies.get('profile').role == 'admin')
+            {
+                this.setState({isAdmin: true})
+            }
+            if(cookies.get('profile').role == 'Author')
+            {
+                this.setState({isAuthor: true})
+            }
+
+        }
 
 
         this.setState({isbn: id})
         this.find_preview(id)
+        if(cookies.get('loggedInFrom') == 'GL')
+        {
+
+            this.setState({loggedInFrom: 'GL',userId: cookies.get('profile').googleId})
+        }
+        if(cookies.get('loggedInFrom') == 'FB')
+        {
+            console.log(cookies.get('profile'))
+            this.setState({loggedInFrom: 'FB',userId: cookies.get('profile').id})
+        }
+
+
+        if (cookies.get('loggedInFrom') == 'NU'){
+
+
+            this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
+        }
 
     }
 
@@ -92,7 +130,10 @@ class BookDetails extends React.Component {
 
     changeRating( newRating, name ) {
 
-        var review = {isbn: String(name), reviewerId: String(this.state.profile.googleId), reviewerName: this.state.profile.name, reviewerImageUrl: this.state.profile.imageUrl+'?sz=550', rating: newRating }
+        var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb);
+        var bookTitle = this.state.books.title;
+
+        var review = {isbn: String(name), bookName: bookTitle, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.first_name+" "+this.state.profile.last_name, reviewerImageUrl: this.state.profile.imageURL+'?sz=550', rating: newRating }
 
         this.reviewService.createReview(review,name).then((response)=>{window.location.reload()})
     }
@@ -113,7 +154,7 @@ class BookDetails extends React.Component {
                         <img className="image1" id="prviewImg" src={img} style={{width: "220px", height: "300px", cursor: "pointer"}} onClick={()=>{
 
 
-                            if(this.state.isReader||this.state.isReviewer)
+                            if(this.state.isReader||this.state.isReviewer|| this.state.isAuthor|| this.state.isAdmin || this.state.isPublisher)
                             {
                                 window.location.replace(link)
                                 return
@@ -213,7 +254,7 @@ class BookDetails extends React.Component {
                                         <p >{des.substring(0,550)}...</p>
                                     </div>
                                     <div className="bookInfor">
-                                        {this.state.isReader && <HeartButton userId={this.state.profile.name} bookId={this.state.isbn} ImgUrl={'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb)}/>}
+                                        {this.state.isReader && <HeartButton userId={this.state.userId} bookId={this.state.isbn} ImgUrl={'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb)}/>}
                                         <b>Book Information</b><br/>
                                         <b>Page Count:</b>&nbsp;{this.state.books.pageCount}<br/>
                                         <b>Published Date:</b>&nbsp;{this.state.books.publishedDate}
@@ -231,7 +272,7 @@ class BookDetails extends React.Component {
 
                                 </div>
                                 <div className="reviewWidget" hidden={!this.state.isReviewer}>
-                                    <ReviewWidget isbn={this.state.isbn} reviewerId={this.state.profile.googleId}/>
+                                    <ReviewWidget imgUrl={this.state.imgthumb} isbn={this.state.isbn} books={this.state.books} reviewerId={this.state.profile.id}/>
                                 </div>
                                 <div>
                                     <ReviewContainer isbn={this.state.isbn}/>

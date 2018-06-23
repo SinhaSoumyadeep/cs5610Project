@@ -104,10 +104,10 @@ class ReviewContainer extends React.Component {
                         <img src={review.reviewerImageUrl} style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
                         <h5>{review.reviewerName} </h5>
                     </div>
-                    {review.rating == null && <h6>no star ratings available</h6>}
-
-
-                    {review.rating != null && <StarRatings starDimension="20px" starSpacing="1px" rating={parseFloat(review.rating)} starRatedColor="#DAA520" numberOfStars={5} />}
+                    <div className="">
+                        {review.rating == null && <h6>no star ratings available</h6>}
+                        {review.rating != null && <StarRatings starDimension="20px" starSpacing="1px" rating={parseFloat(review.rating)} starRatedColor="#DAA520" numberOfStars={5} />}
+                    </div>
 
                     <h6 style={{textAlign: "justify"}}>{review.review}</h6>
                     <hr/>
