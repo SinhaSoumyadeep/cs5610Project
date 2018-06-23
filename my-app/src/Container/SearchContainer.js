@@ -80,7 +80,7 @@ class SearchContainer
         }
 
         $("tbody").empty();
-        $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey,function (response) {
+        $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",function (response) {
 
 
             try {
@@ -180,6 +180,8 @@ class SearchContainer
                         cookies.remove('loggedInFrom',{ path: '/' });
                         cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
+                        cookies.remove('isAuthor',{ path: '/' });
+
 
                     }}>LogOut</a>
 

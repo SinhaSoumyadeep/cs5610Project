@@ -62,21 +62,6 @@ class Login extends React.Component
             cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
           }
 
-          else if(profile.role == 'Author'){
-            //alert("Here I am")
-            cookies.set('isAuthor',true,{path: '/', maxAge: (1800)});
-          }
-
-          else if(profile.role == 'admin'){
-            cookies.set('isAdmin',true,{path: '/', maxAge: (1800)})
-          }
-
-          // else if(profile.role == 'Publisher'){
-          //   cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
-          // }
-
-
-
 
         }
 
@@ -88,7 +73,7 @@ class Login extends React.Component
         
         if (loggedInFrom == 'FB')
         {
-            cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
+            cookies.set('isReader',true, { path: '/',maxAge: (1800) });
             cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
         }
 
@@ -135,6 +120,7 @@ class Login extends React.Component
       else{
 
         var user = {
+            id: response.id,
           date_of_birth: response.dateOfBirth,
           email: response.email,
           first_name: response.firstName,
@@ -196,6 +182,7 @@ class Login extends React.Component
           <Button
             className = "btn btn-block btn-primary"
             onClick = {()=> {this.handleLogin(this.state.email,this.state.password)}}>
+
             Login
           </Button>
           <div>

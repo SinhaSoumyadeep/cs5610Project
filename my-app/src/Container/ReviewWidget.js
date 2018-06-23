@@ -47,7 +47,11 @@ class ReviewWidget
     {
 
         var reviewTxt = this.refs.reviewText.value;
-        var review = {isbn: String(isbn), reviewerId: String(this.state.profile.googleId), reviewerName: this.state.profile.name, reviewerImageUrl: this.state.profile.imageUrl+'?sz=550', review: reviewTxt }
+        //console.log(this.props.books.title)
+        var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.props.imgUrl)
+        //console.log(img)
+
+        var review = {isbn: String(isbn), bookName: this.props.books.title, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.first_name+" "+this.state.profile.last_name, reviewerImageUrl: this.state.profile.imageURL+'?sz=550',review: reviewTxt }
 
 
         this.reviewService.createReview(review,isbn).then((response)=>{window.location.reload()})

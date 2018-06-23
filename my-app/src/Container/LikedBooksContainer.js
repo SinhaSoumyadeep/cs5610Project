@@ -1,37 +1,63 @@
 import React from 'react';
+import ReviewService from "../Services/ReviewService";
 
 export default class LikedBooksContainer extends React.Component {
+
+    constructor()
+    {
+        super();
+        this.reviewService = ReviewService.instance;
+        this.state = {
+            likedBooks: []
+        }
+    }
+
+    componentDidMount() {
+
+        if(this.props.userId != undefined)
+        {
+           this.reviewService.findAllLikedBookForUser(this.props.userId).then((response)=>{
+               this.setState({likedBooks: response})})
+        }
+    }
+
+    showLikedBooks()
+    {
+        if(this.state.likedBooks.length == 0)
+        {
+            return
+        }
+        else {
+            var rows = this.state.likedBooks.map((books) => {
+
+                var link = "/bookDetails/"+books.isbn
+
+                return (
+
+                    <div className="col-md-4">
+                        <a href={link}> <img src={books.imgUrl}/></a>
+                    </div>
+
+                )
+
+            });
+            return (
+                rows
+            )
+        }
+
+
+    }
 
     render()
     {
         return(
             <div>
                 <div className="row gallery">
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774817-photo1.jpg"/>
-                    </div>
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774813-photo4.jpg"/>
-                    </div>
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo5.jpg"/>
-                    </div>
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774814-photo6.jpg"/>
-                    </div>
 
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774815-photo2.jpg"/>
-                    </div>
-                    <div className="col-md-4">
-                        <img
-                            src="https://image.noelshack.com/fichiers/2017/38/2/1505774816-photo3.jpg"/>
-                    </div>
+                    {this.showLikedBooks()}
+
+
                 </div>
             </div>
         )

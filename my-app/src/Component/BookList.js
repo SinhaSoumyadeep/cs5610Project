@@ -57,7 +57,7 @@ class BookList extends React.Component
     fetchAllNonFictionBooks()
     {
 
-        fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-nonfiction&api-key=8e08852c66f845fbae14cb660487234e', {
+        fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-nonfiction&api-key=700226a42e4f48859f6c2f69b23ff4c4', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
@@ -92,7 +92,7 @@ class BookList extends React.Component
     fetchAllFictionBooks()
     {
 
-        fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=8e08852c66f845fbae14cb660487234e', {
+        fetch('https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=700226a42e4f48859f6c2f69b23ff4c4', {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
@@ -127,7 +127,7 @@ class BookList extends React.Component
                 $.ajax({
                     async: false,
                     type:"GET",
-                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
+                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
                     success: (result)=>{
 
                         try {
@@ -166,7 +166,7 @@ class BookList extends React.Component
             $.ajax({
                 async: false,
                 type:"GET",
-                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
+                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
                 success: (result)=>{
 
                     try {

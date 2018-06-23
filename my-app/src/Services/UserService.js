@@ -1,7 +1,7 @@
 import React from 'react'
 
 let _singleton = Symbol();
-const User_URL = 'http://localhost8080:/api/user';
+const User_URL = 'https://book-worms-server.herokuapp.com/api/user';
 
 export default class UserService{
     constructor(singletonToken){

@@ -12,6 +12,10 @@ import '../CSS/profile.css'
 import LikedBooksContainer from "./LikedBooksContainer";
 import ReadBooksContainer from "./ReadBooksContainer";
 import WishListContainer from "./WishListContainer";
+import ReviewedBooksContainer from "./ReviewedBooksContainer";
+import {Link} from 'react-router-dom'
+import Trigger from "./Trigger";
+import Settings from "./Settings";
 
 
 
@@ -37,9 +41,11 @@ class Profile extends React.Component {
             isPublisher: false,
             isAdmin: false,
             isPublisher: false,
-            likedBooks: true,
+            likedBooks: false,
             readBooks: false,
-            wishlist: false
+            wishlist: false,
+            reviewedBooks: false,
+            userId:''
 
         };
 
@@ -52,13 +58,32 @@ class Profile extends React.Component {
         
         if(cookies.get('isReader')!= undefined){
             //alert("is reader"+cookies.get('isReader'))
-            this.setState({isReader: cookies.get('isReader')})
+            this.setState({isReader: cookies.get('isReader'),likedBooks: true})
+
         }
         
         if(cookies.get('isReviewer')!= undefined)
         {
             //alert("is reviewer"+cookies.get('isReviewer'))
-            this.setState({isReviewer: cookies.get('isReviewer')})
+            this.setState({isReviewer: cookies.get('isReviewer'),reviewedBooks: true})
+        }
+
+        if(cookies.get('profile')!= undefined)
+        {
+
+            if(cookies.get('profile').role == 'Publisher')
+            {
+                this.setState({isPublisher: true})
+            }
+            if(cookies.get('profile').role == 'admin')
+            {
+                this.setState({isAdmin: true})
+            }
+            if(cookies.get('profile').role == 'Author')
+            {
+                this.setState({isAuthor: true})
+            }
+
         }
 
          if(cookies.get('isAdmin')!= undefined)
@@ -88,21 +113,18 @@ class Profile extends React.Component {
 
         if(cookies.get('loggedInFrom') == 'GL')
         {
-            this.setState({loggedInFrom: 'GL'})
+
+            this.setState({loggedInFrom: 'GL',userId: cookies.get('profile').googleId})
         }
         if(cookies.get('loggedInFrom') == 'FB')
         {
-            this.setState({loggedInFrom: 'FB'})
+            this.setState({loggedInFrom: 'FB',userId: cookies.get('profile').id})
         }
 
         if (cookies.get('loggedInFrom') == 'NU'){
-            this.setState({loggedInFrom: 'NU'})
+            this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
         }
     }
-
-
-
-
 
 
 
@@ -137,13 +159,17 @@ class Profile extends React.Component {
                                                 />
                                                 }
 
+
                                                 {this.state.loggedInFrom == 'NU' &&
                                                 <img className="photo" src={this.state.profile.imageURL}
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
+                                                <div className="profileActive"></div>
+                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
+                                                    <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profile={this.state.profile}/>
+                                               {/* <Link to="/settings">Settings</Link>*/}
 
-                                                <div className="active"></div><a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
 
                                             </div>
                                             {this.state.loggedInFrom == 'FB' &&
@@ -159,15 +185,18 @@ class Profile extends React.Component {
 
                                             <p className="info" hidden={!this.state.isReader}>Reader</p>
                                             <p className="info" hidden={!this.state.isReviewer}>Reviewer</p>
-                                            <p className = "info" hidden={!this.state.isAdmin}>Admin</p>
-                                            <p className = "info" hidden={!this.state.isAuthor}>Author</p>
-                                          
+                                            <p className="info" hidden={!this.state.isPublisher}>Publisher</p>
+                                            <p className="info" hidden={!this.state.isAdmin}>Admin</p>
+                                            <p className="info" hidden={!this.state.isAuthor}>Author</p>
 
 
                                             {this.state.loggedInFrom == 'FB' &&
                                             <p className="info">{this.state.profile.email}</p>
                                             }
                                             {this.state.loggedInFrom == 'GL'&&
+                                            <p className="info">{this.state.profile.email}</p>
+                                            }
+                                            {this.state.loggedInFrom == 'NU'&&
                                             <p className="info">{this.state.profile.email}</p>
                                             }
 
@@ -185,7 +214,8 @@ class Profile extends React.Component {
                                                     <p className="desc-stat">Uploads</p>
                                                 </div>
                                             </div>
-                                            <p className="desc">Hi ! My name is Jane Doe. I'm a UI/UX Designer from
+                                            <p className="desc">
+                                                Hi ! My name is Jane Doe. I'm a UI/UX Designer from
                                                 Paris, in France. I really enjoy photography and mountains.</p>
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
@@ -194,58 +224,48 @@ class Profile extends React.Component {
                                         </div>
                                         <div className="right col-lg-8">
                                             <ul className="nav">
-                                                <li onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
+
+                                                <li hidden={this.state.isReviewer} onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(3)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: true,readBooks: false, wishlist: false})}}>Liked Books</li>
-                                                <li onClick={()=>{$(".nav li:nth-child(2)").css("border-bottom", "2px solid #999");
-                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
-                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,readBooks: true, wishlist: false})}}>Read Books</li>
-                                                <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: true,reviewedBooks: false, readBooks: false, wishlist: false })}}>Liked Books</li>
+
+                                                     <li hidden={!this.state.isReviewer} onClick={()=>{$(".nav li:nth-child(2)").css("border-bottom", "2px solid #999");
+                                                      $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                      $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                      $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                      this.setState({likedBooks: false,reviewedBooks: true, readBooks: false, wishlist: false})}}>Reviewed Books</li>
+
+                                                      <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, readBooks: true, wishlist: false})}}>Read Books</li>
+                                                <li onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
 
                                             </ul>
                                             <span className="follow">Follow</span>
                                             <div className="hideScroll">
 
-                                                {this.state.likedBooks == true && <LikedBooksContainer/>}
-                                                {this.state.readBooks == true && <ReadBooksContainer/>}
+                                                {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
+                                                {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.profile.id}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
+                                                {this.state.readBooks == true && <ReadBooksContainer/>}
 
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
-
-
-
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
         )
     }
