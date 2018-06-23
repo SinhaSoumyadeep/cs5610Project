@@ -123,9 +123,10 @@ class Login extends React.Component
       password: userPassword   
 
     }
-    console.log("Handle Login")
-    console.log("Email: " + userEmail)
-    console.log("Password: " + userPassword)
+
+    
+
+
     this.userService.loginUser(this.state.user).then((response)=>{
       if(response.id == 0){
         alert("Invalid Credentials.")

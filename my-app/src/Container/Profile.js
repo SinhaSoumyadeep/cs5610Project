@@ -34,16 +34,13 @@ class Profile extends React.Component {
             err: false,
             redirectToLogin: false,
             isAuthor: false,
-<<<<<<< HEAD
             isPublisher: false,
-            isAdmin: false
-=======
-            isPublisher: false
+            isAdmin: false,
+            isPublisher: false,
             likedBooks: true,
             readBooks: false,
             wishlist: false
 
->>>>>>> d5e6c420150588c8d0cd8e6aa0c2c812ad056016
         };
 
     }
