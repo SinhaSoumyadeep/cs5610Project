@@ -37,8 +37,9 @@ class Profile extends React.Component {
             isReviewer: false,
             err: false,
             redirectToLogin: false,
-            isAdmin: false,
             isAuthor: false,
+            isPublisher: false,
+            isAdmin: false,
             isPublisher: false,
             likedBooks: false,
             readBooks: false,
@@ -85,11 +86,21 @@ class Profile extends React.Component {
 
         }
 
-         if(cookies.get('isAuthor')!= undefined)
-        {
-            alert("is reviewer"+cookies.get('isAuthor'))
+         if(cookies.get('isAdmin')!= undefined)
+        {   
+            alert("here admin")
+            this.setState({isAuthor: true})
+            //alert("is reviewer"+cookies.get('isReviewer'))
+            this.setState({isAdmin: cookies.get('isAdmin')})
+        }
+
+        if(cookies.get('isAuthor')!= undefined)
+        {   
+            this.setState({isAdmin: false})
+            //alert("is reviewer"+cookies.get('isReviewer'))
             this.setState({isAuthor: cookies.get('isAuthor')})
         }
+
 
         // if(cookies.get('isPublisher')!= undefined)
         // {
