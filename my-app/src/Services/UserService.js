@@ -34,6 +34,37 @@ export default class UserService{
         // console.log(email);
         console.log(user.password);
         var postObject = {method: 'post',body: JSON.stringify(user),headers: {'content-Type': 'application/json','dataType':'json'} }
-         return fetch('http://localhost:8080/api/login', postObject).then(function (response) {return response.json();});
+         return fetch('https://book-worms-server.herokuapp.com/api/login', postObject).then(function (response) {return response.json();});
     }
+
+
+    addTopic(topicName){
+        console.log("Topic Name:" +topicName)
+        var topic = {
+            topicName: topicName
+        }
+        
+    return fetch("https://book-worms-server.herokuapp.com/api/topic",
+      {
+        body: JSON.stringify(topic),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST'
+      }).then(function (response) {
+      return response.json();
+    })
+
+    }
+
+    deleteTopic(topicId){
+    return fetch("https://book-worms-server.herokuapp.com/api/topic/" + topicId , {
+      method: 'Delete'
+    })
+    }
+
+    findAlltopics() {
+    return fetch("https://book-worms-server.herokuapp.com/api/topic")
+      .then(function(response){
+        return response.json();
+      });
+  }
 }

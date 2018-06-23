@@ -63,8 +63,12 @@ class Login extends React.Component
           }
 
           else if(profile.role == 'Author'){
-            alert("Here I am")
+            //alert("Here I am")
             cookies.set('isAuthor',true,{path: '/', maxAge: (1800)});
+          }
+
+          else if(profile.role == 'admin'){
+            cookies.set('isAdmin',true,{path: '/', maxAge: (1800)})
           }
 
           // else if(profile.role == 'Publisher'){
@@ -138,8 +142,8 @@ class Login extends React.Component
           role: response.role,
           username: response.username,
           gender: response.gender,
-          imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
-        }
+          imageURL: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
+         }
 
         console.log(user);
 

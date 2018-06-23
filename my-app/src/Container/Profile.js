@@ -30,9 +30,9 @@ class Profile extends React.Component {
             isReviewer: false,
             err: false,
             redirectToLogin: false,
-            isAdmin: false,
             isAuthor: false,
-            isPublisher: false
+            isPublisher: false,
+            isAdmin: false
         };
 
     }
@@ -53,11 +53,21 @@ class Profile extends React.Component {
             this.setState({isReviewer: cookies.get('isReviewer')})
         }
 
-         if(cookies.get('isAuthor')!= undefined)
-        {
-            alert("is reviewer"+cookies.get('isAuthor'))
+         if(cookies.get('isAdmin')!= undefined)
+        {   
+            alert("here admin")
+            this.setState({isAuthor: true})
+            //alert("is reviewer"+cookies.get('isReviewer'))
+            this.setState({isAdmin: cookies.get('isAdmin')})
+        }
+
+        if(cookies.get('isAuthor')!= undefined)
+        {   
+            this.setState({isAdmin: false})
+            //alert("is reviewer"+cookies.get('isReviewer'))
             this.setState({isAuthor: cookies.get('isAuthor')})
         }
+
 
         // if(cookies.get('isPublisher')!= undefined)
         // {
@@ -141,7 +151,9 @@ class Profile extends React.Component {
 
                                             <p className="info" hidden={!this.state.isReader}>Reader</p>
                                             <p className="info" hidden={!this.state.isReviewer}>Reviewer</p>
-                                            <p>{this.state.isAuthor}</p>
+                                            <p className = "info" hidden={!this.state.isAdmin}>Admin</p>
+                                            <p className = "info" hidden={!this.state.isAuthor}>Author</p>
+                                          
 
 
                                             {this.state.loggedInFrom == 'FB' &&

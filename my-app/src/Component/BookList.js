@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom';
 import UserProfile from '../Container/UserProfile';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-
+import UserService from '../Services/UserService';
 class BookList extends React.Component
 {
 
@@ -23,6 +23,7 @@ class BookList extends React.Component
 
 
         this.state = {
+             topics : [],
             ficthumb:[],
             nonficthumb:[],
             fictionBooks: [],
@@ -30,9 +31,16 @@ class BookList extends React.Component
             paperback:[],
             err: false,
             count: 0,
+            isAdmin: false,
+            topic: "",
             profile: ''
 
         };
+        this.userService = UserService.instance;
+        this.changePick = this.changePick.bind(this);
+        this.addPicks = this.addPicks.bind(this);
+        this.findAlltopics = this.findAlltopics.bind(this);
+        this.setTopics = this.setTopics.bind(this);
 
     }
 
@@ -42,11 +50,9 @@ class BookList extends React.Component
         this.fetchAllFictionBooks();
 
         this.fetchAllNonFictionBooks();
-
-
-
-
+        
     }
+
 
     fetchAllNonFictionBooks()
     {
@@ -67,6 +73,17 @@ class BookList extends React.Component
 
         });
 
+
+    }
+
+    findAlltopics(){
+        this.userService.findAlltopics().then((response)=>{
+            this.setTopics(response)
+        });
+    }
+
+    setTopics(topics){
+        this.setState({topics: topics})
 
     }
 
@@ -245,13 +262,18 @@ class BookList extends React.Component
 
     }
 
+    changePick(event){
+        this.setState({
+            topic:event.target.value
+        })
+    }
 
-
-
-
-
-
-
+    addPicks(topic){
+        console.log(topic)
+        this.userService.addTopic(topic).then(()=>{
+            window.location.reload();
+        })
+    }
 
 
 
@@ -263,13 +285,14 @@ class BookList extends React.Component
         return(
 
             <div className="pageView">
-
+                
 
                     <div>
                         <SearchContainer/>
                     </div>
 
                 <div>
+
 
                     <div className="row" style={{marginTop: "81px"}}>
                         <div className="col-sm-8 mainSec">
@@ -297,7 +320,6 @@ class BookList extends React.Component
                             
 
                         </div>
-
                         <div className="col-sm-4 asideSec">
                             <Advertisement/>
                             <hr width="300px"/>
@@ -305,7 +327,23 @@ class BookList extends React.Component
                                 <h5>Our Top Picks </h5>
                                 <NewOpenings/>
                             </div>
+                            {this.state.profile != undefined &&
+                                 this.state.profile.role == 'admin' &&
+                            <div>
+                                <span style={{float: "left"}}>
+                                <input style={{width: "281px"}} id = "topicInput" onChange = {this.changePick}
+                                className = "form-control"
+                                placeholder = "Picks">
+                                </input>
+                                </span>
+                                <span style={{float: "left"}}>
+                                <button className="btn btn-success">
+                                <i className="fa fa-plus" onClick = {() => this.addPicks(this.state.topic)}>  </i>
+                                </button>
+                                </span>
 
+                            </div>
+                            }
                         </div>
 
                     </div>
