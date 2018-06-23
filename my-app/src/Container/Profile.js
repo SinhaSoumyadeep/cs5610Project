@@ -12,8 +12,14 @@ import '../CSS/profile.css'
 import LikedBooksContainer from "./LikedBooksContainer";
 import ReadBooksContainer from "./ReadBooksContainer";
 import WishListContainer from "./WishListContainer";
+<<<<<<< HEAD
 import ReviewedBooksContainer from "./ReviewedBooksContainer";
 
+=======
+import {Link} from 'react-router-dom'
+import Trigger from "./Trigger";
+import Settings from "./Settings";
+>>>>>>> adee43ca338c62f32d7cb3dee0af18bdfc5d543b
 
 
 
@@ -114,10 +120,6 @@ class Profile extends React.Component {
 
 
 
-
-
-
-
     render() {
 
         return(
@@ -149,13 +151,17 @@ class Profile extends React.Component {
                                                 />
                                                 }
 
+
                                                 {this.state.loggedInFrom == 'NU' &&
                                                 <img className="photo" src={this.state.profile.imageURL}
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
+                                                <div className="profileActive"></div>
+                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
+                                                    <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profile={this.state.profile}/>
+                                               {/* <Link to="/settings">Settings</Link>*/}
 
-                                                <div className="active"></div><a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
 
                                             </div>
                                             {this.state.loggedInFrom == 'FB' &&
@@ -200,7 +206,8 @@ class Profile extends React.Component {
                                                     <p className="desc-stat">Uploads</p>
                                                 </div>
                                             </div>
-                                            <p className="desc">Hi ! My name is Jane Doe. I'm a UI/UX Designer from
+                                            <p className="desc">
+                                                Hi ! My name is Jane Doe. I'm a UI/UX Designer from
                                                 Paris, in France. I really enjoy photography and mountains.</p>
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
@@ -245,34 +252,12 @@ class Profile extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
-
-
-
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
         )
     }
