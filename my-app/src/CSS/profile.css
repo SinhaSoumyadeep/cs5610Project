@@ -158,7 +158,7 @@ main {
     color: #888;
 }
 
-.nav li:hover, .nav li:nth-child(1)  {
+.nav li:nth-child(1)  {
     color: #999;
     border-bottom: 2px solid #999;
 }
@@ -194,8 +194,20 @@ main {
         text-align: center;
     }
 }
+.hideScroll
+{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 .gallery  {
     margin-top: 35px;
+    width: 620px;
+    height: 340px;
+    overflow-y: scroll;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box;
+
 }
 
 .gallery div {

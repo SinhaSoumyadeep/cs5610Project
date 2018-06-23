@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Butler;
+    src: url(../Style/Butler_Regular.otf);
+}
+
 body{
     font-family: 'Cormorant Unicase', serif;
     background-color: black;
@@ -245,6 +250,8 @@ a:hover{
     border-top: 1px solid black;
     background-color: #c1c1c1;
     border-bottom: 1px solid black;
+    z-index: 94;
+    overflow:hidden;
 }
 
 .parent {
@@ -319,7 +326,7 @@ a:hover{
 
 .bookBody
 {
-    min-height: 429px;
+    min-height: 445px;
     background-color: rgb(220, 220, 220);
     margin-top: 5px;
     width: 707px;
@@ -413,4 +420,20 @@ a:hover{
 
 .modal-container .modal, .modal-container .modal-backdrop {
        position: absolute;
+}
+
+.hideScroll
+{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.reviewBoxSection  {
+    margin-top: 35px;
+    width: 620px;
+    height: 340px;
+    overflow-y: scroll;
+    padding-right: 57px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box;
+
 }
