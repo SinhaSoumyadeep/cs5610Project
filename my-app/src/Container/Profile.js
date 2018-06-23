@@ -12,14 +12,11 @@ import '../CSS/profile.css'
 import LikedBooksContainer from "./LikedBooksContainer";
 import ReadBooksContainer from "./ReadBooksContainer";
 import WishListContainer from "./WishListContainer";
-<<<<<<< HEAD
 import ReviewedBooksContainer from "./ReviewedBooksContainer";
-
-=======
 import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
->>>>>>> adee43ca338c62f32d7cb3dee0af18bdfc5d543b
+
 
 
 

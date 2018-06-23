@@ -106,7 +106,7 @@ class BookDetails extends React.Component {
     find_preview(id)
     {
         var isbn = id
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM", {
+        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0", {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
