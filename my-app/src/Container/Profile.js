@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
 import AuthorBlog from "./AuthorBlog";
+import UserService from "../Services/UserService";
 
 
 
@@ -24,6 +25,7 @@ class Profile extends React.Component {
 
     constructor(props) {
         super(props)
+        this.userService = UserService.instance;
         this.state = {
             isbn: '',
             imgthumb: '',
@@ -40,7 +42,9 @@ class Profile extends React.Component {
             wishlist: false,
             reviewedBooks: false,
             userId:'',
-            coverPicSet: false
+            coverPicSet: false,
+            loggedInFrom: 'NU',
+            profile: {imageUrl: '', picture: {data: {url: ''}}}
 
 
         };
@@ -51,79 +55,154 @@ class Profile extends React.Component {
     componentDidMount() {
         const { cookies } = this.props;
 
-        console.log(cookies.get('profile'))
-
-        if(cookies.get('isReader')!= undefined){
-            //alert("is reader"+cookies.get('isReader'))
-            this.setState({isReader: cookies.get('isReader'),likedBooks: true})
-
-        }
-        
-        if(cookies.get('isReviewer')!= undefined)
-        {
-            //alert("is reviewer"+cookies.get('isReviewer'))
-            this.setState({isReviewer: cookies.get('isReviewer'),reviewedBooks: true})
-        }
-
-        if(cookies.get('profile')!= undefined)
-        {
-
-            if(cookies.get('profile').role == 'Publisher')
-            {
-                this.setState({isPublisher: true})
-            }
-            if(cookies.get('profile').role == 'admin')
-            {
-                this.setState({isAdmin: true})
-            }
-            if(cookies.get('profile').role == 'Author')
-            {
-                this.setState({isAuthor: true})
-            }
-
-        }
-
-         if(cookies.get('isAdmin')!= undefined)
-        {   
-            alert("here admin")
-            this.setState({isAuthor: true})
-            //alert("is reviewer"+cookies.get('isReviewer'))
-            this.setState({isAdmin: cookies.get('isAdmin')})
-        }
-
-        if(cookies.get('isAuthor')!= undefined)
-        {   
-            this.setState({isAdmin: false})
-            //alert("is reviewer"+cookies.get('isReviewer'))
-            this.setState({isAuthor: cookies.get('isAuthor')})
-        }
+        var LoggedinUserId;
 
 
-        // if(cookies.get('isPublisher')!= undefined)
-        // {
-        //     //alert("is reviewer"+cookies.get('isReviewer'))
-        //     this.setState({isPublisher: cookies.get('isPublisher')})
-        // }
-
-        this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
-        this.setState({isLoggedIn: cookies.get('isLoggedIn')})
 
         if(cookies.get('loggedInFrom') == 'GL')
         {
 
-            this.setState({loggedInFrom: 'GL',userId: cookies.get('profile').googleId})
+            this.setState({loggedInFrom: 'GL'})
+            LoggedinUserId = cookies.get('profile').googleId;
         }
         if(cookies.get('loggedInFrom') == 'FB')
         {
-            this.setState({loggedInFrom: 'FB',userId: cookies.get('profile').id})
+            this.setState({loggedInFrom: 'FB'})
+            LoggedinUserId = cookies.get('profile').id;
+
         }
         if (cookies.get('loggedInFrom') == 'NU'){
-            this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
+            this.setState({loggedInFrom: 'NU'})
+            LoggedinUserId = cookies.get('profile').id;
         }
+
+        var id = this.props.match.params.userId;
+
+
+
+       if(id != LoggedinUserId)
+       {
+            alert("viewing someone elses profile")
+
+           this.setState({loggedInFrom: 'NU'})
+           this.state.userId = id;
+           this.userService.findUserById(id).then((user)=>{
+               console.log(user)
+               this.setState({profile: user||{imageUrl: '', picture: {data: {url: ''}}}})
+               this.setState({isLoggedIn: true})
+               if(this.state.profile!= undefined)
+               {
+                   if(this.state.profile.role == 'Reviewer')
+                   {
+                       this.setState({isReviewer: true})
+                       this.setState({reviewedBook: true})
+
+                   }
+
+                   if(this.state.profile.role == 'Publisher')
+                   {
+                       this.setState({isPublisher: true})
+                   }
+                   if(this.state.profile.role == 'admin')
+                   {
+                       this.setState({isAdmin: true})
+                   }
+                   if(this.state.profile.role == 'Author')
+                   {
+                       this.setState({isAuthor: true})
+                   }
+
+               }
+           })
+
+       }
+       else
+       {
+           alert("viewing his own profile")
+           console.log(cookies.get('profile'))
+
+           if(cookies.get('isReader')!= undefined){
+               //alert("is reader"+cookies.get('isReader'))
+               this.setState({isReader: cookies.get('isReader'),likedBooks: true})
+
+           }
+
+           if(cookies.get('isReviewer')!= undefined)
+           {
+               //alert("is reviewer"+cookies.get('isReviewer'))
+               this.setState({isReviewer: cookies.get('isReviewer'),reviewedBooks: true})
+           }
+
+           if(cookies.get('profile')!= undefined)
+           {
+
+               if(cookies.get('profile').role == 'Publisher')
+               {
+                   this.setState({isPublisher: true})
+               }
+               if(cookies.get('profile').role == 'admin')
+               {
+                   this.setState({isAdmin: true})
+               }
+               if(cookies.get('profile').role == 'Author')
+               {
+                   this.setState({isAuthor: true})
+               }
+
+           }
+
+           if(cookies.get('isAdmin')!= undefined)
+           {
+               alert("here admin")
+               this.setState({isAuthor: true})
+               //alert("is reviewer"+cookies.get('isReviewer'))
+               this.setState({isAdmin: cookies.get('isAdmin')})
+           }
+
+           if(cookies.get('isAuthor')!= undefined)
+           {
+               this.setState({isAdmin: false})
+               //alert("is reviewer"+cookies.get('isReviewer'))
+               this.setState({isAuthor: cookies.get('isAuthor')})
+           }
+
+
+           // if(cookies.get('isPublisher')!= undefined)
+           // {
+           //     //alert("is reviewer"+cookies.get('isReviewer'))
+           //     this.setState({isPublisher: cookies.get('isPublisher')})
+           // }
+
+           this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
+           this.setState({isLoggedIn: cookies.get('isLoggedIn')})
+           if(cookies.get('loggedInFrom') == 'GL')
+           {
+
+               this.setState({userId: cookies.get('profile').googleId})
+           }
+           if(cookies.get('loggedInFrom') == 'FB')
+           {
+               this.setState({userId: cookies.get('profile').id})
+           }
+           if (cookies.get('loggedInFrom') == 'NU'){
+               this.setState({userId: cookies.get('profile').id})
+           }
+
+       }
+
+
+
+
+
+
     }
 
     componentWillReceiveProps(newProps){
+
         this.setCoverPic(newProps.coverPic);
+        const { cookies } = newProps;
+
+
     }
 
     setCoverPic(coverPic){
@@ -148,10 +227,8 @@ class Profile extends React.Component {
 
 
                                 <div className="container">
-                                    {this.state.coverPic == false &&
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
-                                    {this.state.coverPic == true &&
-                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/" + this.state.profile.cover_pic} ></img>}
+
+                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
 
 
                                     <div className="row">
@@ -193,7 +270,7 @@ class Profile extends React.Component {
                                             <h4 className="name">{this.state.profile.name}</h4>
                                             }
                                             {this.state.loggedInFrom == 'NU'&&
-                                            <h4 className="name">{this.state.profile.first_name}</h4>
+                                            <h4 className="name">{this.state.profile.firstName}</h4>
                                             }
                                             <div></div>
 
@@ -275,7 +352,7 @@ class Profile extends React.Component {
                                             <div className="hideScroll">
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
-                                                {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.profile.id}/>}
+                                                {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
                                                 {this.state.readBooks == true && <AuthorBlog/>}
 

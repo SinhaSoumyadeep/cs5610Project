@@ -69,9 +69,33 @@ export default class UserService{
   }
 
 
+    findAllUsers() {
+        return fetch("https://book-worms-server.herokuapp.com/api/user")
+            .then(function(response){
+                return response.json();
+            });
+    }
+
+    findUserById(userId) {
+        return fetch("http://localhost:8080/api/user/"+userId)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
     findByUsername(username){
         return fetch("https://book-worms-server.herokuapp.com/api/profile/" + username, {
             body: JSON.stringify(username),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }).then(function(response){return response.json()})
+    }
+
+    findBySrchKey(srchKey){
+        return fetch("http://localhost:8080/api/searchuser", {
+            body: JSON.stringify(srchKey),
             headers: {
                 'Content-Type': 'application/json'
             },
