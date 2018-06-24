@@ -104,7 +104,7 @@ class Login extends React.Component
     var userEmail = email
     var userPassword = password
     this.state.user = {
-      email: userEmail,
+      username: userEmail,
       password: userPassword   
 
     }
@@ -163,16 +163,12 @@ class Login extends React.Component
 
       <div>
       <form>
-      <label>
-      Email
-      </label>
+
       <input onChange={this.emailChanged}
                          className="form-control" 
                          id="emailFld"
-                         placeholder="Email"/>
-      <label>
-      Password
-      </label>
+                         placeholder="Username"/>
+
       <input onChange = {this.passwordChanged}
              className = "form-control"
              id= "passwordFld"

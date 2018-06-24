@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
-import logo from "../Style/BookWorm_Logo_2016_small.png"
+import logo from "../Style/Bookworm-01.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -42,6 +42,9 @@ class DummyTitle
         {
             this.setState({loggedInFrom: 'FB'})
         }
+        if(cookies.get('loggedInFrom') == 'NU'){
+            this.setState({loggedInFrom: 'NU'})
+        }
 
 
     }
@@ -56,7 +59,7 @@ class DummyTitle
             <div className="titleBar">
                 <div className="logo">
                     <a href="/books">
-                    <img src={logo} height="45px" width="121px"
+                    <img src={logo} height="45px" width="140px"
                          onClick={this.goBack}/>
                     </a>
 
@@ -95,6 +98,12 @@ class DummyTitle
                         }
                         {this.state.loggedInFrom == 'FB'&&
                         <img className="loggedInUsr" src={this.state.profile.picture.data.url}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
+                        {this.state.loggedInFrom == 'NU'&&
+                        <img className="loggedInUsr" src={this.state.profile.imageURL}
                              height="40px"
                              hidden={!this.state.isLoggedIn}
                         />

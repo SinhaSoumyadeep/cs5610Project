@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
-import logo from "../Style/BookWorm_Logo_2016_small.png"
+import logo from "../Style/Bookworm-01.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Trigger from "./Trigger";
@@ -145,7 +145,7 @@ class SearchContainer
                 <div className="logo">
                     <a href="/books">
                     <img src={logo}
-                    height="45px" width="121px"
+                    height="45px" width="140px"
                     />
 
                     </a>
