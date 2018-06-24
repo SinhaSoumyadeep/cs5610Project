@@ -9,10 +9,44 @@ export default class HeartButton extends React.Component {
     {
         super(props)
         this.reviewService = ReviewService.instance;
+        this.state = {
+            likedBooks: [],
+            likeId: ''
+        }
+    }
+
+    componentDidMount()
+    {
+        if(this.props.userId != undefined)
+        {
+            this.reviewService.findAllLikedBookForUser(this.props.userId).then((response)=> {
+
+                response.map((books)=>{
+
+                    if(books.isbn == this.props.bookId)
+                    {
+                        this.setState({likeId: books.id})
+                        $(".fa-heart").css('color','#DAA520')
+                        $(".fa-heart").text("Liked");
+                        $(".btn-secondary").css('background','white')
+                        $(this).children('.fa-heart').addClass('animate-like');
+                    }
+
+                })
+
+            })
+
+
+
+        }
+
+
     }
 
     liked(userId, isbn, imgUrl)
     {
+
+
 
         if($(".fa-heart").text() == "Like")
         {
@@ -27,6 +61,8 @@ export default class HeartButton extends React.Component {
         else
         {
             alert(userId+" unliked "+isbn)
+            alert(this.state.likeId)
+            this.reviewService.deleteLikedBook(this.state.likeId).then((response)=>{ console.log(response)})
             $(".fa-heart").css('color','rgb(255, 255, 255)')
             $(".btn-secondary").css('background','#DAA520')
             $(".fa-heart").text("Like");

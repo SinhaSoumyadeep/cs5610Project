@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import $ from 'jquery';
 import SearchRow from "./SearchRow";
-import logo from "../Style/BookWorm_Logo_2016_small.png"
+import logo from "../Style/Bookworm-01.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Trigger from "./Trigger";
@@ -80,7 +80,7 @@ class SearchContainer
         }
 
         $("tbody").empty();
-        $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey,function (response) {
+        $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",function (response) {
 
 
             try {
@@ -145,7 +145,7 @@ class SearchContainer
                 <div className="logo">
                     <a href="/books">
                     <img src={logo}
-                    height="45px" width="121px"
+                    height="45px" width="140px"
                     />
 
                     </a>
@@ -180,6 +180,8 @@ class SearchContainer
                         cookies.remove('loggedInFrom',{ path: '/' });
                         cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
+                        cookies.remove('isAuthor',{ path: '/' });
+
 
                     }}>LogOut</a>
 

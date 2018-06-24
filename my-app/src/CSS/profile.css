@@ -203,7 +203,7 @@ main {
 .gallery  {
     margin-top: 35px;
     width: 620px;
-    height: 340px;
+    height: 270px;
     overflow-y: scroll;
     padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
     box-sizing: content-box;
@@ -220,4 +220,23 @@ main {
     height: auto;
     cursor: pointer;
     max-width: 100%;
+}
+
+.reviewBoxProfile
+{
+    width: 590px;
+    height: 171px;
+    margin: 0px 0px 0px 23px;
+
+
+}
+
+.reviewBoxText
+{
+   margin-top: -45px;
+    overflow: hidden;
+    overflow-x: scroll;
+
+    width: 457px;
+    height: 43px;
 }

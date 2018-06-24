@@ -45,5 +45,28 @@ export default class ReviewService{
         })
     }
 
+    findAllLikedBookForUser(userId) {
+        return fetch("http://localhost:8080/api/findBooks/" + userId).then(function(response) {return response.json()})
+    }
+
+    deleteLikedBook(likedId) {
+
+        return fetch("http://localhost:8080/api/like/"+likedId,
+            {
+                body: JSON.stringify({id: likedId}),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'DELETE'
+            }
+        )
+
+    }
+
+    fetchAllReviewsForReviewer(userId)
+    {
+        return fetch("http://localhost:8080/api/reviewedBooks/" + userId).then(function(response) {return response.json()})
+    }
+
 
 }
