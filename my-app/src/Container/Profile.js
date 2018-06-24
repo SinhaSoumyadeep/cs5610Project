@@ -73,6 +73,12 @@ class Profile extends React.Component {
         this.setState({profile: cookies.get('profile')||{imageUrl: '', picture: {data: {url: ''}}}})
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
 
+        if(cookies.get('profile').cover_pic != '')
+        {
+            alert("inside covrer p")
+            this.setState({coverPicSet: true})
+        }
+
         if(cookies.get('loggedInFrom') == 'GL')
         {
             this.setState({loggedInFrom: 'GL'})
@@ -112,10 +118,10 @@ class Profile extends React.Component {
 
 
                                 <div className="container">
-                                    {this.state.coverPic == false &&
+                                    {this.state.coverPicSet == false &&
                                     <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
-                                    {this.state.coverPic == true &&
-                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/" + this.state.profile.cover_pic} ></img>}
+                                    {this.state.coverPicSet == true &&
+                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
 
 
                                     <div className="row">
