@@ -22,6 +22,7 @@ import AllBlogContainer from "./AllBlogContainer";
 
 
 
+
 class Profile extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -63,7 +64,6 @@ class Profile extends React.Component {
 
 
         };
-        this.setCoverPic = this.setCoverPic.bind(this);
 
     }
 
@@ -213,11 +213,19 @@ class Profile extends React.Component {
        }
 
 
+        if(cookies.get('isPublisher')!= undefined){
+            //alert("is reader"+cookies.get('isReader'))
+            this.setState({isPublisher: cookies.get('isPublisher')})
+
+        }
+
+
 
 
 
 
     }
+
 
     componentWillReceiveProps(newProps){
 
@@ -231,6 +239,7 @@ class Profile extends React.Component {
         this.setState({coverPic: coverPic});
         console.log(coverPic)
     }
+
 
     render() {
 
@@ -250,7 +259,14 @@ class Profile extends React.Component {
 
                                 <div className="container">
 
+                                    {this.state.coverPicSet == false &&
+                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
+                                    {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
+                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
+
+
                                     <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
+
 
 
                                     <div className="row">
@@ -439,6 +455,7 @@ class Profile extends React.Component {
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <AdContainer/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
+
 
 
                                             </div>
