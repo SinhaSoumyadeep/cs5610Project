@@ -6,6 +6,7 @@ import logo from "../Style/Bookworm-01.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Trigger from "./Trigger";
+import UserService from "../Services/UserService";
 
 
 
@@ -19,6 +20,7 @@ class SearchContainer
         super(props)
         this.hidesearch = this.hidesearch.bind(this);
         this.Search = this.Search.bind(this);
+        this.userService = UserService.instance;
         this.state = {
 
             books: [],
@@ -27,7 +29,9 @@ class SearchContainer
             isLoggedIn: false,
             picture:'',
             loggedInFrom: 'BW',
-            picture: {data: {url: ''}}
+            picture: {data: {url: ''}},
+            userId:'',
+            searchArray:[]
 
 
         };
@@ -40,15 +44,15 @@ class SearchContainer
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
         if(cookies.get('loggedInFrom') == 'GL')
         {
-            this.setState({loggedInFrom: 'GL'})
+            this.setState({loggedInFrom: 'GL',userId: cookies.get('profile').googleId})
         }
         if(cookies.get('loggedInFrom') == 'FB')
         {
-            this.setState({loggedInFrom: 'FB'})
+            this.setState({loggedInFrom: 'FB',userId: cookies.get('profile').id})
         }
 
         if(cookies.get('loggedInFrom') == 'NU'){
-            this.setState({loggedInFrom: 'NU'})
+            this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
         }
 
 
@@ -69,8 +73,6 @@ class SearchContainer
 
     Search()
     {
-
-
         var srchKey = this.refs.searchKey.value;
         console.log(srchKey);
         if($('#searchResults').css('display') == 'none')
@@ -80,7 +82,65 @@ class SearchContainer
         }
 
         $("tbody").empty();
-        $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",function (response) {
+        this.userService.findBySrchKey(srchKey).then((users)=> {
+            this.state.searchArray = users;
+            $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",(response)=>{
+
+
+                this.state.searchArray.push(...response.items)
+                console.log(this.state.searchArray)
+
+                this.state.searchArray.map((item,index)=>{
+                    var keys = Object.keys(item)
+                    if(keys.indexOf("username")>=0)
+                    {
+                        console.log("this is a user")
+                        console.log(item.username)
+                        var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
+
+                            '<div style="height: 12px"></div>'+
+                            '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/profile/'+item.id+'" style="color: black"><img src="http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png" height="82"/></a></td>'+
+                            '<td style="padding: 20px" id="title['+item.index+']"><a href="/profile/'+item.id+'" style="color: black">'+item.username+'</a></td>'+
+                            '</tr>');
+
+                        if(this.state.isLoggedIn)
+                        {
+                            $('table> tbody:last').append($row);
+                        }
+
+
+                    }
+                    else {
+                        console.log("this is a book")
+                        var keys = Object.keys(item.volumeInfo);
+                        //console.log(keys)
+
+                        if (keys.indexOf("imageLinks") < 0 || keys.indexOf("industryIdentifiers") < 0) {
+
+                        }
+                        else {
+                           console.log(item.volumeInfo.title)
+                            var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
+
+                                '<div style="height: 12px"></div>'+
+                                '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black"><img src='+item.volumeInfo.imageLinks.thumbnail+' height="82"/></a></td>'+
+                                '<td style="padding: 20px" id="title['+item.index+']"><a href="/bookDetails/'+item.volumeInfo.industryIdentifiers[0].identifier+'" style="color: black">'+item.volumeInfo.title+'</a></td>'+
+                                '</tr>');
+
+                            $('table> tbody:last').append($row);
+                        }
+                    }
+                })
+
+
+            })
+
+
+        })
+
+
+
+       /* $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",function (response) {
 
 
             try {
@@ -120,7 +180,7 @@ class SearchContainer
 
 
         })
-
+*/
 
 
 
@@ -188,7 +248,7 @@ class SearchContainer
                        <span style={{float: "left", marginRight: "5px"}} hidden={this.state.isLoggedIn}><Trigger buttonLabel={"Login"} type={"login"}/></span>
                     <span style={{float: "left"}} hidden={this.state.isLoggedIn}><Trigger buttonLabel={"SignUp"} type={"register"}/></span>
 
-                    <Link to={`/profile`}>
+                    <a href={"/profile/"+this.state.userId}>
 
 
                         {this.state.loggedInFrom == 'GL'&&
@@ -221,7 +281,7 @@ class SearchContainer
 
 
 
-                    </Link>
+                    </a>
 
 
                 </div>

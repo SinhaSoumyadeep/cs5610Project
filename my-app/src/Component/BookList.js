@@ -10,6 +10,8 @@ import UserProfile from '../Container/UserProfile';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import UserService from '../Services/UserService';
+import ReviewService from '../Services/ReviewService';
+
 class BookList extends React.Component
 {
 
@@ -27,20 +29,24 @@ class BookList extends React.Component
             ficthumb:[],
             nonficthumb:[],
             fictionBooks: [],
+            blogs: [],
             nonFiction:[],
             paperback:[],
             err: false,
             count: 0,
             isAdmin: false,
             topic: "",
-            profile: ''
+            profile: '',
+            changeState: false
 
         };
         this.userService = UserService.instance;
+        this.reviewService = ReviewService.instance;
         this.changePick = this.changePick.bind(this);
         this.addPicks = this.addPicks.bind(this);
         this.findAlltopics = this.findAlltopics.bind(this);
         this.setTopics = this.setTopics.bind(this);
+        this.findAllBlogs = this.findAllBlogs.bind(this);
 
     }
 
@@ -50,8 +56,12 @@ class BookList extends React.Component
         this.fetchAllFictionBooks();
 
         this.fetchAllNonFictionBooks();
+        this.findAllBlogs();
+        
         
     }
+
+    
 
 
     fetchAllNonFictionBooks()
@@ -127,7 +137,7 @@ class BookList extends React.Component
                 $.ajax({
                     async: false,
                     type:"GET",
-                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
+                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
                     success: (result)=>{
 
                         try {
@@ -166,7 +176,7 @@ class BookList extends React.Component
             $.ajax({
                 async: false,
                 type:"GET",
-                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
+                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
                 success: (result)=>{
 
                     try {
@@ -262,6 +272,46 @@ class BookList extends React.Component
 
     }
 
+    
+    setBlogs(blogs){
+        this.setState({blogs: blogs})
+    }
+
+
+
+
+
+    findAllBlogs(){
+        this.reviewService.findAllBlogs().then((response)=>{
+            this.setBlogs(response);
+        })
+    }
+
+
+    showBlogs(){
+        var rows = this.state.blogs.map((blog) => {
+
+
+
+            return (
+
+                <div id = "blogs">
+                {blog.blog}
+                    <span className="float-right">
+                        <i className="fa fa-times" style={{cursor: "pointer"}} 
+                            onClick = {()=> {this.deleteBlog(blog.id)}}>
+                        </i>
+                    </span>
+                </div>
+
+            )
+
+        });
+        return (
+            rows
+        )
+    }
+
     changePick(event){
         this.setState({
             topic:event.target.value
@@ -271,7 +321,9 @@ class BookList extends React.Component
     addPicks(topic){
         console.log(topic)
         this.userService.addTopic(topic).then(()=>{
-            window.location.reload();
+            this.findAlltopics();
+            
+
         })
     }
 
@@ -315,6 +367,10 @@ class BookList extends React.Component
                                     {this.displayNonFictionBooks()}
                                 </div>
 
+                            </div>
+
+                            <div>
+                            <h1> BLOGS HERE </h1>
                             </div>
                             
                             
