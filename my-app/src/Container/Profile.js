@@ -12,9 +12,9 @@ import ReviewedBooksContainer from "./ReviewedBooksContainer";
 import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
-import AuthorBlog from "./AuthorBlog";
+import Reviews from "./ReviewsContainer.js"
+import BlogContainer from "./BlogContainer.js"
 import UserService from "../Services/UserService";
-import BlogContainer from "./BlogContainer";
 import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
@@ -46,6 +46,7 @@ class Profile extends React.Component {
             likedBooks: false,
             wishlist: false,
             reviewedBooks: false,
+
             blogcontainer: false,
             adcontainer: false,
             reviewscontainer: false,
@@ -58,6 +59,7 @@ class Profile extends React.Component {
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
             profilePic: ''
+
 
 
         };
@@ -382,6 +384,7 @@ class Profile extends React.Component {
 
 
 
+
                                             <li hidden={!this.state.isAuthor}  onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
                                                 $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                 $(".nav li:nth-child(2)").css("border-bottom", "none");
@@ -424,6 +427,7 @@ class Profile extends React.Component {
 
 
 
+
                                             </ul>
                                             <span className="follow">Follow</span>
                                             <div className="hideScroll">
@@ -435,6 +439,7 @@ class Profile extends React.Component {
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <AdContainer/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
+
 
                                             </div>
                                         </div>
