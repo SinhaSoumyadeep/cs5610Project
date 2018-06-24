@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
 import AuthorBlog from "./AuthorBlog";
+import PublisherWidget from "./PublisherWidget"
 
 
 
@@ -44,7 +45,6 @@ class Profile extends React.Component {
 
 
         };
-        this.setCoverPic = this.setCoverPic.bind(this);
 
     }
 
@@ -98,6 +98,12 @@ class Profile extends React.Component {
             this.setState({isAuthor: cookies.get('isAuthor')})
         }
 
+        if(cookies.get('isPublisher')!= undefined){
+            //alert("is reader"+cookies.get('isReader'))
+            this.setState({isPublisher: cookies.get('isPublisher')})
+
+        }
+
 
         // if(cookies.get('isPublisher')!= undefined)
         // {
@@ -110,7 +116,7 @@ class Profile extends React.Component {
 
         if(cookies.get('profile').cover_pic != '')
         {
-            alert("inside covrer p")
+            alert("inside cover picture")
             this.setState({coverPicSet: true})
         }
 
@@ -126,15 +132,6 @@ class Profile extends React.Component {
         if (cookies.get('loggedInFrom') == 'NU'){
             this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
         }
-    }
-
-    componentWillReceiveProps(newProps){
-        this.setCoverPic(newProps.coverPic);
-    }
-
-    setCoverPic(coverPic){
-        this.setState({coverPic: coverPic});
-        console.log(coverPic)
     }
 
     render() {
@@ -156,7 +153,7 @@ class Profile extends React.Component {
                                 <div className="container">
                                     {this.state.coverPicSet == false &&
                                     <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
-                                    {this.state.coverPicSet == true &&
+                                    {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
                                     <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
 
 
@@ -283,7 +280,7 @@ class Profile extends React.Component {
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.profile.id}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
-                                                {this.state.readBooks == true && <AuthorBlog/>}
+                                                {this.state.readBooks == true && <PublisherWidget/>}
 
                                             </div>
                                         </div>

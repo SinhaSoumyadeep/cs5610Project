@@ -59,7 +59,12 @@ class Login extends React.Component
           }
 
           else if (profile.role == 'Reviewer'){
+
             cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
+          }
+          else if (profile.role == 'Publisher'){
+
+              cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
           }
 
 
@@ -115,7 +120,7 @@ class Login extends React.Component
     this.userService
             .loginUser(this.state.user)
             .then((response)=>{
-                    if(response.id == 0){
+                if(response.id == 0){
                     alert("Invalid Credentials")
 
 
