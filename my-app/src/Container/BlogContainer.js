@@ -42,7 +42,8 @@ import "../CSS/blog.css"
         var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.props.imgUrl)
         //console.log(img)
 
-        var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.firstName+" "+this.state.profile.lastName,
+
+        var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.firstName+" "+this.state.profile.lastName, 
         			  bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
 
 

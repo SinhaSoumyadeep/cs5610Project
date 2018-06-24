@@ -12,6 +12,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import UserService from '../Services/UserService';
 import ReviewService from '../Services/ReviewService';
 
+
 class BookList extends React.Component
 {
 
@@ -295,13 +296,17 @@ class BookList extends React.Component
 
             return (
 
-                <div id = "blogs">
-                {blog.blog}
-                    <span className="float-right">
-                        <i className="fa fa-times" style={{cursor: "pointer"}} 
-                            onClick = {()=> {this.deleteBlog(blog.id)}}>
-                        </i>
-                    </span>
+                <div id = "blogBoxProfile" >
+                    <div style={{float: "left"}}>
+                        <a > <img src={'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'} 
+                        style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
+                        </a>
+                        <h5>{blog.blogger}</h5>
+                    </div>
+                      <h6>{blog.blog}</h6>
+                    <div style={{marginTop: "100px"}}>
+                    <hr />
+                    </div>                   
                 </div>
 
             )
@@ -369,8 +374,10 @@ class BookList extends React.Component
 
                             </div>
 
-                            <div>
-                            <h1> BLOGS HERE </h1>
+                            <div className = "hideScrollStyle">
+                            <div className="galleryStyle">
+                                {this.showBlogs()}
+                            </div>
                             </div>
                             
                             
