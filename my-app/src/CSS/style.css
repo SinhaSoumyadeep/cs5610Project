@@ -21,8 +21,8 @@ body{
     bottom: 0;
     left: 0;
     background-color: white;
-    width: 1059px;
-    height: 1024px;
+        width: 1059px;
+    height: 1123px;
     border: 1px solid black;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
@@ -192,14 +192,14 @@ a:hover{
 .asideSec
 {
     border-left: 1px solid #8b8b8b;
-    height: 941px;
+    height: 1036px;
 
 }
 
 .mainSec
 {
     border-right: 1px solid #8b8b8b;
-    height: 941px;
+        height: 1036px;
 }
 
 #searchResults
@@ -436,4 +436,19 @@ a:hover{
     padding-right: 57px; /* Increase/decrease this value for cross-browser compatibility */
     box-sizing: content-box;
 
+}
+.hideScrollStyle
+{
+    height: 27%;
+    width: 100%;
+    overflow: hidden;
+}
+.galleryStyle  {
+       margin-top: 35px;
+    width: 706px;
+    height: 270px;
+    overflow-y: scroll;
+    padding-right: 17px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
 }

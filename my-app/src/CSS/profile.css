@@ -240,3 +240,9 @@ main {
     width: 457px;
     height: 43px;
 }
+
+#blogBoxProfile{
+    width: 900px;
+    height: 170px;
+    margin: 0px 0px 0px 23px;
+}
