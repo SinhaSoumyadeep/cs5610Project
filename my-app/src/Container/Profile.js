@@ -18,6 +18,7 @@ import UserService from "../Services/UserService";
 import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
+import PublisherWidget from "./PublisherWidget"
 
 
 
@@ -265,7 +266,6 @@ class Profile extends React.Component {
                                     <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
 
 
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
 
 
 
@@ -452,7 +452,7 @@ class Profile extends React.Component {
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
                                                 {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer/>}
-                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <AdContainer/>}
+                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
 
