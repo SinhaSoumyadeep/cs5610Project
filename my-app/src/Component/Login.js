@@ -125,10 +125,10 @@ class Login extends React.Component
         var user = {
             id: response.id,
 
-            date_of_birth: response.dateOfBirth,
+            dateOfBirth: response.dateOfBirth,
             email: response.email,
-            first_name: response.firstName,
-            last_name: response.lastName,
+            firstName: response.firstName,
+            lastName: response.lastName,
             password: response.password,
             role: response.role,
             username: response.username,
