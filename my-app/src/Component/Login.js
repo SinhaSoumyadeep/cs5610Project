@@ -103,16 +103,24 @@ class Login extends React.Component
   handleLogin(email,password){
     var userEmail = email
     var userPassword = password
+    console.log(email)
+    console.log(password)
     this.state.user = {
-      email: userEmail,
+      username: userEmail,
       password: userPassword   
 
     }
 
-    
+    if(email == ' '){
+      alert("Username cannot be blank")
+    }
 
+    if(password == null){
+      alert("Password cannot be blank")
+    }
 
-    this.userService.loginUser(this.state.user).then((response)=>{
+    if(email != null  && password != null){
+      this.userService.loginUser(this.state.user).then((response)=>{
       if(response.id == 0){
         alert("Invalid Credentials.")
 
@@ -141,6 +149,8 @@ class Login extends React.Component
       
         }
       });
+    }
+    
 
   }
 
@@ -164,12 +174,12 @@ class Login extends React.Component
       <div>
       <form>
       <label>
-      Email
+      Username
       </label>
       <input onChange={this.emailChanged}
                          className="form-control" 
                          id="emailFld"
-                         placeholder="Email"/>
+                         placeholder="Username"/>
       <label>
       Password
       </label>

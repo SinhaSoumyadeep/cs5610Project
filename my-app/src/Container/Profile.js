@@ -16,8 +16,8 @@ import ReviewedBooksContainer from "./ReviewedBooksContainer";
 import {Link} from 'react-router-dom'
 import Trigger from "./Trigger";
 import Settings from "./Settings";
-
-
+import Reviews from "./ReviewsContainer.js"
+import BlogContainer from "./BlogContainer.js"
 
 
 class Profile extends React.Component {
@@ -45,6 +45,7 @@ class Profile extends React.Component {
             readBooks: false,
             wishlist: false,
             reviewedBooks: false,
+            reviews: false,
             userId:''
 
         };
@@ -237,16 +238,25 @@ class Profile extends React.Component {
                                                       $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                       this.setState({likedBooks: false,reviewedBooks: true, readBooks: false, wishlist: false})}}>Reviewed Books</li>
 
-                                                      <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                      <li hidden={!this.state.isAdmin} onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                      $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                      $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                      $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                      this.setState({likedBooks: false,reviewedBooks: false, readBooks: false, wishlist: false , reviews: true})}}>Reviews</li>
+
+                                                    
+                                                    <li onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, readBooks: true, wishlist: false})}}>Read Books</li>
-                                                <li onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, readBooks: true, wishlist: false})}}>My Blogs</li>
+                                                
+                                                <li onClick={()=>{$(".nav li:nth-child(5)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(3)").css("border-bottom", "none");
                                                     this.setState({likedBooks: false,reviewedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
+
 
                                             </ul>
                                             <span className="follow">Follow</span>
@@ -254,8 +264,10 @@ class Profile extends React.Component {
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.profile.id}/>}
-                                                {this.state.wishlist == true && <WishListContainer/>}
-                                                {this.state.readBooks == true && <ReadBooksContainer/>}
+                                                
+                                                {this.state.wishlist == true && <Reviews/>}
+
+                                                {this.state.readBooks == true && <BlogContainer/>}
 
                                             </div>
                                         </div>
