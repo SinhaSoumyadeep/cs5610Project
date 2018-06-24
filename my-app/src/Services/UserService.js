@@ -67,7 +67,7 @@ export default class UserService{
         return response.json();
       });
   }
-}
+
 
     findByUsername(username){
         return fetch("https://book-worms-server.herokuapp.com/api/profile/" + username, {
@@ -78,5 +78,5 @@ export default class UserService{
             method: 'POST'
         }).then(function(response){return response.json()})
     }
-    }
+}
 
