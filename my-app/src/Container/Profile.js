@@ -56,7 +56,8 @@ class Profile extends React.Component {
             userId:'',
             coverPicSet: false,
             loggedInFrom: 'NU',
-            profile: {imageUrl: '', picture: {data: {url: ''}}}
+            profile: {imageUrl: '', picture: {data: {url: ''}}},
+            profilePic: ''
 
 
         };
@@ -102,6 +103,7 @@ class Profile extends React.Component {
                console.log(user)
                this.setState({profile: user||{imageUrl: '', picture: {data: {url: ''}}}})
                this.setState({isLoggedIn: true})
+               this.setState({profilePic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'})
                if(this.state.profile!= undefined)
                {
                    if(this.state.profile.role == 'Reader'){
@@ -137,6 +139,7 @@ class Profile extends React.Component {
        {
            alert("viewing his own profile")
            console.log(cookies.get('profile'))
+           this.setState({profilePic: cookies.get('profile').imageURL})
 
            if(cookies.get('isReader')!= undefined){
                //alert("is reader"+cookies.get('isReader'))
@@ -262,7 +265,7 @@ class Profile extends React.Component {
                                                 }
 
                                                 {this.state.loggedInFrom == 'NU' &&
-                                                <img className="photo" src={this.state.profile.imageURL}
+                                                <img className="photo" src={this.state.profilePic}
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
@@ -425,13 +428,13 @@ class Profile extends React.Component {
                                             <span className="follow">Follow</span>
                                             <div className="hideScroll">
 
-                                                {this.state.likedBooks == true && <LikedBooksContainer userId={this.state.userId}/>}
-                                                {this.state.reviewedBooks == true && <ReviewedBooksContainer userId={this.state.userId}/>}
+                                                {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
+                                                {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
-                                                {this.state.blogcontainer == true && <BlogContainer/>}
-                                                {this.state.adcontainer == true && <AdContainer/>}
-                                                {this.state.reviewscontainer == true && <ReviewsContainer/>}
-                                                {this.state.allblogscontainer == true && <AllBlogContainer/>}
+                                                {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer/>}
+                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <AdContainer/>}
+                                                {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
+                                                {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
 
                                             </div>
                                         </div>
