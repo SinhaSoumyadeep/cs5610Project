@@ -18,6 +18,8 @@ import UserService from "../Services/UserService";
 import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
+import PublisherWidget from "./PublisherWidget"
+
 
 
 
@@ -63,7 +65,6 @@ class Profile extends React.Component {
 
 
         };
-        this.setCoverPic = this.setCoverPic.bind(this);
 
     }
 
@@ -213,11 +214,19 @@ class Profile extends React.Component {
        }
 
 
+        if(cookies.get('isPublisher')!= undefined){
+            //alert("is reader"+cookies.get('isReader'))
+            this.setState({isPublisher: cookies.get('isPublisher')})
+
+        }
+
+
 
 
 
 
     }
+
 
     componentWillReceiveProps(newProps){
 
@@ -231,6 +240,7 @@ class Profile extends React.Component {
         this.setState({coverPic: coverPic});
         console.log(coverPic)
     }
+
 
     render() {
 
@@ -250,7 +260,13 @@ class Profile extends React.Component {
 
                                 <div className="container">
 
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
+                                    {this.state.coverPicSet == false &&
+                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
+                                    {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
+                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
+
+
+
 
 
                                     <div className="row">
@@ -436,9 +452,10 @@ class Profile extends React.Component {
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
                                                 {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer/>}
-                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <AdContainer/>}
+                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
+
 
 
                                             </div>
