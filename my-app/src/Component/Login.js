@@ -62,17 +62,6 @@ class Login extends React.Component
             cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
           }
 
-          else if(profile.role == 'Author'){
-            alert("Here I am")
-            cookies.set('isAuthor',true,{path: '/', maxAge: (1800)});
-          }
-
-          // else if(profile.role == 'Publisher'){
-          //   cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
-          // }
-
-
-
 
         }
 
@@ -84,7 +73,7 @@ class Login extends React.Component
         
         if (loggedInFrom == 'FB')
         {
-            cookies.set('isReviewer',true, { path: '/',maxAge: (1800) });
+            cookies.set('isReader',true, { path: '/',maxAge: (1800) });
             cookies.set('loggedInFrom','FB', { path: '/',maxAge: (1800) });
         }
 
@@ -115,10 +104,11 @@ class Login extends React.Component
     var userEmail = email
     var userPassword = password
     this.state.user = {
-      email: userEmail,
+      username: userEmail,
       password: userPassword   
 
     }
+
     console.log("Handle Login")
     console.log("Email: " + userEmail)
     console.log("Password: " + userPassword)
@@ -128,11 +118,13 @@ class Login extends React.Component
                     if(response.id == 0){
                     alert("Invalid Credentials")
 
+
       }
       else{
 
         var user = {
             id: response.id,
+
             date_of_birth: response.dateOfBirth,
             email: response.email,
             first_name: response.firstName,
@@ -146,6 +138,7 @@ class Login extends React.Component
             category: response.category,
             cover_pic: response.coverPic
         }
+
         console.log(user);
 
       
@@ -177,16 +170,12 @@ class Login extends React.Component
 
       <div>
       <form>
-      <label>
-      Email
-      </label>
+
       <input onChange={this.emailChanged}
                          className="form-control" 
                          id="emailFld"
-                         placeholder="Email"/>
-      <label>
-      Password
-      </label>
+                         placeholder="Username"/>
+
       <input onChange = {this.passwordChanged}
              className = "form-control"
              id= "passwordFld"
