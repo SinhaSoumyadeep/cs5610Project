@@ -122,25 +122,30 @@ class Login extends React.Component
     console.log("Handle Login")
     console.log("Email: " + userEmail)
     console.log("Password: " + userPassword)
-    this.userService.loginUser(this.state.user).then((response)=>{
-      if(response.id == 0){
-        alert("Invalid Credentials.")
+    this.userService
+            .loginUser(this.state.user)
+            .then((response)=>{
+                    if(response.id == 0){
+                    alert("Invalid Credentials")
 
       }
       else{
 
         var user = {
-          date_of_birth: response.dateOfBirth,
-          email: response.email,
-          first_name: response.firstName,
-          last_name: response.lastName,
-          password: response.password,
-          role: response.role,
-          username: response.username,
-          gender: response.gender,
-          imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
+            id: response.id,
+            date_of_birth: response.dateOfBirth,
+            email: response.email,
+            first_name: response.firstName,
+            last_name: response.lastName,
+            password: response.password,
+            role: response.role,
+            username: response.username,
+            gender: response.gender,
+            imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
+            bio: response.bio,
+            category: response.category,
+            cover_pic: response.coverPic
         }
-
         console.log(user);
 
       

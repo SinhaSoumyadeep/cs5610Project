@@ -2,10 +2,6 @@ import React from 'react'
 import SearchContainer from './SearchContainer'
 import { Redirect } from 'react-router-dom'
 import $ from "jquery";
-import StarRatings from 'react-star-ratings';
-import bookmark from '../Style/bookmark-icon.png'
-import ErrorPage from "./ErrorPage";
-import ReviewWidget from "./ReviewWidget";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import '../CSS/profile.css'
@@ -23,8 +19,6 @@ class Profile extends React.Component {
         cookies: instanceOf(Cookies).isRequired
     };
 
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -40,9 +34,11 @@ class Profile extends React.Component {
             isPublisher: false,
             likedBooks: true,
             readBooks: false,
-            wishlist: false
+            wishlist: false,
+            coverPicSet: false
 
         };
+        this.setCoverPic = this.setCoverPic.bind(this);
 
     }
 
@@ -50,7 +46,7 @@ class Profile extends React.Component {
         const { cookies } = this.props;
 
         console.log(cookies.get('profile'))
-        
+
         if(cookies.get('isReader')!= undefined){
             //alert("is reader"+cookies.get('isReader'))
             this.setState({isReader: cookies.get('isReader')})
@@ -85,13 +81,19 @@ class Profile extends React.Component {
         {
             this.setState({loggedInFrom: 'FB'})
         }
-
         if (cookies.get('loggedInFrom') == 'NU'){
             this.setState({loggedInFrom: 'NU'})
         }
     }
 
+    componentWillReceiveProps(newProps){
+        this.setCoverPic(newProps.coverPic);
+    }
 
+    setCoverPic(coverPic){
+        this.setState({coverPic: coverPic});
+        console.log(coverPic)
+    }
 
     render() {
 
@@ -110,11 +112,16 @@ class Profile extends React.Component {
 
 
                                 <div className="container">
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>
+                                    {this.state.coverPic == false &&
+                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
+                                    {this.state.coverPic == true &&
+                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/" + this.state.profile.cover_pic} ></img>}
+
+
                                     <div className="row">
                                         <div className="left col-lg-4">
                                             <div className="photo-left">
-                                                {this.state.loggedInFrom == 'GL'&&
+                                                {this.state.loggedInFrom == 'GL' &&
                                                 <img className="photo" src={this.state.profile.imageUrl+'?sz=550'}
                                                 />
                                                 }
@@ -124,7 +131,6 @@ class Profile extends React.Component {
                                                 />
                                                 }
 
-
                                                 {this.state.loggedInFrom == 'NU' &&
                                                 <img className="photo" src={this.state.profile.imageURL}
                                                      hidden={!this.state.isLoggedIn}
@@ -132,8 +138,15 @@ class Profile extends React.Component {
                                                 }
                                                 <div className="profileActive"></div>
                                                 <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
-                                                    <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profile={this.state.profile}/>
-                                               {/* <Link to="/settings">Settings</Link>*/}
+                                                {this.state.loggedInFrom == 'GL'&&
+                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                }
+                                                {this.state.loggedInFrom == 'NU'&&
+                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                }
+                                                {this.state.loggedInFrom == 'FB'&&
+                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                }
 
 
                                             </div>
@@ -174,9 +187,17 @@ class Profile extends React.Component {
                                                     <p className="desc-stat">Uploads</p>
                                                 </div>
                                             </div>
-                                            <p className="desc">
-                                                Hi ! My name is Jane Doe. I'm a UI/UX Designer from
-                                                Paris, in France. I really enjoy photography and mountains.</p>
+
+
+                                            {this.state.loggedInFrom == 'NU' &&
+                                            <p className="desc">{this.state.profile.bio}</p>
+                                            }
+                                            {this.state.loggedInFrom == 'GL' &&
+                                            <p className="desc">Go to settings to update your bio!</p>
+                                            }
+                                            {this.state.loggedInFrom == 'FB' &&
+                                            <p className="desc">Go to settings to update your bio!</p>
+                                            }
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
                                                 <i className="fa fa-twitter-square" aria-hidden="true"></i>
