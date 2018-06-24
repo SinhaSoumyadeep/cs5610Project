@@ -14,6 +14,10 @@ import Trigger from "./Trigger";
 import Settings from "./Settings";
 import AuthorBlog from "./AuthorBlog";
 import UserService from "../Services/UserService";
+import BlogContainer from "./BlogContainer";
+import AdContainer from "./AdContainer";
+import ReviewsContainer from "./ReviewsContainer";
+import AllBlogContainer from "./AllBlogContainer";
 
 
 
@@ -30,17 +34,25 @@ class Profile extends React.Component {
             isbn: '',
             imgthumb: '',
             books:'',
-            isReader: false,
-            isReviewer: false,
             err: false,
             redirectToLogin: false,
+
+            isReader: false,
+            isReviewer: false,
             isAuthor: false,
             isPublisher: false,
             isAdmin: false,
+
             likedBooks: false,
-            readBooks: false,
             wishlist: false,
             reviewedBooks: false,
+            blogcontainer: false,
+            adcontainer: false,
+            reviewscontainer: false,
+            allblogscontainer: false,
+
+
+
             userId:'',
             coverPicSet: false,
             loggedInFrom: 'NU',
@@ -92,24 +104,29 @@ class Profile extends React.Component {
                this.setState({isLoggedIn: true})
                if(this.state.profile!= undefined)
                {
+                   if(this.state.profile.role == 'Reader'){
+
+                       this.setState({isReader: true,likedBooks: true})
+
+                   }
                    if(this.state.profile.role == 'Reviewer')
                    {
-                       this.setState({isReviewer: true})
-                       this.setState({reviewedBook: true})
+                       this.setState({isReviewer: true, reviewedBook: true})
+
 
                    }
 
                    if(this.state.profile.role == 'Publisher')
                    {
-                       this.setState({isPublisher: true})
+                       this.setState({isPublisher: true, adcontainer: true})
                    }
                    if(this.state.profile.role == 'admin')
                    {
-                       this.setState({isAdmin: true})
+                       this.setState({isAdmin: true,allblogscontainer: true})
                    }
                    if(this.state.profile.role == 'Author')
                    {
-                       this.setState({isAuthor: true})
+                       this.setState({isAuthor: true,blogcontainer: true})
                    }
 
                }
@@ -138,15 +155,15 @@ class Profile extends React.Component {
 
                if(cookies.get('profile').role == 'Publisher')
                {
-                   this.setState({isPublisher: true})
+                   this.setState({isPublisher: true,adcontainer: true})
                }
                if(cookies.get('profile').role == 'admin')
                {
-                   this.setState({isAdmin: true})
+                   this.setState({isAdmin: true,allblogscontainer: true})
                }
                if(cookies.get('profile').role == 'Author')
                {
-                   this.setState({isAuthor: true})
+                   this.setState({isAuthor: true,blogcontainer: true})
                }
 
            }
@@ -324,37 +341,97 @@ class Profile extends React.Component {
                                         <div className="right col-lg-8">
                                             <ul className="nav">
 
-                                                <li hidden={this.state.isReviewer} onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
-                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
-                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
-                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: true,reviewedBooks: false, readBooks: false, wishlist: false })}}>Liked Books</li>
+
+
+
+
+
+                                                 <li hidden={!this.state.isReader} onClick={()=>{$(".nav li:nth-child(1)").css("border-bottom", "2px solid #999");
+                                                        $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                        this.setState({likedBooks: true,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Liked Books</li>
+
+
+
 
                                                      <li hidden={!this.state.isReviewer} onClick={()=>{$(".nav li:nth-child(2)").css("border-bottom", "2px solid #999");
                                                       $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                       $(".nav li:nth-child(3)").css("border-bottom", "none");
                                                       $(".nav li:nth-child(4)").css("border-bottom", "none");
-                                                      this.setState({likedBooks: false,reviewedBooks: true, readBooks: false, wishlist: false})}}>Reviewed Books</li>
+                                                         $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                         $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                         $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                         this.setState({likedBooks: false,reviewedBooks: true, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Reviewed Books</li>
 
-                                                      <li onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
-                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
-                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
-                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, readBooks: true, wishlist: false})}}>Read Books</li>
-                                                <li onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
+
+                                                         <li hidden={!this.state.isAdmin} onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
+                                                        $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                        $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                         $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                         $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                         $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                         this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:true })}}>AllBlogs</li>
+
+
+
+                                            <li hidden={!this.state.isAuthor}  onClick={()=>{$(".nav li:nth-child(4)").css("border-bottom", "2px solid #999");
+                                                $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: true, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Blog</li>
+
+                                                <li hidden={!this.state.isPublisher} onClick={()=>{$(".nav li:nth-child(5)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(3)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false,readBooks: false, wishlist: true})}}>Wish List</li>
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: true, reviewscontainer: false, allblogscontainer:false })}}>Ad</li>
+
+                                                <li hidden={!this.state.isAdmin}  onClick={()=>{$(".nav li:nth-child(6)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: true, allblogscontainer:false })}}>AllReviews</li>
+
+
+                                                <li onClick={()=>{$(".nav li:nth-child(7)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Wish List</li>
+
+
+
+
+
 
                                             </ul>
                                             <span className="follow">Follow</span>
                                             <div className="hideScroll">
 
-                                                {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
-                                                {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
+                                                {this.state.likedBooks == true && <LikedBooksContainer userId={this.state.userId}/>}
+                                                {this.state.reviewedBooks == true && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
-                                                {this.state.readBooks == true && <AuthorBlog/>}
+                                                {this.state.blogcontainer == true && <BlogContainer/>}
+                                                {this.state.adcontainer == true && <AdContainer/>}
+                                                {this.state.reviewscontainer == true && <ReviewsContainer/>}
+                                                {this.state.allblogscontainer == true && <AllBlogContainer/>}
 
                                             </div>
                                         </div>

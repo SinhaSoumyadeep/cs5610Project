@@ -19,11 +19,16 @@ export default class ReviewedBooksContainer extends React.Component {
 
         if(this.props.userId != undefined)
         {
+            
 
             this.reviewService.fetchAllReviewsForReviewer(this.props.userId).then((response)=>{
                 this.setState({reviewedBooks: response})})
         }
     }
+
+
+
+
 
     showLikedBooks()
     {
