@@ -68,3 +68,15 @@ export default class UserService{
       });
   }
 }
+
+    findByUsername(username){
+        return fetch("https://book-worms-server.herokuapp.com/api/profile/" + username, {
+            body: JSON.stringify(username),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }).then(function(response){return response.json()})
+    }
+    }
+
