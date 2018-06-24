@@ -16,6 +16,7 @@ export default class LikedBooksContainer extends React.Component {
 
         if(this.props.userId != undefined)
         {
+
            this.reviewService.findAllLikedBookForUser(this.props.userId).then((response)=>{
                this.setState({likedBooks: response})})
         }

@@ -118,6 +118,7 @@ this.findAllReviews();
         )
     }
 
+
     render()
     {
         return(
@@ -139,3 +140,4 @@ this.findAllReviews();
 	
 }
 export default withCookies(Reviews);
+

@@ -39,7 +39,7 @@ export default class BookStore
                     <Route path="/error"
                            component={ErrorPage}>
                     </Route>
-                    <Route path="/profile"
+                    <Route path="/profile/:userId"
                            component={Profile}>
                     </Route>
                     <Route path="/settings"

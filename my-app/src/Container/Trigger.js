@@ -9,11 +9,21 @@ class Trigger extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false,
+            profile: " "
         };
 
         this.toggle = this.toggle.bind(this);
     }
+
+    componentDidMount()
+    {
+        if(this.props.profileURL != undefined){
+            this.setState({profile: this.props.profileURL})
+        }
+
+    }
+
 
     toggle() {
         this.setState({
@@ -31,7 +41,8 @@ class Trigger extends React.Component {
 
                         {this.props.type == 'login' && <Login/>}
                         {this.props.type == 'register' && <Register/>}
-                        {this.props.type == 'settings' && <Settings profile={this.state.profile}/>}
+                         <h3>{this.state.profile.name}</h3>
+                        {this.props.type == 'settings' && <Settings profileSetting={this.state.profile}/>}
 
                     </ModalBody>
 

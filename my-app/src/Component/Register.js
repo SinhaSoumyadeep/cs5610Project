@@ -19,6 +19,8 @@ export default class Register
                 email: ""
             }
         }
+        this.userService = UserService.instance;
+        this.checkUsername = this.checkUsername.bind(this);
         this.createUser = this.createUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
@@ -40,6 +42,19 @@ export default class Register
         });
     }
 
+    checkUsername(username){
+            this.userService
+                .findByUsername(username)
+                .then(function(response) {
+                    if (response === null) {
+                        alert('Username available');
+                        }
+                        else{
+                        alert('Sorry! Username already taken!');
+                    }
+                });
+    }
+
 
     createUser(){
 
@@ -49,7 +64,7 @@ export default class Register
         var password1 = this.refs.password.value;
         var email1 = this.refs.email.value;
         var gender1 = this.refs.gender.value;
-        var verify1Password = this.refs.verifyPassword.value;
+        var verifyPassword1 = this.refs.verifyPassword.value;
         var role1 = this.refs.role.value;
         var dob1 = this.refs.dob.value;
 
@@ -81,7 +96,8 @@ export default class Register
                 <div className="form-row">
                     <div className="col form-group">
                         <label><b>FIRST NAME</b> </label>
-                        <input type = "text" className="form-control" placeholder="First Name" ref="firstName"/>
+                        <input type = "text" className="form-control" placeholder="First Name" ref="firstName"
+                        />
                     </div>
                     <div className="col form-group">
                         <label><b>LAST NAME</b></label>
@@ -95,10 +111,12 @@ export default class Register
             <div className="col-sm-9">
                 <input className = "form-control" placeholder = "Username" ref="userName"/>
             </div></div>
+
             <div className="form-group row">
                 <label className="col-sm-3 col-form-label"><b>EMAIL</b></label>
                 <div className="col-sm-9">
                     <input className = "form-control"  placeholder = "Email" ref="email"
+                           onChange = {() => this.checkUsername(this.refs.userName.value)}
                     />
                 </div></div>
             <div className="form-group row">
@@ -144,5 +162,6 @@ export default class Register
 
         </div>
     )
-    }
+
+}
 }

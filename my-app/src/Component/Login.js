@@ -124,21 +124,26 @@ class Login extends React.Component
       if(response.id == 0){
         alert("Invalid Credentials.")
 
+
       }
       else{
 
         var user = {
             id: response.id,
-          date_of_birth: response.dateOfBirth,
-          email: response.email,
-          first_name: response.firstName,
-          last_name: response.lastName,
-          password: response.password,
-          role: response.role,
-          username: response.username,
-          gender: response.gender,
-          imageURL: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
-         }
+
+            dateOfBirth: response.dateOfBirth,
+            email: response.email,
+            firstName: response.firstName,
+            lastName: response.lastName,
+            password: response.password,
+            role: response.role,
+            username: response.username,
+            gender: response.gender,
+            imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
+            bio: response.bio,
+            category: response.category,
+            cover_pic: response.coverPic
+        }
 
         console.log(user);
 
@@ -173,16 +178,20 @@ class Login extends React.Component
 
       <div>
       <form>
+
       <label>
       Username
       </label>
+
       <input onChange={this.emailChanged}
                          className="form-control" 
                          id="emailFld"
                          placeholder="Username"/>
+
       <label>
       Password
       </label>
+
       <input onChange = {this.passwordChanged}
              className = "form-control"
              id= "passwordFld"
