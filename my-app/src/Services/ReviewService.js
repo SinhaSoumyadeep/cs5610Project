@@ -22,6 +22,12 @@ export default class ReviewService{
      })
     }
 
+    deleteBlog(blogId){
+    return fetch("https://book-worms-server.herokuapp.com/api/bloger/" + blogId , {
+      method: 'Delete'
+     })
+    }
+
     findBlogsforUser(bloggerId){
         return fetch("https://book-worms-server.herokuapp.com/api/blogger/" + bloggerId)
         .then(function(response) {return response.json()})

@@ -33,7 +33,7 @@ export default class NewOpenings
 
     findAlltopics(){
         this.userService.findAlltopics().then((response)=>{
-            this.setTopics(response)
+            this.setState({topics: response})
         });
     }
 

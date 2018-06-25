@@ -34,6 +34,19 @@ import "../CSS/blog.css"
     });
   }
 
+  findBlogsforUser(userid){
+    this.reviewService.findBlogsforUser(userid).then((response)=>{
+        this.setState({blogs: response})
+    })
+  }
+
+
+  deleteBlog(blogId){
+     this.reviewService.deleteBlog(blogId).then(()=>{
+        this.findBlogsforUser(this.state.profile.id);
+     });
+  }
+
    postBlog(bloggerId)
     {
 
@@ -47,7 +60,9 @@ import "../CSS/blog.css"
         			  bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
 
 
-        this.reviewService.createBlog(blog,bloggerId);
+        this.reviewService.createBlog(blog,bloggerId).then(() =>{
+            this.findBlogsforUser(bloggerId)
+            });
         //.then((response)=>{window.location.reload()})
     }
 
