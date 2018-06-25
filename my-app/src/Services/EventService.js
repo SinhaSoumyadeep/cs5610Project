@@ -1,7 +1,7 @@
 import React from 'react'
 
 let _singleton = Symbol();
-const EVENT_URL = 'http://localhost:8080/api/event';
+const EVENT_URL = 'https://book-worms-server.herokuapp.com/api/event';
 
 export default class EventService {
     constructor(singletonToken) {
@@ -25,6 +25,26 @@ export default class EventService {
             method: 'POST'
         }).then(function (response) {
             return response.json();
+        })
+    }
+
+    findAllEvents(){
+        return fetch(EVENT_URL)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
+    findAllEventsForPublisher(publisherId)
+    {
+        return fetch(EVENT_URL + "/" + publisherId)
+            .then(function(response) {
+                return response.json()})
+    }
+
+    deleteEvent(eventId){
+        return fetch(EVENT_URL + "/" + eventId , {
+            method: 'Delete'
         })
     }
 }

@@ -437,3 +437,7 @@ a:hover{
     box-sizing: content-box;
 
 }
+.previewComponent{
+    width: 95%;
+}
+

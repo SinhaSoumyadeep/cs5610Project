@@ -80,7 +80,7 @@ export default class UserService{
     }
 
     findUserById(userId) {
-        return fetch("http://localhost:8080/api/user/"+userId)
+        return fetch("https://book-worms-server.herokuapp.com/api/user/"+userId)
             .then(function(response){
                 return response.json();
             });
@@ -98,7 +98,7 @@ export default class UserService{
     }
 
     findBySrchKey(srchKey){
-        return fetch("http://localhost:8080/api/searchuser", {
+        return fetch("https://book-worms-server.herokuapp.com/api/searchuser", {
             body: JSON.stringify(srchKey),
             headers: {
                 'Content-Type': 'application/json'

@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import SearchContainer from './SearchContainer'
 import Advertisement from './Advertisement'
+
 import EventService from "../Services/EventService";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import axios from "axios/index";
+import EventsForPublisher from "./EventsForPublisher"
 
 
 
@@ -59,7 +61,7 @@ class PublisherWidget
         const config = {
             headers: { 'content-type': 'multipart/form-data'}
         };
-        return axios.post('http://localhost:8080/api/user/'+ this.state.profile.id +'/event',data,config);
+        return axios.post('https://book-worms-server.herokuapp.com/api/user/'+ this.state.profile.id +'/event',data,config);
 
 
     }
@@ -88,13 +90,13 @@ class PublisherWidget
            var event = {
                 event_info: eventinfo,
                 publisherId: String(this.state.profile.id),
-                publisherName: String(this.state.profile.first_name + " " + this.state.profile.last_name),
+                publisherName: this.state.profile.firstName + " " + this.state.profile.lastName,
                 publisher_imgURL: String(this.state.profile.imageURL + '?sz=550'),
                 event_imgURL: filename
             }
             console.log(event);
 
-        this.eventService.createEvent(event);
+        this.eventService.createEvent(event).then(window.location.reload());
    }
 
 
@@ -113,11 +115,11 @@ class PublisherWidget
         return(
 
 
-            <div className="container-fluid">
+            <div className="container-fluid hideScroll">
 
-                <div className="previewComponent"><br/>
+                <div className="reviewBoxSection "><br/>
                     <h3> ADD EVENTS </h3>
-                        <textarea id="myInput" className="form-control" rows="4"  placeholder="Say something about the event..." ref="eventInfo"/><br/>
+                        <textarea id="myInput" className="form-control" rows="4"  placeholder="Say something about the event..." ref="eventInfo" style={{width: "95%"}}/><br/>
                         <div className="previewComponent">
                             <form>
                                 <input
@@ -130,11 +132,13 @@ class PublisherWidget
                                     onClick={e => this.UploadImage(e)}>
                                     Add Event
                                 </button>
-                            </form><hr/>
+                            </form>
                             <div className="imgPreview">{$imagePreview}</div>
-                        </div>
+                        </div><hr/>
+                    <EventsForPublisher/>
 
                 </div>
+
             </div>
 
         )
