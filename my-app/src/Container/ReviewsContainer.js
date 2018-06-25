@@ -93,7 +93,7 @@ this.findAllReviews();
                     <div>
                         <img src={review.reviewerImageUrl} style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
                         <h5>{review.reviewerName} </h5>
-                        
+
                         <button className="btn btn-danger" onClick = {()=> {this.deleteReview(review.id)}}>
                             <i className="fa fa-times"></i>
                         </button>
