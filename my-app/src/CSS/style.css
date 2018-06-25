@@ -439,6 +439,12 @@ a:hover{
     box-sizing: content-box;
 
 }
+
+.previewComponent{
+    width: 95%;
+}
+
+
 .hideScrollStyle
 {
     height: 27%;
@@ -454,3 +460,4 @@ a:hover{
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
+

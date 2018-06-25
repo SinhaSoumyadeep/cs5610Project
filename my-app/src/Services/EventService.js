@@ -27,4 +27,24 @@ export default class EventService {
             return response.json();
         })
     }
+
+    findAllEvents(){
+        return fetch(EVENT_URL)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
+    findAllEventsForPublisher(publisherId)
+    {
+        return fetch(EVENT_URL + "/" + publisherId)
+            .then(function(response) {
+                return response.json()})
+    }
+
+    deleteEvent(eventId){
+        return fetch(EVENT_URL + "/" + eventId , {
+            method: 'Delete'
+        })
+    }
 }

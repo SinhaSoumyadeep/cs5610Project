@@ -15,11 +15,11 @@ import Settings from "./Settings";
 import Reviews from "./ReviewsContainer.js"
 import BlogContainer from "./BlogContainer.js"
 import UserService from "../Services/UserService";
-import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
-import PublisherWidget from "./PublisherWidget"
+import PublisherWidget from "./PublisherWidget";
 import FooterPage from "./FooterPage";
+
 
 
 
@@ -272,7 +272,9 @@ class Profile extends React.Component {
 
 
 
+
                                     <div className="row" style={{paddingBottom: "285px"}}>
+
                                         <div className="left col-lg-4">
                                             <div className="photo-left">
                                                 {this.state.loggedInFrom == 'GL' &&

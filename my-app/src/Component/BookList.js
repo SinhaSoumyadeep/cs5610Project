@@ -11,6 +11,8 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import UserService from '../Services/UserService';
 import ReviewService from '../Services/ReviewService';
+import AdverstisementCarousel from "../Container/AdvertisementCarousel";
+import Example from "../Container/AdvertisementCarousel"
 
 
 class BookList extends React.Component
@@ -385,7 +387,8 @@ class BookList extends React.Component
 
                         </div>
                         <div className="col-sm-4 asideSec">
-                            <Advertisement/>
+                            <Example/>
+
                             <hr width="300px"/>
                             <div id="topPicks">
                                 <h5>Our Top Picks </h5>
