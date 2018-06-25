@@ -34,7 +34,7 @@ class Trigger extends React.Component {
     render() {
         return (
             <div>
-                <a href="#" color="danger" onClick={this.toggle}>{this.props.buttonLabel}</a>
+                <a href="#" style={{color: this.props.color}} onClick={this.toggle}>{this.props.buttonLabel}</a>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}></ModalHeader>
                     <ModalBody>

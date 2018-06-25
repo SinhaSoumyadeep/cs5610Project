@@ -84,7 +84,9 @@ class Settings extends React.Component {
 
         console.log(this.state.user)
 
+
         return fetch('https://book-worms-server.herokuapp.com/api/user/' + userId, {
+
                 method: 'put',
                 body: JSON.stringify(this.state.user),
                 headers: {

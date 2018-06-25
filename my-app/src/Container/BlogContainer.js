@@ -34,6 +34,19 @@ import "../CSS/blog.css"
     });
   }
 
+  findBlogsforUser(userid){
+    this.reviewService.findBlogsforUser(userid).then((response)=>{
+        this.setState({blogs: response})
+    })
+  }
+
+
+  deleteBlog(blogId){
+     this.reviewService.deleteBlog(blogId).then(()=>{
+        this.findBlogsforUser(this.state.profile.id);
+     });
+  }
+
    postBlog(bloggerId)
     {
 
@@ -42,11 +55,14 @@ import "../CSS/blog.css"
         var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.props.imgUrl)
         //console.log(img)
 
-        var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.first_name+" "+this.state.profile.last_name, 
+
+        var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.firstName+" "+this.state.profile.lastName, 
         			  bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
 
 
-        this.reviewService.createBlog(blog,bloggerId);
+        this.reviewService.createBlog(blog,bloggerId).then(() =>{
+            this.findBlogsforUser(bloggerId)
+            });
         //.then((response)=>{window.location.reload()})
     }
 
@@ -60,7 +76,7 @@ import "../CSS/blog.css"
 
             return (
 
-            	<div id = "blogs">
+                <div className="alert alert-success" role="alert" style={{width: "541px"}}>
                 {blog.blog}
                 	<span className="float-right">
            				<i className="fa fa-times" style={{cursor: "pointer"}} 
@@ -80,8 +96,10 @@ import "../CSS/blog.css"
 	render(){
 		return(
 				<div>
-					<div className="hideScroll">
-						{this.showBlogs()}
+					<div className="gallery">
+
+                            {this.showBlogs()}
+
 					</div>
 
 				 	<div className="reviewBox container-fluid">

@@ -205,7 +205,7 @@ class SearchContainer
                 <div className="logo">
                     <a href="/books">
                     <img src={logo}
-                    height="45px" width="140px"
+                    height="35px" width="149px"
                     />
 
                     </a>

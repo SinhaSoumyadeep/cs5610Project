@@ -18,6 +18,8 @@ import UserService from "../Services/UserService";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
 import PublisherWidget from "./PublisherWidget";
+import FooterPage from "./FooterPage";
+
 
 
 
@@ -59,7 +61,8 @@ class Profile extends React.Component {
             coverPicSet: false,
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
-            profilePic: ''
+            profilePic: '',
+            restrictedView: false
 
 
 
@@ -98,6 +101,7 @@ class Profile extends React.Component {
        if(id != LoggedinUserId)
        {
             alert("viewing someone elses profile")
+           this.setState({restrictedView: true})
 
            this.setState({loggedInFrom: 'NU'})
            this.state.userId = id;
@@ -264,7 +268,13 @@ class Profile extends React.Component {
                                     {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
                                     <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
 
-                                    <div className="row">
+
+
+
+
+
+                                    <div className="row" style={{paddingBottom: "285px"}}>
+
                                         <div className="left col-lg-4">
                                             <div className="photo-left">
                                                 {this.state.loggedInFrom == 'GL' &&
@@ -283,16 +293,12 @@ class Profile extends React.Component {
                                                 />
                                                 }
                                                 <div className="profileActive"></div>
-                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
-                                                {this.state.loggedInFrom == 'GL'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+
+
+                                                {this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
+                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
-                                                {this.state.loggedInFrom == 'NU'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
-                                                }
-                                                {this.state.loggedInFrom == 'FB'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
-                                                }
+
 
 
                                             </div>
@@ -343,12 +349,7 @@ class Profile extends React.Component {
                                             {this.state.loggedInFrom == 'NU' &&
                                             <p className="desc">{this.state.profile.bio}</p>
                                             }
-                                            {this.state.loggedInFrom == 'GL' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
-                                            {this.state.loggedInFrom == 'FB' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
+
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
                                                 <i className="fa fa-twitter-square" aria-hidden="true"></i>
@@ -460,7 +461,12 @@ class Profile extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <FooterPage/>
+                    </div>
+                    <div style={{height: "126px"}}></div>
                 </div>
+
 
             </div>
         )

@@ -205,6 +205,7 @@ main {
     width: 620px;
     height: 270px;
     overflow-y: scroll;
+
     padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
     box-sizing: content-box;
 
@@ -239,4 +240,10 @@ main {
 
     width: 457px;
     height: 43px;
+}
+
+#blogBoxProfile{
+    width: 900px;
+    height: 170px;
+    margin: 0px 0px 0px 23px;
 }
