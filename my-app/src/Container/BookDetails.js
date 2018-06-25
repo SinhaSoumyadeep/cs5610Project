@@ -14,6 +14,7 @@ import HeartButton from "./HeartButton";
 import ReviewContainer from "./ReviewContainer"
 import FooterPage from "./FooterPage"
 import ReviewService from "../Services/ReviewService";
+import Example from "./AdvertisementCarousel";
 
 
 
@@ -106,7 +107,7 @@ class BookDetails extends React.Component {
     find_preview(id)
     {
         var isbn = id
-        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM", {
+        fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0", {
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
@@ -133,7 +134,7 @@ class BookDetails extends React.Component {
         var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb);
         var bookTitle = this.state.books.title;
 
-        var review = {isbn: String(name), bookName: bookTitle, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.first_name+" "+this.state.profile.last_name, reviewerImageUrl: this.state.profile.imageURL+'?sz=550', rating: newRating }
+        var review = {isbn: String(name), bookName: bookTitle, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.firstName+" "+this.state.profile.lastName, reviewerImageUrl: this.state.profile.imageURL+'?sz=550', rating: newRating }
 
         this.reviewService.createReview(review,name).then((response)=>{window.location.reload()})
     }
@@ -289,12 +290,12 @@ class BookDetails extends React.Component {
                         </div>
 
                         <div className="col-sm-4 asideSec">
-                            <Advertisement/>
+                            <Example/>
                         </div>
-
+x
                     </div>
                 </div>
-                <div>
+                <div style={{margin: "-24px auto -34px"}}>
                     <FooterPage/>
                 </div>
                 <div style={{height: "126px"}}></div>

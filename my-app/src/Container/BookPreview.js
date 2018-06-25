@@ -5,6 +5,7 @@ import $ from "jquery";
 import DummyTitle from "./DummyTitle";
 import bufferImg from "../Style/tenor.gif"
 import FooterPage from "./FooterPage";
+import Example from "./AdvertisementCarousel";
 
 
 
@@ -57,7 +58,7 @@ export default class BookPreview extends React.Component {
                         </div>
 
                         <div className="col-sm-4 asideSec">
-                            <Advertisement/>
+                            <Example/>
                         </div>
 
                     </div>

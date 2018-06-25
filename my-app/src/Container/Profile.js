@@ -59,6 +59,7 @@ class Profile extends React.Component {
 
             userId:'',
             coverPicSet: false,
+            coverPic: 'https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg',
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
             profilePic: '',
@@ -100,7 +101,7 @@ class Profile extends React.Component {
 
        if(id != LoggedinUserId)
        {
-            alert("viewing someone elses profile")
+            //alert("viewing someone elses profile")
            this.setState({restrictedView: true})
 
            this.setState({loggedInFrom: 'NU'})
@@ -109,9 +110,15 @@ class Profile extends React.Component {
                console.log(user)
                this.setState({profile: user||{imageUrl: '', picture: {data: {url: ''}}}})
                this.setState({isLoggedIn: true})
+
+
                this.setState({profilePic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'})
                if(this.state.profile!= undefined)
                {
+                   if(this.state.profile.coverPic != null)
+                   {
+                       this.setState({coverPic: "https://s3.amazonaws.com/book-worms/"+this.state.profile.coverPic})
+                   }
                    if(this.state.profile.role == 'Reader'){
 
                        this.setState({isReader: true,likedBooks: true})
@@ -143,7 +150,7 @@ class Profile extends React.Component {
        }
        else
        {
-           alert("viewing his own profile")
+           //alert("viewing his own profile")
            console.log(cookies.get('profile'))
            this.setState({profilePic: cookies.get('profile').imageURL})
 
@@ -161,6 +168,10 @@ class Profile extends React.Component {
 
            if(cookies.get('profile')!= undefined)
            {
+               if(cookies.get('profile').coverPic != null)
+               {
+                   this.setState({coverPic: "https://s3.amazonaws.com/book-worms/"+cookies.get('profile').coverPic})
+               }
 
                if(cookies.get('profile').role == 'Publisher')
                {
@@ -263,10 +274,8 @@ class Profile extends React.Component {
 
                                 <div className="container">
 
-                                    {this.state.coverPicSet == false &&
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
-                                    {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
-                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
+
+                                    <img className="header" src={this.state.coverPic}></img>
 
 
 

@@ -461,3 +461,32 @@ a:hover{
     box-sizing: content-box;
 }
 
+.carousel-control-prev-icon, .carousel-control-next-icon
+{
+    background-image: none;
+}
+
+.carousel-indicators li {
+    position: relative;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 30px;
+    height: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0);
+}
+.carousel-indicators .active {
+    background-color: rgba(0,0,0,0);
+}
+.carousel {
+    position: relative;
+    width: 316px;
+    height: 205px;
+}
+.AdContainer
+{
+    margin-top: 23px;
+}
