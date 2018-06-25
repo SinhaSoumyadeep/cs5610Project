@@ -79,7 +79,7 @@ class BookList extends React.Component
                 this.setState({nonFiction: books.results});
             }
             catch(err) {
-                alert("error1")
+                //alert("error1")
                 this.setState({ err: true })
             }
 
@@ -114,7 +114,7 @@ class BookList extends React.Component
                 this.setState({fictionBooks: books.results});
             }
             catch(err) {
-                alert("error2")
+                //alert("error2")
                 this.setState({ err: true })
             }
 
@@ -149,7 +149,7 @@ class BookList extends React.Component
                             this.setState({ ficthumb: joined })
                         }
                         catch(err) {
-                            alert("error3")
+                            //alert("error3")
                             this.setState({ err: true })
                         }
 
@@ -188,7 +188,7 @@ class BookList extends React.Component
                         this.setState({ nonficthumb: joined })
                     }
                     catch(err) {
-                        alert("error4")
+                        //alert("error4")
                         this.setState({ err: true })
                     }
 

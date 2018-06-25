@@ -190,7 +190,7 @@ class Profile extends React.Component {
 
            if(cookies.get('isAdmin')!= undefined)
            {
-               alert("here admin")
+               //alert("here admin")
                this.setState({isAuthor: true})
                //alert("is reviewer"+cookies.get('isReviewer'))
                this.setState({isAdmin: cookies.get('isAdmin')})
