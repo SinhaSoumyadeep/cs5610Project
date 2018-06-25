@@ -1,7 +1,7 @@
 import React from 'react'
 
 let _singleton = Symbol();
-const EVENT_URL = 'http://localhost:8080/api/event';
+const EVENT_URL = 'https://book-worms-server.herokuapp.com/api/event';
 
 export default class EventService {
     constructor(singletonToken) {

@@ -61,7 +61,8 @@ class Profile extends React.Component {
             coverPicSet: false,
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
-            profilePic: ''
+            profilePic: '',
+            restrictedView: false
 
 
 
@@ -100,6 +101,7 @@ class Profile extends React.Component {
        if(id != LoggedinUserId)
        {
             alert("viewing someone elses profile")
+           this.setState({restrictedView: true})
 
            this.setState({loggedInFrom: 'NU'})
            this.state.userId = id;
@@ -290,15 +292,11 @@ class Profile extends React.Component {
                                                 }
                                                 <div className="profileActive"></div>
 
-                                                {this.state.loggedInFrom == 'GL'&&
+
+                                                {this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
                                                 <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
-                                                {this.state.loggedInFrom == 'NU'&&
-                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
-                                                }
-                                                {this.state.loggedInFrom == 'FB'&&
-                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
-                                                }
+
 
 
                                             </div>
@@ -349,12 +347,7 @@ class Profile extends React.Component {
                                             {this.state.loggedInFrom == 'NU' &&
                                             <p className="desc">{this.state.profile.bio}</p>
                                             }
-                                            {this.state.loggedInFrom == 'GL' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
-                                            {this.state.loggedInFrom == 'FB' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
+
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
                                                 <i className="fa fa-twitter-square" aria-hidden="true"></i>
