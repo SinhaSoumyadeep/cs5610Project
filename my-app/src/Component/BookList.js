@@ -89,7 +89,7 @@ class BookList extends React.Component
 
     findAlltopics(){
         this.userService.findAlltopics().then((response)=>{
-            this.setTopics(response)
+            this.setState({topics: response})
         });
     }
 
@@ -327,6 +327,7 @@ class BookList extends React.Component
         console.log(topic)
         this.userService.addTopic(topic).then(()=>{
             this.findAlltopics();
+            window.location.reload();
             
 
         })
