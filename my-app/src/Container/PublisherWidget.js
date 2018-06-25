@@ -61,7 +61,7 @@ class PublisherWidget
         const config = {
             headers: { 'content-type': 'multipart/form-data'}
         };
-        return axios.post('https://book-worms-server.herokuapp.com/api/user/'+ this.state.profile.id +'/event',data,config);
+        return axios.post('http://localhost:8080/api/user/'+ this.state.profile.id +'/event',data,config);
 
 
     }
