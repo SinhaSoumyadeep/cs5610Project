@@ -70,7 +70,7 @@ class EventsForPublisher extends React.Component {
 
                     <div>
                         <h5>{event.event_info}</h5>
-                        <div align="center"> <img src={"https://s3.amazonaws.com/book-worms/events"+event.event_imgURL}
+                        <div align="center"> <img src={"https://s3.amazonaws.com/bookwormstest/"+event.event_imgURL}
                                                   style={{height: "250px", width: "370px"}}></img></div>
                     </div><hr/></div>
                     )

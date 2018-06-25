@@ -117,7 +117,7 @@ class Profile extends React.Component {
                {
                    if(this.state.profile.coverPic != null)
                    {
-                       this.setState({coverPic: "https://s3.amazonaws.com/book-worms/"+this.state.profile.coverPic})
+                       this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+this.state.profile.coverPic})
                    }
                    if(this.state.profile.role == 'Reader'){
 
@@ -170,7 +170,7 @@ class Profile extends React.Component {
            {
                if(cookies.get('profile').coverPic != null)
                {
-                   this.setState({coverPic: "https://s3.amazonaws.com/book-worms/"+cookies.get('profile').coverPic})
+                   this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+cookies.get('profile').coverPic})
                }
 
                if(cookies.get('profile').role == 'Publisher')

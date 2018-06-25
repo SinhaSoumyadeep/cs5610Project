@@ -489,4 +489,5 @@ a:hover{
 .AdContainer
 {
     margin-top: 23px;
+    overflow: hidden;
 }

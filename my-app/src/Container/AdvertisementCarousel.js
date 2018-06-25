@@ -25,7 +25,7 @@ export default class Example extends React.Component{
                 response.map((event)=>{
 
 
-                    var item = {src: "https://s3.amazonaws.com/book-worms/events"+event.event_imgURL}
+                    var item = {src: "https://s3.amazonaws.com/bookwormstest/"+event.event_imgURL}
                     this.state.items.push(item);
 
 

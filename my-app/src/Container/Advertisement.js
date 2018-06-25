@@ -31,7 +31,7 @@ export default class Advertisement extends Component {
     EventList() {
         var eventList = this.state.events.map((event) => {
             return (
-                <img src={"https://s3.amazonaws.com/book-worms/" + event.event_imgURL} height="286rem" width="315px"/>
+                <img src={"https://s3.amazonaws.com/bookwormstest/" + event.event_imgURL} height="286rem" width="315px"/>
             )
         });
         return (eventList);
