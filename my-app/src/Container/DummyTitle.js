@@ -59,8 +59,10 @@ class DummyTitle
             <div className="titleBar">
                 <div className="logo">
                     <a href="/books">
-                    <img src={logo} height="45px" width="140px"
-                         onClick={this.goBack}/>
+                        <img src={logo}
+                             height="35px" width="149px"
+                        />
+
                     </a>
 
                 </div>
