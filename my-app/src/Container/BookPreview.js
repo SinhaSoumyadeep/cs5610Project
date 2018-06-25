@@ -4,6 +4,7 @@ import Advertisement from './Advertisement'
 import $ from "jquery";
 import DummyTitle from "./DummyTitle";
 import bufferImg from "../Style/tenor.gif"
+import FooterPage from "./FooterPage";
 
 
 
@@ -61,6 +62,10 @@ export default class BookPreview extends React.Component {
 
                     </div>
                 </div>
+                <div>
+                    <FooterPage/>
+                </div>
+                <div style={{height: "126px"}}></div>
 
             </div>
 

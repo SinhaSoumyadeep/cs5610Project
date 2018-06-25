@@ -19,6 +19,7 @@ import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
 import PublisherWidget from "./PublisherWidget"
+import FooterPage from "./FooterPage";
 
 
 
@@ -269,7 +270,7 @@ class Profile extends React.Component {
 
 
 
-                                    <div className="row">
+                                    <div className="row" style={{paddingBottom: "285px"}}>
                                         <div className="left col-lg-4">
                                             <div className="photo-left">
                                                 {this.state.loggedInFrom == 'GL' &&
@@ -288,15 +289,15 @@ class Profile extends React.Component {
                                                 />
                                                 }
                                                 <div className="profileActive"></div>
-                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
+
                                                 {this.state.loggedInFrom == 'GL'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
                                                 {this.state.loggedInFrom == 'NU'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
                                                 {this.state.loggedInFrom == 'FB'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
 
 
@@ -465,7 +466,12 @@ class Profile extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <FooterPage/>
+                    </div>
+                    <div style={{height: "126px"}}></div>
                 </div>
+
 
             </div>
         )
