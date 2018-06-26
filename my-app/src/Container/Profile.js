@@ -279,7 +279,7 @@ class Profile extends React.Component {
     follow()
     {
         const { cookies } = this.props;
-        alert(cookies.get('profile').id+"is following"+this.props.match.params.userId);
+        //alert(cookies.get('profile').id+"is following"+this.props.match.params.userId);
         this.userService.follow(cookies.get('profile').id,this.props.match.params.userId)
     }
 

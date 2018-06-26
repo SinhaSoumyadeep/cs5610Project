@@ -22,8 +22,9 @@ class FollowerContainer extends React.Component {
 
     }
 
-    componentWillReceiveProps(newProps){
-        this.userService.findFollower(newProps.userId).then((follower)=>{
+    componentDidMount(){
+
+        this.userService.findFollower(this.props.userId).then((follower)=>{
 
             this.setState({follower: follower})
         })
