@@ -41,7 +41,7 @@ class Trigger extends React.Component {
 
                         {this.props.type == 'login' && <Login/>}
                         {this.props.type == 'register' && <Register/>}
-                         <h3>{this.state.profile.name}</h3>
+                         <h3>{this.state.profile.firstName}</h3>
                         {this.props.type == 'settings' && <Settings profileSetting={this.state.profile}/>}
 
                     </ModalBody>

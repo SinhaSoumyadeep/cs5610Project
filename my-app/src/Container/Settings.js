@@ -15,11 +15,14 @@ class Settings extends React.Component {
         super(props);
         this.state = {
             file: "", imagePreviewUrl: " ",
-            profile: " "
+            profile: " ",
+            profile1: ""
         }
     }
 
     componentDidMount() {
+        const { cookies } = this.props;
+        //this.setState({profile1: cookies.get('profile')});
         if(this.props.profileSetting != undefined){
             console.log(this.props.profileSetting)
             this.setState({profile: this.props.profileSetting})
@@ -72,37 +75,38 @@ class Settings extends React.Component {
 
 
     updateProfile(userId){
-        var email1= this.refs.email.value
-        var dob1 = this.refs.dob.value;
-        var bio1 = this.refs.bio.value;
-        var category1 = this.refs.category.value;
-        var fileName1 = this.state.file;
-        console.log('Update called')
+        // var email1= this.refs.email.value
+        // var dob1 = this.refs.dob.value;
+        // var bio1 = this.refs.bio.value;
+        // var category1 = this.refs.category.value;
+        // var fileName1 = this.state.file;
+        // console.log('Update called')
 
-        this.state.user = {
-            email:email1,
-            bio:bio1,
-            category:category1,
-            dateOfBirth:dob1
-        }
+        // this.state.user = {
+        //     email:email1,
+        //     bio:bio1,
+        //     category:category1,
+        //     dateOfBirth:dob1
+        // }
 
-        console.log(this.state.user)
+        console.log(this.state.profile)
 
 
-        return fetch('https://book-worms-server.herokuapp.com/api/user/' + userId, {
+        return fetch('https://book-worms-server.herokuapp.com/api/user/' + this.state.profile.id, {
 
-                method: 'put',
-                body: JSON.stringify(this.state.user),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
+                 method: 'put',
+                 body: JSON.stringify(this.state.profile),
+                 headers: {
+                     'content-type': 'application/json'
+                 }
+             })
             .then(function(response){return response.json()})
 
 
     }
 
     render() {
+        
         let { imagePreviewUrl } = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
@@ -126,11 +130,69 @@ class Settings extends React.Component {
 
                 <div className="tab-content active">
                     <div id="personal" className="tab-pane"><br/>
+                        
                         EMAIL
-                        <input type ="text" className="form-control" placeholder="Email" ref="email" value={this.state.profile.email}/><br/>
+                            <input type ="text" 
+                                className="form-control" 
+                                placeholder={this.state.profile.emaill} 
+                                ref="email" 
+                                value={this.state.profile.email}
+                                onChange = {
+                                    (e) => {
+                                        var currentUser = this.state.profile
+                                        currentUser.email = e.target.value
+                                        this.setState({profile: currentUser})
+                                    }
+                                }
+                            />
+                        <br/>
+                        
                         DATE OF BIRTH
-                        <input type ="date" className="form-control" ref="dob" value={this.state.profile.date_of_birth}/>
+                            <input type ="date" 
+                                placeholder={this.state.profile.dateOfBirth} 
+                                className="form-control" 
+                                ref="dob" 
+                                value={this.state.profile.dateOfBirth}
+                                onChange = {
+                                    (e) => {
+                                        var currentUser = this.state.profile
+                                        currentUser.dateOfBirth = e.target.value
+                                        this.setState({profile: currentUser})
+                                    }
+                                }
+                            />
+                        
+                        First Name
+                            <input type ="text" 
+                                className="form-control" 
+                                ref="fn" 
+                                placeholder={this.state.profile.firstName} 
+                                value={this.state.profile.firstName}
+                                onChange = {
+                                    (e) => {
+                                        var currentUser = this.state.profile
+                                        currentUser.firstName = e.target.value
+                                        this.setState({profile: currentUser})
+                                    }
+                                }
+                            />
+                        
+                        LastName
+                            <input type ="text" 
+                                className="form-control" 
+                                ref="ln" 
+                                placeholder={this.state.profile.lastName} 
+                                value={this.state.profile.lastName}
+                                onChange = {
+                                    (e) => {
+                                        var currentUser = this.state.profile
+                                        currentUser.lastName = e.target.value
+                                        this.setState({profile: currentUser})
+                                    }
+                                }
+                            /> 
                     </div>
+
 
                     <div id="photo" className="tab-pane"><br/>COVER PICTURE
                         <div className="previewComponent">
@@ -175,8 +237,19 @@ class Settings extends React.Component {
                     </div>
                 </div>
                 <hr/>
-                <button className="btn btn-outline-primary float-right"  onClick = {()=> {this.updateProfile(this.state.profile.id)
-                                                                                              .then(window.location.reload())}}> UPDATE </button>
+                <button className="btn btn-outline-primary float-right"  
+                    onClick = {()=> {
+                            this.updateProfile(this.state.profile.id)
+                            .then((response) =>{
+                                alert(response.firstName)
+                                this.setState({profile: response})
+                                alert(this.state.profile.firstName)
+                            })
+                            .then(()=>{
+                                window.location.reload()
+                            }
+                            );
+                            }}> UPDATE </button>
             </div>
         );
     }

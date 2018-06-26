@@ -174,6 +174,8 @@ class Profile extends React.Component {
                if (cookies.get('loggedInFrom') == 'NU'){
                    this.userService.findUserById(cookies.get('profile').id).then((profile)=>{
 
+
+                        this.setState({profile: profile})
                        console.log(profile)
                        if(profile.coverPic != null)
                        {
@@ -283,7 +285,9 @@ class Profile extends React.Component {
 
 
     render() {
-        const { cookies } = this.props;
+
+       const { cookies } = this.props;
+
 
         return(
 
@@ -331,7 +335,7 @@ class Profile extends React.Component {
                                                 <div className="profileActive"></div>
 
 
-                                                {this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
+                                                {this.state.profile.id!=null && this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
                                                 <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
 
