@@ -62,10 +62,10 @@ class Login extends React.Component
 
             cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
           }
-          else if (profile.role == 'Publisher'){
+          /*else if (profile.role == 'Publisher'){
 
               cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
-          }
+          }*/
 
 
         }

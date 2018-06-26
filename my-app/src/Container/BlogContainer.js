@@ -4,6 +4,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import ReviewService from "../Services/ReviewService";
 import "../CSS/blog.css"
+import UserService from "../Services/UserService";
 
  class BlogContainer extends React.Component {
 
@@ -19,17 +20,25 @@ import "../CSS/blog.css"
         	profile: '',
         	blogs: []
         }
-
+        this.userService = UserService.instance;
         this.reviewService = ReviewService.instance;
 
     }
 
     componentDidMount(){
     const { cookies } = this.props;
+
     console.log(cookies.get('profile'));
-    this.setState({profile: cookies.get('profile')})
+    //this.setState({profile: cookies.get('profile')})
+        this.userService.findUserById(this.props.userId).then((profile)=>{
+
+            console.log(profile)
+            this.setState({profile: profile})
+
+
+        })
     console.log(this.state.profile)
-    this.reviewService.findBlogsforUser(cookies.get('profile').id).then((response)=>{
+    this.reviewService.findBlogsforUser(this.props.userId).then((response)=>{
     	this.setState({blogs: response})
     });
   }
@@ -96,6 +105,7 @@ import "../CSS/blog.css"
 	render(){
 		return(
 				<div>
+
 					<div className="gallery">
 
                             {this.showBlogs()}
