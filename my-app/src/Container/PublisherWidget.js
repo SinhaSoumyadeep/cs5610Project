@@ -116,6 +116,8 @@ class PublisherWidget
             );
         }
 
+
+
         return(
 
 
@@ -139,7 +141,7 @@ class PublisherWidget
                             </form>
                             <div className="imgPreview">{$imagePreview}</div>
                         </div><hr/>
-                    <EventsForPublisher/>
+                    <EventsForPublisher userId={this.props.userId}/>
 
                 </div>
 

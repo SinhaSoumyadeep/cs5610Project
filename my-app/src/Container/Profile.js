@@ -172,7 +172,7 @@ class Profile extends React.Component {
                if (cookies.get('loggedInFrom') == 'NU'){
                    this.userService.findUserById(cookies.get('profile').id).then((profile)=>{
 
-                       console.log("************"+profile)
+                       console.log(profile)
                        if(profile.coverPic != null)
                        {
                            this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+profile.coverPic})
@@ -474,7 +474,7 @@ class Profile extends React.Component {
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
                                                 {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer/>}
-                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget/>}
+                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
 

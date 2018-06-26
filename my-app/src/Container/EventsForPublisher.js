@@ -4,6 +4,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import EventService from "../Services/EventService";
 import "../CSS/blog.css"
+import UserService from "../Services/UserService";
 
 class EventsForPublisher extends React.Component {
 
@@ -20,17 +21,27 @@ class EventsForPublisher extends React.Component {
             profile: '',
             events: []
         }
+        this.userService = UserService.instance;
         this.eventService = EventService.instance;
 
     }
 
     componentDidMount(){
         const { cookies } = this.props;
-        this.setState({profile: cookies.get('profile')})
+
         console.log(cookies.get('profile'))
         console.log(cookies.get('profile').id)
+
+        this.userService.findUserById(this.props.userId).then((profile)=>{
+
+            console.log(profile)
+            this.setState({profile: profile})
+
+
+        })
+
         this.eventService
-            .findAllEventsForPublisher(cookies.get('profile').id)
+            .findAllEventsForPublisher(this.props.userId)
             .then((response)=>{
             this.setState({events: response})
         });
@@ -80,6 +91,7 @@ class EventsForPublisher extends React.Component {
     }
 
     render(){
+        
         return(
             <div>
                 <div className="hideScroll">
