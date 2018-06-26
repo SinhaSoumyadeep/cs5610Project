@@ -19,6 +19,8 @@ import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
 import PublisherWidget from "./PublisherWidget";
 import FooterPage from "./FooterPage";
+import FollowingContainer from "./FollowingContainer";
+import FollowerContainer from "./FollowerContainer";
 
 
 
@@ -272,6 +274,13 @@ class Profile extends React.Component {
         console.log(coverPic)
     }
 
+    follow()
+    {
+        const { cookies } = this.props;
+        alert(cookies.get('profile').id+"is following"+this.props.match.params.userId);
+        this.userService.follow(cookies.get('profile').id,this.props.match.params.userId)
+    }
+
 
     render() {
 
@@ -467,7 +476,7 @@ class Profile extends React.Component {
 
 
                                             </ul>
-                                            <span className="follow">Follow</span>
+                                            <span className="follow" onClick={()=>{this.follow()}}>Follow</span>
                                             <div className="hideScroll">
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
@@ -481,6 +490,8 @@ class Profile extends React.Component {
 
 
                                             </div>
+                                            {this.state.loggedInFrom == 'NU' && <FollowingContainer userId={this.state.userId}/>}
+                                            {this.state.loggedInFrom == 'NU' && <FollowerContainer userId={this.state.userId}/>}
                                         </div>
                                     </div>
                                 </div>

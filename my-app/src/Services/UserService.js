@@ -106,5 +106,25 @@ export default class UserService{
             method: 'POST'
         }).then(function(response){return response.json()})
     }
+
+    follow(followerId,followingId)
+    {
+        return fetch("http://localhost:8080/api/user/"+followerId+"/"+followingId)
+
+    }
+
+    findFollower(userId) {
+        return fetch("http://localhost:8080/api/findfollowers/"+userId)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
+    findFollowing(userId) {
+        return fetch("http://localhost:8080/api/findfollowing/"+userId)
+            .then(function(response){
+                return response.json();
+            });
+    }
 }
 

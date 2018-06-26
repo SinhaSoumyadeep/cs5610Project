@@ -3,7 +3,7 @@ import React from 'react';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import ReviewService from "../Services/ReviewService";
-import "../CSS/blog.css"
+
 import UserService from "../Services/UserService";
 
  class BlogContainer extends React.Component {
