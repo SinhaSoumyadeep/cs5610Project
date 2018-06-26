@@ -84,7 +84,7 @@ class SearchContainer
         $("tbody").empty();
         this.userService.findBySrchKey(srchKey).then((users)=> {
             this.state.searchArray = users;
-            $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",(response)=>{
+            $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",(response)=>{
 
 
                 this.state.searchArray.push(...response.items)
@@ -96,6 +96,10 @@ class SearchContainer
                     {
                         console.log("this is a user")
                         console.log(item.username)
+                        if(item.role == "admin")
+                        {
+                            return
+                        }
                         var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
 
                             '<div style="height: 12px"></div>'+
@@ -205,7 +209,7 @@ class SearchContainer
                 <div className="logo">
                     <a href="/books">
                     <img src={logo}
-                    height="45px" width="140px"
+                    height="35px" width="149px"
                     />
 
                     </a>
@@ -241,6 +245,7 @@ class SearchContainer
                         cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
                         cookies.remove('isAuthor',{ path: '/' });
+                        //cookies.remove('isPublisher',{ path: '/' });
 
 
                     }}>LogOut</a>

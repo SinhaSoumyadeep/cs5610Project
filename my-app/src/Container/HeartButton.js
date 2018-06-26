@@ -50,7 +50,7 @@ export default class HeartButton extends React.Component {
 
         if($(".fa-heart").text() == "Like")
         {
-            alert(userId+" likes "+isbn)
+            //alert(userId+" likes "+isbn)
             var book = {userId: userId, isbn: isbn, imgUrl: imgUrl }
             this.reviewService.likedBook(book).then((response)=>{ console.log(response)})
             $(".fa-heart").css('color','#DAA520')
@@ -60,8 +60,8 @@ export default class HeartButton extends React.Component {
         }
         else
         {
-            alert(userId+" unliked "+isbn)
-            alert(this.state.likeId)
+            //alert(userId+" unliked "+isbn)
+            //alert(this.state.likeId)
             this.reviewService.deleteLikedBook(this.state.likeId).then((response)=>{ console.log(response)})
             $(".fa-heart").css('color','rgb(255, 255, 255)')
             $(".btn-secondary").css('background','#DAA520')

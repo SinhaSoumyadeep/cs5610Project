@@ -4,10 +4,11 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import ReviewService from "../Services/ReviewService";
 import "../CSS/blog.css"
+import UserService from "../Services/UserService";
 
  class BlogContainer extends React.Component {
 
-	static propTypes = {
+    static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
 
@@ -16,10 +17,12 @@ import "../CSS/blog.css"
         super(props);
 
         this.state = {
-        	profile: '',
-        	blogs: []
+            profile: '',
+            blogs: [],
+            updateForm: false,
+            currentBlog: ''
         }
-
+        this.userService = UserService.instance;
         this.reviewService = ReviewService.instance;
 
     }
@@ -27,10 +30,17 @@ import "../CSS/blog.css"
     componentDidMount(){
     const { cookies } = this.props;
     console.log(cookies.get('profile'));
-    this.setState({profile: cookies.get('profile')})
+    //this.setState({profile: cookies.get('profile')})
+        this.userService.findUserById(this.props.userId).then((profile)=>{
+
+            console.log(profile)
+            this.setState({profile: profile})
+
+
+        })
     console.log(this.state.profile)
-    this.reviewService.findBlogsforUser(cookies.get('profile').id).then((response)=>{
-    	this.setState({blogs: response})
+    this.reviewService.findBlogsforUser(this.props.userId).then((response)=>{
+        this.setState({blogs: response})
     });
   }
 
@@ -57,7 +67,7 @@ import "../CSS/blog.css"
 
 
         var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.firstName+" "+this.state.profile.lastName, 
-        			  bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
+                      bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
 
 
         this.reviewService.createBlog(blog,bloggerId).then(() =>{
@@ -66,23 +76,51 @@ import "../CSS/blog.css"
         //.then((response)=>{window.location.reload()})
     }
 
+    updateBlog(blogid,blog){
+        console.log(blogid)
+        this.setState({updateForm: true})
+        this.setState({currentBlog: blog})
+    }
+
+    updateBlogContent(blogID){
+
+        var blogTxt = this.state.currentBlog.blog;
+        var blog = {
+            bloggerId: String(this.state.profile.id),
+            blogger: this.state.profile.firstName+" "+this.state.profile.lastName,
+            bloggerImageUrl: this.state.profile.imageURL+'?sz=550',
+            blog: blogTxt,
+            id: blogID
+        }
+
+        this.reviewService.updateBlog(blogID,blog).then(()=>{
+                    window.location.reload();
+
+        })
+
+
+    }
+
 
 
         showBlogs()
     {
         var rows = this.state.blogs.map((blog) => {
 
-
+            const { cookies } = this.props;
 
             return (
 
                 <div className="alert alert-success" role="alert" style={{width: "541px"}}>
                 {blog.blog}
-                	<span className="float-right">
-           				<i className="fa fa-times" style={{cursor: "pointer"}} 
-           					onClick = {()=> {this.deleteBlog(blog.id)}}>
-           				</i>
-        			</span>
+                    {cookies.get('profile').id == this.props.userId &&<span className="float-right">
+                        <i className="fa fa-times" style={{cursor: "pointer"}} 
+                            onClick = {()=> {this.deleteBlog(blog.id)}}>
+                        </i>
+                        <i className="fa fa-pencil" style={{cursor: "pointer"}} 
+                            onClick = {()=>{this.updateBlog(blog.id, blog)}}>
+                        </i>
+                    </span>}
                 </div>
 
             )
@@ -93,30 +131,51 @@ import "../CSS/blog.css"
         )
     }
 
-	render(){
-		return(
-				<div>
-					<div className="gallery">
+    render(){
+        const { cookies } = this.props;
+        return(
+                <div>
+                    <div className="gallery">
 
                             {this.showBlogs()}
 
-					</div>
+                    </div>
 
-				 	<div className="reviewBox container-fluid">
-                		{this.state.profile.role == "Author" &&
-                		<div>
-                		<textarea id="myInput" style = {{width:"75%"}}className="form-control"  
-                		 placeholder="Blogs" ref="blogText" />
-                		<button style = {{width:"75%"}} className="btn btn-success btn-block"
-                		onClick={()=>{this.postBlog(this.state.profile.id)}}>
-                			Add Blogs
-                		</button>
-                		</div>	}
-            		</div>
+                    {cookies.get('profile').id == this.props.userId && <div className="reviewBox container-fluid">
+                        {this.state.profile.role == "Author" && this.state.updateForm == false &&
+                        <div>
+                        <textarea id="myInput" style = {{width:"75%"}}className="form-control"  
+                         placeholder="Blogs" ref="blogText" />
+                        <button style = {{width:"75%"}} className="btn btn-success btn-block"
+                        onClick={()=>{this.postBlog(this.state.profile.id)}}>
+                            Add Blogs
+                        </button>
+                        </div>  }
 
-				</div>
-			)
-	}
+                        {
+                            this.state.updateForm == true && 
+                            <div>
+                        <textarea id="myInput" style = {{width:"75%" , height: "120px"}}className="form-control" 
+                        value =  {this.state.currentBlog.blog} onChange = {(e)=>{ 
+
+                            var currentBlog = this.state.currentBlog
+                            currentBlog.blog = e.target.value
+
+                            this.setState({currentBlog: currentBlog}) 
+                        } }
+                         placeholder= {this.state.currentBlog.blog} ref="blogText" />
+                        <button style = {{width:"75%"}} className="btn btn-success btn-block"
+                        onClick={()=>{this.updateBlogContent(this.state.currentBlog.id)}}>
+                           UpdateBlog
+                        </button>
+                        </div>
+                        }
+                    </div>
+                }
+
+                </div>
+            )
+    }
 }
 export default withCookies(BlogContainer);
 

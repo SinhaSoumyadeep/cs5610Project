@@ -15,10 +15,11 @@ import Settings from "./Settings";
 import Reviews from "./ReviewsContainer.js"
 import BlogContainer from "./BlogContainer.js"
 import UserService from "../Services/UserService";
-import AdContainer from "./AdContainer";
 import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
-import PublisherWidget from "./PublisherWidget"
+import PublisherWidget from "./PublisherWidget";
+import FooterPage from "./FooterPage";
+
 
 
 
@@ -58,9 +59,11 @@ class Profile extends React.Component {
 
             userId:'',
             coverPicSet: false,
+            coverPic: 'https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg',
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
-            profilePic: ''
+            profilePic: '',
+            restrictedView: false
 
 
 
@@ -98,7 +101,8 @@ class Profile extends React.Component {
 
        if(id != LoggedinUserId)
        {
-            alert("viewing someone elses profile")
+            //alert("viewing someone elses profile")
+           this.setState({restrictedView: true})
 
            this.setState({loggedInFrom: 'NU'})
            this.state.userId = id;
@@ -106,9 +110,15 @@ class Profile extends React.Component {
                console.log(user)
                this.setState({profile: user||{imageUrl: '', picture: {data: {url: ''}}}})
                this.setState({isLoggedIn: true})
+
+
                this.setState({profilePic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'})
                if(this.state.profile!= undefined)
                {
+                   if(this.state.profile.coverPic != null)
+                   {
+                       this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+this.state.profile.coverPic})
+                   }
                    if(this.state.profile.role == 'Reader'){
 
                        this.setState({isReader: true,likedBooks: true})
@@ -140,8 +150,9 @@ class Profile extends React.Component {
        }
        else
        {
-           alert("viewing his own profile")
+           //alert("viewing his own profile")
            console.log(cookies.get('profile'))
+
            this.setState({profilePic: cookies.get('profile').imageURL})
 
            if(cookies.get('isReader')!= undefined){
@@ -158,6 +169,26 @@ class Profile extends React.Component {
 
            if(cookies.get('profile')!= undefined)
            {
+               if (cookies.get('loggedInFrom') == 'NU'){
+                   this.userService.findUserById(cookies.get('profile').id).then((profile)=>{
+
+                       console.log(profile)
+                       if(profile.coverPic != null)
+                       {
+                           this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+profile.coverPic})
+                       }
+
+                   })
+               }
+               else
+               {
+                   if(cookies.get('profile').coverPic != null)
+                   {
+                       this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+cookies.get('profile').coverPic})
+                   }
+               }
+
+
 
                if(cookies.get('profile').role == 'Publisher')
                {
@@ -176,7 +207,7 @@ class Profile extends React.Component {
 
            if(cookies.get('isAdmin')!= undefined)
            {
-               alert("here admin")
+               //alert("here admin")
                this.setState({isAuthor: true})
                //alert("is reviewer"+cookies.get('isReviewer'))
                this.setState({isAdmin: cookies.get('isAdmin')})
@@ -260,16 +291,16 @@ class Profile extends React.Component {
 
                                 <div className="container">
 
-                                    {this.state.coverPicSet == false &&
-                                    <img className="header" src="https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"></img>}
-                                    {this.state.coverPicSet == true && this.state.profile.cover_pic != undefined &&
-                                    <img className="header" src={"https://s3.amazonaws.com/book-worms/"+this.state.profile.cover_pic.replace(" ","%20")} ></img>}
+
+                                    <img className="header" src={this.state.coverPic}></img>
 
 
 
 
 
-                                    <div className="row">
+
+                                    <div className="row" style={{paddingBottom: "285px"}}>
+
                                         <div className="left col-lg-4">
                                             <div className="photo-left">
                                                 {this.state.loggedInFrom == 'GL' &&
@@ -288,16 +319,12 @@ class Profile extends React.Component {
                                                 />
                                                 }
                                                 <div className="profileActive"></div>
-                                                <a href="#" style={{color: "black"}}><i className="fa fa-cogs"></i></a>
-                                                {this.state.loggedInFrom == 'GL'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
+
+
+                                                {this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
+                                                <Trigger color={"black"} buttonLabel={<i className="fa fa-cog">Edit Profile</i>} type={"settings"} profileURL={this.state.profile}></Trigger>
                                                 }
-                                                {this.state.loggedInFrom == 'NU'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
-                                                }
-                                                {this.state.loggedInFrom == 'FB'&&
-                                                <Trigger style={{color: "black"}} buttonLabel={"Edit Profile"} type={"settings"} profileURL={this.state.profile}/>
-                                                }
+
 
 
                                             </div>
@@ -348,12 +375,7 @@ class Profile extends React.Component {
                                             {this.state.loggedInFrom == 'NU' &&
                                             <p className="desc">{this.state.profile.bio}</p>
                                             }
-                                            {this.state.loggedInFrom == 'GL' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
-                                            {this.state.loggedInFrom == 'FB' &&
-                                            <p className="desc">Go to settings to update your bio!</p>
-                                            }
+
                                             <div className="social">
                                                 <i className="fa fa-facebook-square" aria-hidden="true"></i>
                                                 <i className="fa fa-twitter-square" aria-hidden="true"></i>
@@ -451,8 +473,8 @@ class Profile extends React.Component {
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.wishlist == true && <WishListContainer/>}
-                                                {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer/>}
-                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget/>}
+                                                {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer userId={this.state.userId}/>}
+                                                {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
 
@@ -465,7 +487,12 @@ class Profile extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <FooterPage/>
+                    </div>
+                    <div style={{height: "126px"}}></div>
                 </div>
+
 
             </div>
         )

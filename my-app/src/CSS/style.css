@@ -118,6 +118,8 @@ a:hover{
     width: 15%;
     height: 38px;
     border-radius: 7px;
+    margin-left: -7px;
+    margin-right: 14px;
 
 }
 .searchBar
@@ -192,14 +194,14 @@ a:hover{
 .asideSec
 {
     border-left: 1px solid #8b8b8b;
-    height: 1036px;
+    height: 1039px;
 
 }
 
 .mainSec
 {
     border-right: 1px solid #8b8b8b;
-        height: 1036px;
+    height: 1039px;
 }
 
 #searchResults
@@ -437,6 +439,12 @@ a:hover{
     box-sizing: content-box;
 
 }
+
+.previewComponent{
+    width: 95%;
+}
+
+
 .hideScrollStyle
 {
     height: 27%;
@@ -451,4 +459,35 @@ a:hover{
     padding-right: 17px;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon
+{
+    background-image: none;
+}
+
+.carousel-indicators li {
+    position: relative;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 30px;
+    height: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0);
+}
+.carousel-indicators .active {
+    background-color: rgba(0,0,0,0);
+}
+.carousel {
+    position: relative;
+    width: 316px;
+    height: 205px;
+}
+.AdContainer
+{
+    margin-top: 23px;
+    overflow: hidden;
 }

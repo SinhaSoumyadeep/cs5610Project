@@ -8,10 +8,6 @@ import { CookiesProvider } from 'react-cookie';
 
 
 
-
-
-
-
 ReactDOM.render(
 
     <div className="container-fluid">

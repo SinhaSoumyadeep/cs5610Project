@@ -11,6 +11,8 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import UserService from '../Services/UserService';
 import ReviewService from '../Services/ReviewService';
+import AdverstisementCarousel from "../Container/AdvertisementCarousel";
+import Example from "../Container/AdvertisementCarousel"
 
 
 class BookList extends React.Component
@@ -77,7 +79,7 @@ class BookList extends React.Component
                 this.setState({nonFiction: books.results});
             }
             catch(err) {
-                alert("error1")
+                //alert("error1")
                 this.setState({ err: true })
             }
 
@@ -112,7 +114,7 @@ class BookList extends React.Component
                 this.setState({fictionBooks: books.results});
             }
             catch(err) {
-                alert("error2")
+                //alert("error2")
                 this.setState({ err: true })
             }
 
@@ -138,7 +140,7 @@ class BookList extends React.Component
                 $.ajax({
                     async: false,
                     type:"GET",
-                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
+                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
                     success: (result)=>{
 
                         try {
@@ -147,7 +149,7 @@ class BookList extends React.Component
                             this.setState({ ficthumb: joined })
                         }
                         catch(err) {
-                            alert("error3")
+                            //alert("error3")
                             this.setState({ err: true })
                         }
 
@@ -177,7 +179,7 @@ class BookList extends React.Component
             $.ajax({
                 async: false,
                 type:"GET",
-                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
+                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
                 success: (result)=>{
 
                     try {
@@ -186,7 +188,7 @@ class BookList extends React.Component
                         this.setState({ nonficthumb: joined })
                     }
                     catch(err) {
-                        alert("error4")
+                        //alert("error4")
                         this.setState({ err: true })
                     }
 
@@ -385,7 +387,8 @@ class BookList extends React.Component
 
                         </div>
                         <div className="col-sm-4 asideSec">
-                            <Advertisement/>
+                            <Example/>
+
                             <hr width="300px"/>
                             <div id="topPicks">
                                 <h5>Our Top Picks </h5>

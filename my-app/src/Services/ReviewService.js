@@ -1,7 +1,7 @@
 import React from 'react'
 
 let _singleton = Symbol();
-const User_URL = 'http://localhost8080:/api/user';
+const User_URL = 'https://book-worms-server.herokuapp.com/api/user';
 
 export default class ReviewService{
     constructor(singletonToken){
@@ -119,6 +119,11 @@ export default class ReviewService{
     fetchAllReviewsForReviewer(userId)
     {
         return fetch("https://book-worms-server.herokuapp.com/api/reviewedBooks/" + userId).then(function(response) {return response.json()})
+    }
+
+    updateBlog(blogId,blog){
+            var postObject = {method: 'put',body: JSON.stringify(blog),headers: {'content-Type': 'application/json','dataType':'json'} }
+    return fetch("https://book-worms-server.herokuapp.com/api/blog/"+blogId, postObject);   
     }
 
 

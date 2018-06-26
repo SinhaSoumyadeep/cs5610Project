@@ -62,10 +62,10 @@ class Login extends React.Component
 
             cookies.set('isReviewer',true,{path: '/', maxAge: (1800)});
           }
-          else if (profile.role == 'Publisher'){
+          /*else if (profile.role == 'Publisher'){
 
               cookies.set('isPublisher',true,{path: '/', maxAge: (1800)});
-          }
+          }*/
 
 
         }
@@ -149,7 +149,7 @@ class Login extends React.Component
             imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
             bio: response.bio,
             category: response.category,
-            cover_pic: response.coverPic
+            coverPic: response.coverPic
         }
 
         console.log(user);
@@ -185,6 +185,8 @@ class Login extends React.Component
 
       <div>
       <form>
+          <h3>Login</h3>
+
 
       <label>
       Username
@@ -213,25 +215,27 @@ class Login extends React.Component
           </Button>
           <div>
 
-           <GoogleLogin
-    clientId="82907325524-jfg57300vs7m0300cs7uk6pvekjckq39.apps.googleusercontent.com"
-    button className = "btn btn-block btn-danger"
-    buttonText="Login With Gmail"
-    onSuccess={this.responseGoogle}
-    onFailure={this.responseGoogle}
-  />
-          </div>
+              <GoogleLogin
+                  clientId="82907325524-jfg57300vs7m0300cs7uk6pvekjckq39.apps.googleusercontent.com"
+                  onSuccess={this.responseGoogle}
+                  onFailure={this.responseGoogle}
+                  buttonText={<span
+                      className="fa fa-google-plus ">&nbsp;&nbsp;&nbsp;&nbsp; Login with Google </span>}
+                  style={{marginLeft: 0, marginRight: 5, width: 465, fontWeight: "bold"}}
+                  icon="fa fa-google-plus-g"
+                  className="btn btn-danger">
+              </GoogleLogin>
+              <FacebookLogin
+                  appId="202947930333909"
+                  fields="first_name,last_name,gender,birthday,email,picture"
+                  textButton={<span> &nbsp;&nbsp;&nbsp;&nbsp; Login with Facebook </span>}
+                  callback={this.responseFacebook}
+                  cssClass="my-facebook-button-class btn btn-primary"
+                  buttonStyle={{marginLeft: 0, marginRight: 5, width: 465, backgroundColor: "#3B5998"}}
+                  icon="fa-facebook-square"
+                  className="btn btn-primary"
+              />
 
-          <br/>
-          <div>
-           <FacebookLogin
-    appId="202947930333909"
-    autoLoad={false}
-    button className = "btn btn-block btn-primary"
-    buttonText="Login With Facebook"
-    fields="name,email,picture"
-    callback={this.responseFacebook}
-  />
           </div>
             </form>
             </div>

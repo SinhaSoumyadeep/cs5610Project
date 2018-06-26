@@ -36,14 +36,15 @@ class DummyTitle
         this.setState({isLoggedIn: cookies.get('isLoggedIn')})
         if(cookies.get('loggedInFrom') == 'GL')
         {
-            this.setState({loggedInFrom: 'GL'})
+            this.setState({loggedInFrom: 'GL',userId: cookies.get('profile').googleId})
         }
         if(cookies.get('loggedInFrom') == 'FB')
         {
-            this.setState({loggedInFrom: 'FB'})
+            this.setState({loggedInFrom: 'FB',userId: cookies.get('profile').id})
         }
+
         if(cookies.get('loggedInFrom') == 'NU'){
-            this.setState({loggedInFrom: 'NU'})
+            this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
         }
 
 
@@ -59,8 +60,10 @@ class DummyTitle
             <div className="titleBar">
                 <div className="logo">
                     <a href="/books">
-                    <img src={logo} height="45px" width="140px"
-                         onClick={this.goBack}/>
+                        <img src={logo}
+                             height="35px" width="149px"
+                        />
+
                     </a>
 
                 </div>
@@ -77,7 +80,11 @@ class DummyTitle
                         const { cookies } = this.props;
                         cookies.remove('profile',{ path: '/' });
                         cookies.remove('isLoggedIn',{ path: '/' });
+                        cookies.remove('loggedInFrom',{ path: '/' });
+                        cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
+                        cookies.remove('isAuthor',{ path: '/' });
+                        
 
 
                     }}>LogOut</a>
@@ -89,15 +96,11 @@ class DummyTitle
                     <Link to={`/register`}>
                         <a hidden={this.state.isLoggedIn}>SignUp</a>
                     </Link>
-                    <Link to={`/profile`}>
+                    <a href={"/profile/"+this.state.userId}>
+
+
                         {this.state.loggedInFrom == 'GL'&&
                         <img className="loggedInUsr" src={this.state.profile.imageUrl}
-                             height="40px"
-                             hidden={!this.state.isLoggedIn}
-                        />
-                        }
-                        {this.state.loggedInFrom == 'FB'&&
-                        <img className="loggedInUsr" src={this.state.profile.picture.data.url}
                              height="40px"
                              hidden={!this.state.isLoggedIn}
                         />
@@ -108,7 +111,25 @@ class DummyTitle
                              hidden={!this.state.isLoggedIn}
                         />
                         }
-                    </Link>
+                        {this.state.loggedInFrom == 'FB'&&
+                        <img className="loggedInUsr" src={this.state.profile.picture.data.url}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
+
+                        {this.state.loggedInFrom == 'NU'&&
+                        <img className="loggedInUsr" src={this.state.profile.imageUrl}
+                             height="40px"
+                             hidden={!this.state.isLoggedIn}
+                        />
+                        }
+
+
+
+
+
+                    </a>
 
 
                 </div>
