@@ -36,7 +36,7 @@ export default class LikedBooksContainer extends React.Component {
                 return (
 
                     <div className="col-md-4">
-                        <a href={link}> <img src={books.imgUrl}/></a>
+                        <a href={link}> <img src={books.imgUrl} height="45px"/></a>
                     </div>
 
                 )

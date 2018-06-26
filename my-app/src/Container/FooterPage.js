@@ -27,6 +27,9 @@ export default class FooterPage
                         <a href="#" className="social-icons"><i className="fa fa-twitter"></i></a>
                     </div>
                 </footer>
+                <div className="hideNub">
+
+                </div>
             </div>
         )
     }

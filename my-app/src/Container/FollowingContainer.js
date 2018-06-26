@@ -39,7 +39,7 @@ class FollowingContainer extends React.Component {
                 <div style={{float: "left",textAlign: "center",margin: "5px"}}>
                     <div>
                         <a href={"/profile/"+following.id}>
-                        <img src="http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png" style={{height: "61px", width: "61px",borderRadius: "91px"}}/></a>
+                        <img src={"https://s3.amazonaws.com/bookwormstest/"+following.coverPic} style={{height: "61px", width: "61px",borderRadius: "91px"}}/></a>
                             <h6>{following.firstName+" "+following.lastName} </h6>
                     </div>
 
@@ -60,8 +60,8 @@ class FollowingContainer extends React.Component {
 
             return(
 
-                <div>
-                    <h1>Following</h1>
+                <div className="form-control followingContainer">
+                    <h5>Following</h5>
                     {this.findFollowing()}
                 </div>
             )

@@ -149,7 +149,7 @@ class Login extends React.Component
             imageURL:'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
             bio: response.bio,
             category: response.category,
-            coverPic: response.coverPic
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'
         }
 
         console.log(user);

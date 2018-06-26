@@ -220,7 +220,7 @@ main {
 .gallery img {
     box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
     width: auto;
-    height: auto;
+    height: 190px;
     cursor: pointer;
     max-width: 100%;
 }

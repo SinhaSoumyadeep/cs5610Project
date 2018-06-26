@@ -433,7 +433,7 @@ a:hover{
 .reviewBoxSection  {
     margin-top: 35px;
     width: 620px;
-    height: 340px;
+    height: 326px;
     overflow-y: scroll;
     padding-right: 57px; /* Increase/decrease this value for cross-browser compatibility */
     box-sizing: content-box;
@@ -490,4 +490,29 @@ a:hover{
 {
     margin-top: 23px;
     overflow: hidden;
+}
+.followerContainer
+{
+    height: 147px;
+    width: 686px;
+    overflow: hidden;
+    overflow-x: scroll;
+    margin-top: 5px;
+
+}
+.followingContainer
+{
+    height: 147px;
+    width: 686px;
+    overflow: hidden;
+    overflow-x: scroll;
+    margin-top: 84px;
+
+}
+.hideNub
+{
+    border: 1px solid black;
+    height: 93px;
+    background-color: #ffc107;
+    margin-top: -41px;
 }
