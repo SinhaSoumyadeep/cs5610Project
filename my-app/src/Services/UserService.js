@@ -106,5 +106,25 @@ export default class UserService{
             method: 'POST'
         }).then(function(response){return response.json()})
     }
+
+    follow(followerId,followingId)
+    {
+        return fetch("https://book-worms-server.herokuapp.com/api/user/"+followerId+"/"+followingId)
+
+    }
+
+    findFollower(userId) {
+        return fetch("https://book-worms-server.herokuapp.com/api/findfollowers/"+userId)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
+    findFollowing(userId) {
+        return fetch("https://book-worms-server.herokuapp.com/api/findfollowing/"+userId)
+            .then(function(response){
+                return response.json();
+            });
+    }
 }
 

@@ -140,7 +140,9 @@ class BookList extends React.Component
                 $.ajax({
                     async: false,
                     type:"GET",
+
                     url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCyGhr-GiGvXE4CX4pT_pwuorSv2327DH4",
+
                     success: (result)=>{
 
                         try {
@@ -179,7 +181,9 @@ class BookList extends React.Component
             $.ajax({
                 async: false,
                 type:"GET",
+
                 url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCyGhr-GiGvXE4CX4pT_pwuorSv2327DH4",
+
                 success: (result)=>{
 
                     try {
@@ -300,7 +304,7 @@ class BookList extends React.Component
 
                 <div id = "blogBoxProfile" >
                     <div style={{float: "left"}}>
-                        <a > <img src={'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png'} 
+                        <a > <img src={blog.bloggerImageUrl}
                         style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
                         </a>
                         <h5>{blog.blogger}</h5>

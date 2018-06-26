@@ -202,7 +202,7 @@ class Settings extends React.Component {
                                     type="file"
                                     onChange={e => this.ImageChange(e)}/>
                                 <button
-                                    className="submitButton"
+                                    className="btn btn-primary"
                                     type="submit"
                                     onClick={e => this.UploadImage(e)}>
                                     Upload Image

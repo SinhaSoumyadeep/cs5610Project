@@ -31,6 +31,7 @@ class SearchContainer
             loggedInFrom: 'BW',
             picture: {data: {url: ''}},
             userId:'',
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
             searchArray:[]
 
 
@@ -53,6 +54,19 @@ class SearchContainer
 
         if(cookies.get('loggedInFrom') == 'NU'){
             this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
+        }
+
+        if(cookies.get('profile')!= undefined) {
+            if (cookies.get('loggedInFrom') == 'NU') {
+                this.userService.findUserById(cookies.get('profile').id).then((profile) => {
+
+                    console.log(profile)
+                    if (profile.coverPic != null) {
+                        this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/" + profile.coverPic})
+                    }
+
+                })
+            }
         }
 
 
@@ -84,7 +98,9 @@ class SearchContainer
         $("tbody").empty();
         this.userService.findBySrchKey(srchKey).then((users)=> {
             this.state.searchArray = users;
+
             $.get("https://www.googleapis.com/books/v1/volumes?q="+srchKey+"&key=AIzaSyCyGhr-GiGvXE4CX4pT_pwuorSv2327DH4",(response)=>{
+
 
 
                 this.state.searchArray.push(...response.items)
@@ -103,7 +119,7 @@ class SearchContainer
                         var $row = $('<tr class="wbdv-template wbdv-user wbdv-hidden" id="trow['+item.index+']">'+
 
                             '<div style="height: 12px"></div>'+
-                            '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/profile/'+item.id+'" style="color: black"><img src="http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png" height="82"/></a></td>'+
+                            '<td style="padding: 20px" id="thumbnail['+item.index+']"><a href="/profile/'+item.id+'" style="color: black"><img src="https://s3.amazonaws.com/bookwormstest/'+item.coverPic+'" height="65" width="65" style="border-radius: 95px"/></a></td>'+
                             '<td style="padding: 20px" id="title['+item.index+']"><a href="/profile/'+item.id+'" style="color: black">'+item.username+'</a></td>'+
                             '</tr>');
 
@@ -263,8 +279,8 @@ class SearchContainer
                             />
                         }
                         {this.state.loggedInFrom == 'NU'&&
-                            <img className="loggedInUsr" src={this.state.profile.imageURL}
-                            height="40px"
+                            <img className="loggedInUsr" src={this.state.coverPic}
+                            height="40px" width="40px"
                             hidden={!this.state.isLoggedIn}
                             />
                         }
@@ -274,16 +290,6 @@ class SearchContainer
                              hidden={!this.state.isLoggedIn}
                         />
                         }
-
-                        {this.state.loggedInFrom == 'NU'&&
-                        <img className="loggedInUsr" src={this.state.profile.imageUrl}
-                             height="40px"
-                             hidden={!this.state.isLoggedIn}
-                        />
-                        }
-
-
-
 
 
                     </a>

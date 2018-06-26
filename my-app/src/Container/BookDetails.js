@@ -15,6 +15,7 @@ import ReviewContainer from "./ReviewContainer"
 import FooterPage from "./FooterPage"
 import ReviewService from "../Services/ReviewService";
 import Example from "./AdvertisementCarousel";
+import UserService from "../Services/UserService";
 
 
 
@@ -27,6 +28,7 @@ class BookDetails extends React.Component {
     constructor(props) {
         super(props)
         this.changeRating = this.changeRating.bind(this);
+        this.userService = UserService.instance;
         this.reviewService = ReviewService.instance;
         this.state = {
             isbn: '',
@@ -39,7 +41,8 @@ class BookDetails extends React.Component {
             isPublisher: false,
             err: false,
             redirectToLogin: false,
-            profile:'',
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
+            profile: {imageUrl: '', picture: {data: {url: ''}}},
             userId:''
         };
 
@@ -99,6 +102,20 @@ class BookDetails extends React.Component {
             this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
         }
 
+        if(cookies.get('profile')!= undefined) {
+            if (cookies.get('loggedInFrom') == 'NU') {
+                this.userService.findUserById(cookies.get('profile').id).then((profile) => {
+
+                    console.log(profile)
+                    this.setState({profile: profile})
+                    if (profile.coverPic != null) {
+                        this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/" + profile.coverPic})
+                    }
+
+                })
+            }
+        }
+
     }
 
 
@@ -107,7 +124,9 @@ class BookDetails extends React.Component {
     find_preview(id)
     {
         var isbn = id
+
         fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCyGhr-GiGvXE4CX4pT_pwuorSv2327DH4", {
+
             method: 'get',
         }).then(function(response) {return response.json()}).then((books) => {
 
@@ -134,7 +153,7 @@ class BookDetails extends React.Component {
         var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.imgthumb);
         var bookTitle = this.state.books.title;
 
-        var review = {isbn: String(name), bookName: bookTitle, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.firstName+" "+this.state.profile.lastName, reviewerImageUrl: this.state.profile.imageURL+'?sz=550', rating: newRating }
+        var review = {isbn: String(name), bookName: bookTitle, bookImg: img, reviewerId: String(this.state.profile.id), reviewerName: this.state.profile.firstName+" "+this.state.profile.lastName, reviewerImageUrl: this.state.coverPic, rating: newRating }
 
         this.reviewService.createReview(review,name).then((response)=>{window.location.reload()})
     }

@@ -19,6 +19,8 @@ import ReviewsContainer from "./ReviewsContainer";
 import AllBlogContainer from "./AllBlogContainer";
 import PublisherWidget from "./PublisherWidget";
 import FooterPage from "./FooterPage";
+import FollowingContainer from "./FollowingContainer";
+import FollowerContainer from "./FollowerContainer";
 
 
 
@@ -59,10 +61,10 @@ class Profile extends React.Component {
 
             userId:'',
             coverPicSet: false,
-            coverPic: 'https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg',
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
             loggedInFrom: 'NU',
             profile: {imageUrl: '', picture: {data: {url: ''}}},
-            profilePic: '',
+            profilePic: 'https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg',
             restrictedView: false
 
 
@@ -274,9 +276,18 @@ class Profile extends React.Component {
         console.log(coverPic)
     }
 
+    follow()
+    {
+        const { cookies } = this.props;
+        alert(cookies.get('profile').id+"is following"+this.props.match.params.userId);
+        this.userService.follow(cookies.get('profile').id,this.props.match.params.userId)
+    }
+
 
     render() {
+
        const { cookies } = this.props;
+
 
         return(
 
@@ -295,7 +306,7 @@ class Profile extends React.Component {
                                 <div className="container">
 
 
-                                    <img className="header" src={this.state.coverPic}></img>
+                                    <img className="header" src={"https://image.noelshack.com/fichiers/2017/38/2/1505775648-annapurnafocus.jpg"}></img>
 
 
 
@@ -317,7 +328,7 @@ class Profile extends React.Component {
                                                 }
 
                                                 {this.state.loggedInFrom == 'NU' &&
-                                                <img className="photo" src={this.state.profilePic}
+                                                <img className="photo" src={this.state.coverPic}
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
@@ -379,9 +390,9 @@ class Profile extends React.Component {
                                             <p className="desc">{this.state.profile.bio}</p>
                                             }
 
-                                            <div className="social">
-                                                <i className="fa fa-facebook-square" aria-hidden="true"></i>
-                                                <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                                            <div className="social ">
+
+
                                             </div>
                                         </div>
                                         <div className="right col-lg-8">
@@ -461,7 +472,7 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(6)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Wish List</li>
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Following/Followers</li>
 
 
 
@@ -470,12 +481,12 @@ class Profile extends React.Component {
 
 
                                             </ul>
-                                            <span className="follow">Follow</span>
+                                            {(cookies.get('profile').id != this.props.match.params.userId) && <span className="follow" onClick={()=>{this.follow()}}>Follow</span>}
                                             <div className="hideScroll">
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
-                                                {this.state.wishlist == true && <WishListContainer/>}
+                                                {this.state.wishlist == true && this.state.loggedInFrom == 'NU' && <WishListContainer userId={this.state.userId}/>}
                                                 {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer userId={this.state.userId}/>}
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
@@ -484,6 +495,7 @@ class Profile extends React.Component {
 
 
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

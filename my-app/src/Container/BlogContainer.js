@@ -3,7 +3,7 @@ import React from 'react';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import ReviewService from "../Services/ReviewService";
-import "../CSS/blog.css"
+
 import UserService from "../Services/UserService";
 
  class BlogContainer extends React.Component {
@@ -17,8 +17,9 @@ import UserService from "../Services/UserService";
         super(props);
 
         this.state = {
-            profile: '',
-            blogs: [],
+            blogs:[],
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
+            profile: {imageUrl: '', picture: {data: {url: ''}}},
             updateForm: false,
             currentBlog: ''
         }
@@ -35,6 +36,9 @@ import UserService from "../Services/UserService";
 
             console.log(profile)
             this.setState({profile: profile})
+            if (profile.coverPic != null) {
+                this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/" + profile.coverPic})
+            }
 
 
         })
@@ -67,7 +71,7 @@ import UserService from "../Services/UserService";
 
 
         var blog = { bloggerId: String(this.state.profile.id), blogger: this.state.profile.firstName+" "+this.state.profile.lastName, 
-                      bloggerImageUrl: this.state.profile.imageURL+'?sz=550',blog: blogTxt }
+                      bloggerImageUrl: this.state.coverPic,blog: blogTxt }
 
 
         this.reviewService.createBlog(blog,bloggerId).then(() =>{
@@ -85,10 +89,11 @@ import UserService from "../Services/UserService";
     updateBlogContent(blogID){
 
         var blogTxt = this.state.currentBlog.blog;
+        alert(this.state.coverPic)
         var blog = {
             bloggerId: String(this.state.profile.id),
             blogger: this.state.profile.firstName+" "+this.state.profile.lastName,
-            bloggerImageUrl: this.state.profile.imageURL+'?sz=550',
+            bloggerImageUrl: this.state.coverPic,
             blog: blogTxt,
             id: blogID
         }

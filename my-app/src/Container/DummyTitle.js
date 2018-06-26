@@ -5,6 +5,7 @@ import SearchRow from "./SearchRow";
 import logo from "../Style/Bookworm-01.png"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import UserService from "../Services/UserService";
 
 
 class DummyTitle
@@ -15,14 +16,16 @@ class DummyTitle
     };
     constructor(props) {
         super(props)
-
+        this.userService = UserService.instance;
         this.state = {
 
             books: [],
             err: false,
             profile: '',
             isLoggedIn: false,
-            picture:'',
+            picture: {data: {url: ''}},
+            userId:'',
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
             loggedInFrom: 'BW'
 
 
@@ -45,6 +48,18 @@ class DummyTitle
 
         if(cookies.get('loggedInFrom') == 'NU'){
             this.setState({loggedInFrom: 'NU',userId: cookies.get('profile').id})
+        }
+        if(cookies.get('profile')!= undefined) {
+            if (cookies.get('loggedInFrom') == 'NU') {
+                this.userService.findUserById(cookies.get('profile').id).then((profile) => {
+
+                    console.log(profile)
+                    if (profile.coverPic != null) {
+                        this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/" + profile.coverPic})
+                    }
+
+                })
+            }
         }
 
 
@@ -106,7 +121,7 @@ class DummyTitle
                         />
                         }
                         {this.state.loggedInFrom == 'NU'&&
-                        <img className="loggedInUsr" src={this.state.profile.imageURL}
+                        <img className="loggedInUsr" src={this.state.coverPic}
                              height="40px"
                              hidden={!this.state.isLoggedIn}
                         />
@@ -118,12 +133,7 @@ class DummyTitle
                         />
                         }
 
-                        {this.state.loggedInFrom == 'NU'&&
-                        <img className="loggedInUsr" src={this.state.profile.imageUrl}
-                             height="40px"
-                             hidden={!this.state.isLoggedIn}
-                        />
-                        }
+
 
 
 
