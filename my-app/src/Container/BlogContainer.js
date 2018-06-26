@@ -81,17 +81,17 @@ import UserService from "../Services/UserService";
     {
         var rows = this.state.blogs.map((blog) => {
 
-
+            const { cookies } = this.props;
 
             return (
 
                 <div className="alert alert-success" role="alert" style={{width: "541px"}}>
                 {blog.blog}
-                	<span className="float-right">
+                    {cookies.get('profile').id == this.props.userId &&<span className="float-right">
            				<i className="fa fa-times" style={{cursor: "pointer"}} 
            					onClick = {()=> {this.deleteBlog(blog.id)}}>
            				</i>
-        			</span>
+        			</span>}
                 </div>
 
             )
@@ -103,6 +103,7 @@ import UserService from "../Services/UserService";
     }
 
 	render(){
+        const { cookies } = this.props;
 		return(
 				<div>
 
@@ -112,7 +113,7 @@ import UserService from "../Services/UserService";
 
 					</div>
 
-				 	<div className="reviewBox container-fluid">
+                    {cookies.get('profile').id == this.props.userId && <div className="reviewBox container-fluid">
                 		{this.state.profile.role == "Author" &&
                 		<div>
                 		<textarea id="myInput" style = {{width:"75%"}}className="form-control"  
@@ -122,7 +123,7 @@ import UserService from "../Services/UserService";
                 			Add Blogs
                 		</button>
                 		</div>	}
-            		</div>
+            		</div>}
 
 				</div>
 			)

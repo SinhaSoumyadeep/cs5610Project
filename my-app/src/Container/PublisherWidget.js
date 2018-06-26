@@ -105,6 +105,7 @@ class PublisherWidget
 
 
     render(){
+        const { cookies } = this.props;
         let { imagePreviewUrl } = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
@@ -123,8 +124,13 @@ class PublisherWidget
 
             <div className="container-fluid hideScroll">
 
+
+
                 <div className="reviewBoxSection "><br/>
-                    <h3> ADD EVENTS </h3>
+                    {cookies.get('profile').id == this.props.userId &&
+
+                    <div>
+                        <h3> ADD EVENTS </h3>
                         <textarea id="myInput" className="form-control" rows="4"  placeholder="Say something about the event..." ref="eventInfo" style={{width: "95%"}}/><br/>
                         <div className="previewComponent">
                             <form>
@@ -141,9 +147,14 @@ class PublisherWidget
                             </form>
                             <div className="imgPreview">{$imagePreview}</div>
                         </div><hr/>
-                    <EventsForPublisher userId={this.props.userId}/>
+                    </div>
 
+                    }
+
+
+                    <EventsForPublisher userId={this.props.userId}/>
                 </div>
+
 
             </div>
 

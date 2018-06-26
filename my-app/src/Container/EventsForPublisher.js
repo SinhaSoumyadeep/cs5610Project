@@ -64,6 +64,7 @@ class EventsForPublisher extends React.Component {
     }
 
     EventList() {
+        const { cookies } = this.props;
         var eventList = this.state.events.map((event) => {
             return (
                 <div>
@@ -72,12 +73,12 @@ class EventsForPublisher extends React.Component {
                     <img src={event.publisher_imgURL} style={{height: "61px", width: "61px", borderRadius: "91px"}}/>
                         <h5>{event.publisherName} </h5></p>
                     </div>
-                    <span>
+                    {cookies.get('profile').id == this.props.userId && <span>
                         <button className="btn btn-danger" onClick = {()=> {this.deleteEvent(event.id)}}>
                             <i className="fa fa-times"></i>
                         </button>
 
-        			</span>
+        			</span>}
 
 
                     <div>
