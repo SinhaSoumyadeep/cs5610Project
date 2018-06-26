@@ -84,7 +84,7 @@ class DummyTitle
                         cookies.remove('isReviewer',{ path: '/' });
                         cookies.remove('isReader',{ path: '/' });
                         cookies.remove('isAuthor',{ path: '/' });
-                        cookies.remove('isPublisher',{ path: '/' });
+                        
 
 
                     }}>LogOut</a>
