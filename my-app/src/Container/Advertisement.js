@@ -1,28 +1,54 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import { UncontrolledCarousel } from 'reactstrap';
+
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+import EventService from "../Services/EventService";
+import "../CSS/blog.css"
 
 
-export default class Advertisement
-    extends Component {
+export default class Advertisement extends Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            profile: '',
+            events: []
+        }
+        this.eventService = EventService.instance;
+    }
+
+    componentDidMount() {
+        this.eventService.findAllEvents()
+            .then((response) => {
+                this.setState({events: response})
+            });
+    }
+
+    EventList() {
+        var eventList = this.state.events.map((event) => {
+            return (
+                <img src={"https://s3.amazonaws.com/bookwormstest/" + event.event_imgURL} height="286rem" width="315px"/>
+            )
+        });
+        return (eventList);
+    }
 
     render() {
-        return (
-            <div>
-                <div className="card Advert" style={{width: "18rem",height: "18rem"}}>
-                    <div className="card-img Adimg">
-                        <img className="card-img-top" src="https://media1.popsugar-assets.com/files/thumbor/V-1rDJbC63aHrpO4TB7K9FlRsbs/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2013/06/17/817/n/1922195/7793f7b8a384ad2d_url-9/i/Snickers.jpeg" alt="Card image cap" height="286rem"/>
-                    </div>
-                    <div className="card-body Adbdy" style={{paddingLeft: "85px",margin: "auto"}}>
-                        <h6>Advertisement</h6>
-
-                    </div>
-                    <div className="card-body Adbtn" style={{paddingLeft: "85px"}}>
-                        <button className="btn btn-primary">
-                           More Info
-                        </button>
-                    </div>
+        return(
+        <div id="carouselExampleSlidesOnly" className="carousel slide" data-ride="carousel">
+            <div className="carousel-inner">
+                <div className="carousel-item active">
+                    {this.EventList()}
                 </div>
             </div>
+        </div>
         )
     }
 }
+
+
+

@@ -1,7 +1,13 @@
+@font-face {
+    font-family: Butler;
+    src: url(../Style/Butler_Regular.otf);
+}
+
 body{
+    font-family: 'Cormorant Unicase', serif;
     background-color: black;
     /*background-image: url("http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781501180989/the-outsider-9781501180989_hr.jpg");*/
-    background-image: url("../Style/Screenshot (65).png");
+    background-image: url("https://images8.alphacoders.com/370/370799.jpg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -9,12 +15,17 @@ body{
 
 .pageView{
 
-    margin-top: 10%;
-    margin-left: 10%;
+    position: relative;
+    margin: 9% auto 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-color: white;
-    width: 1059px;
-    height: 1024px;
+        width: 1059px;
+    height: 1123px;
     border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 
 }
 
@@ -27,7 +38,7 @@ body{
 
 }
 .booksbdy {
-    z-index: 10;
+    z-index: 1;
     background-color: rgba(0,0,0,0.7);
     width: 100%;
     color: white;
@@ -72,10 +83,13 @@ a:hover{
 }
 .featuredBooks
 {
+    padding-left: 8px;
     background-color: #404040;
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 3px;
+    margin-right: -12px;
+    position: relative;
 
 
 }
@@ -104,6 +118,8 @@ a:hover{
     width: 15%;
     height: 38px;
     border-radius: 7px;
+    margin-left: -7px;
+    margin-right: 14px;
 
 }
 .searchBar
@@ -112,6 +128,22 @@ a:hover{
     width: 53%;
     margin-right: 1px;
 }
+
+
+.pageView,
+.titleBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.titleBar {
+    z-index: 10;
+}
+
+
+
+
+
 .searchBtn
 {
     float: left;
@@ -162,12 +194,300 @@ a:hover{
 .asideSec
 {
     border-left: 1px solid #8b8b8b;
-    height: 941px;
+    height: 1039px;
 
 }
 
 .mainSec
 {
     border-right: 1px solid #8b8b8b;
-    height: 941px;
+    height: 1039px;
+}
+
+#searchResults
+{
+    width: 544px;
+    height: 352px;
+    position: relative;
+    background-color: white;
+    z-index: 99;
+    border: 1px solid black;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+#nopreview
+{
+    padding-left: 110px;
+    padding-top: 113px;
+}
+
+#nopreview,
+#viewerCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#viewerCanvas{
+    margin-left: 60px;
+    margin-top: 50px;
+    z-index: 10;
+}
+
+.newopenings
+{
+    width: 319px;
+
+}
+
+#topPicks
+{
+    margin-top: 13px;
+}
+
+#footer
+{
+    height: 421px;
+    border-top: 1px solid black;
+    background-color: #c1c1c1;
+    border-bottom: 1px solid black;
+    z-index: 94;
+    overflow:hidden;
+}
+
+.parent {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.image1 {
+    position: relative;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 55px 45px ;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.image2 {
+    position: absolute;
+    top: 3px;
+    left: 68px;
+    width: 25px;
+    margin-left: 124px;
+}
+.bookDescription
+{
+    float: left;
+    z-index: 23;
+    width: 452px;
+    height: 302px;
+    margin-top: 11px;
+    text-align: justify;
+
+
+}
+.bookPreview
+{
+    float: left;
+    z-index: 13;
+}
+.BooksContainer
+{
+    border: 1px solid white;
+    background-color: #404040;
+    width: 709px;
+    height: 91px;
+
+}
+.bookName
+{
+    float: left;
+    width: 454px;
+    color: white;
+    margin-left: -45px;
+    text-overflow: ellipsis;
+    margin-top: -24px;
+
+
+}
+.bookRating
+{
+    margin-left: 47px;
+    float: left;
+    width: 190px;
+
+}
+.bookBar
+{
+    width: 676px;
+    height: 69px;
+    margin-top: 16px;
+    border-radius: 3px;
+    padding: 15px;
+}
+
+.bookBody
+{
+    min-height: 445px;
+    background-color: rgb(220, 220, 220);
+    margin-top: 5px;
+    width: 707px;
+    border-bottom: 1px solid #a2a2a2;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.wordwrap {
+
+    width: 386px;
+    height: 58px;
+    padding-top: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+
+.bookInfo{
+    float: left;
+    z-index: 23;
+    width: 452px;
+    min-height: 86px;
+    margin-top: 11px;
+}
+
+.bookInfor
+{
+    float: left;
+    width: 220px;
+    height: 104px;
+    margin-top: 4px;
+    margin-left: -684px;
+    margin-top: 316px;
+
+}
+
+#dummysearch
+{
+    width: 298px;
+    height: 45px;
+
+}
+.error {
+    background-color: white;
+    padding-left: 234px;
+    padding-top: 31px;
+    width: 100%;
+    height: 100%;
+}
+
+.reviewBox
+{
+    width: 704px;
+    height: 152px;
+    padding: 23px;
+}
+
+#info {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(113, 217, 41, 1);
+    color: #fff;
+    text-align: center;
+    border-radius: 15px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    right: 1.5%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#info.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 7.9s;
+    animation: fadein 0.5s, fadeout 0.5s 7.9s;
+
+}
+.loggedInUsr{
+
+    border-radius: 93px;
+    margin-left: 72px;
+    margin-top: -36px;
+}
+
+
+.modal-container {
+       position: relative;
+}
+
+.modal-container .modal, .modal-container .modal-backdrop {
+       position: absolute;
+}
+
+.hideScroll
+{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.reviewBoxSection  {
+    margin-top: 35px;
+    width: 620px;
+    height: 340px;
+    overflow-y: scroll;
+    padding-right: 57px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box;
+
+}
+
+.previewComponent{
+    width: 95%;
+}
+
+
+.hideScrollStyle
+{
+    height: 27%;
+    width: 100%;
+    overflow: hidden;
+}
+.galleryStyle  {
+       margin-top: 35px;
+    width: 706px;
+    height: 270px;
+    overflow-y: scroll;
+    padding-right: 17px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon
+{
+    background-image: none;
+}
+
+.carousel-indicators li {
+    position: relative;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 30px;
+    height: 3px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0);
+}
+.carousel-indicators .active {
+    background-color: rgba(0,0,0,0);
+}
+.carousel {
+    position: relative;
+    width: 316px;
+    height: 205px;
+}
+.AdContainer
+{
+    margin-top: 23px;
+    overflow: hidden;
 }
