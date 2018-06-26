@@ -7,6 +7,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import axios from "axios/index";
 import EventsForPublisher from "./EventsForPublisher"
+import UserService from "../Services/UserService";
 
 
 
@@ -20,10 +21,12 @@ class PublisherWidget
     constructor(props)
     {
         super(props);
+        this.userService = UserService.instance;
         this.eventService = EventService.instance;
         this.state = {
             file: "", imagePreviewUrl: " ",
-            profile: " "
+            profile: " ",
+            coverPic: 'http://res.cloudinary.com/youpickone/image/upload/v1494829085/user-placeholder-image.png',
         }}
 
     componentDidMount() {
@@ -43,6 +46,18 @@ class PublisherWidget
         {
             //alert("is reviewer"+cookies.get('isReviewer'))
             this.setState({isPublisher: cookies.get('isPublisher')})
+        }
+        if(cookies.get('profile')!= undefined) {
+            if (cookies.get('loggedInFrom') == 'NU') {
+                this.userService.findUserById(cookies.get('profile').id).then((profile) => {
+
+                    console.log(profile)
+                    if (profile.coverPic != null) {
+                        this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/" + profile.coverPic})
+                    }
+
+                })
+            }
         }
     }
 
@@ -95,7 +110,7 @@ class PublisherWidget
                 event_info: eventinfo,
                 publisherId: String(this.state.profile.id),
                 publisherName: this.state.profile.firstName + " " + this.state.profile.lastName,
-                publisher_imgURL: String(this.state.profile.imageURL + '?sz=550'),
+                publisher_imgURL: this.state.coverPic,
                 event_imgURL: filename
             }
             console.log(event);

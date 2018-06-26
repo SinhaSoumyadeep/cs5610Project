@@ -123,7 +123,7 @@ export default class ReviewService{
 
     updateBlog(blogId,blog){
             var postObject = {method: 'put',body: JSON.stringify(blog),headers: {'content-Type': 'application/json','dataType':'json'} }
-    return fetch("https://book-worms-server.herokuapp.com/api/blog/"+blogId, postObject);   
+    return fetch("https://book-worms-server.herokuapp.com/api/blog/"+blogId, postObject);
     }
 
 
