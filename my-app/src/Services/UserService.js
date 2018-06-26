@@ -109,19 +109,19 @@ export default class UserService{
 
     follow(followerId,followingId)
     {
-        return fetch("http://localhost:8080/api/user/"+followerId+"/"+followingId)
+        return fetch("https://book-worms-server.herokuapp.com/api/user/"+followerId+"/"+followingId)
 
     }
 
     findFollower(userId) {
-        return fetch("http://localhost:8080/api/findfollowers/"+userId)
+        return fetch("https://book-worms-server.herokuapp.com/api/findfollowers/"+userId)
             .then(function(response){
                 return response.json();
             });
     }
 
     findFollowing(userId) {
-        return fetch("http://localhost:8080/api/findfollowing/"+userId)
+        return fetch("https://book-worms-server.herokuapp.com/api/findfollowing/"+userId)
             .then(function(response){
                 return response.json();
             });

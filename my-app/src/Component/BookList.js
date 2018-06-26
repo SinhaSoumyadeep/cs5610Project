@@ -140,7 +140,7 @@ class BookList extends React.Component
                 $.ajax({
                     async: false,
                     type:"GET",
-                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
+                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn,
                     success: (result)=>{
 
                         try {
@@ -179,7 +179,7 @@ class BookList extends React.Component
             $.ajax({
                 async: false,
                 type:"GET",
-                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCENykRNLz0l6Cv5GrW_ooixur15w5QrG0",
+                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn,
                 success: (result)=>{
 
                     try {

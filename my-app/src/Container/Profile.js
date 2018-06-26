@@ -283,6 +283,7 @@ class Profile extends React.Component {
 
 
     render() {
+        const { cookies } = this.props;
 
         return(
 
@@ -386,12 +387,6 @@ class Profile extends React.Component {
                                             }
 
                                             <div className="social ">
-                                                <div  >
-                                                    {this.state.loggedInFrom == 'NU' && <FollowingContainer userId={this.state.userId}/>}
-                                                </div>
-                                                <div >
-                                                    {this.state.loggedInFrom == 'NU' && <FollowerContainer userId={this.state.userId}/>}
-                                                </div>
 
 
                                             </div>
@@ -473,7 +468,7 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(6)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Wish List</li>
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Following/Followers</li>
 
 
 
@@ -482,12 +477,12 @@ class Profile extends React.Component {
 
 
                                             </ul>
-                                            <span className="follow" onClick={()=>{this.follow()}}>Follow</span>
+                                            {(cookies.get('profile').id != this.props.match.params.userId) && <span className="follow" onClick={()=>{this.follow()}}>Follow</span>}
                                             <div className="hideScroll">
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
                                                 {this.state.reviewedBooks == true && this.state.loggedInFrom == 'NU' && <ReviewedBooksContainer userId={this.state.userId}/>}
-                                                {this.state.wishlist == true && <WishListContainer/>}
+                                                {this.state.wishlist == true && this.state.loggedInFrom == 'NU' && <WishListContainer userId={this.state.userId}/>}
                                                 {this.state.blogcontainer == true && this.state.loggedInFrom == 'NU' && <BlogContainer userId={this.state.userId}/>}
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}

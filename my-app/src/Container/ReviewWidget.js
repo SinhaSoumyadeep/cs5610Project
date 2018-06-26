@@ -70,7 +70,7 @@ class ReviewWidget
         var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.props.imgUrl)
         //console.log(img)
         if(this.state.profile!= undefined) {
-            alert(reviewerId)
+           // alert(reviewerId)
 
             var review = {
                 isbn: String(isbn),

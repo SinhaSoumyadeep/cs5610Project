@@ -494,7 +494,7 @@ a:hover{
 .followerContainer
 {
     height: 147px;
-    width: 686px;
+    width: 578px;
     overflow: hidden;
     overflow-x: scroll;
     margin-top: 5px;
@@ -503,10 +503,10 @@ a:hover{
 .followingContainer
 {
     height: 147px;
-    width: 686px;
+    width: 578px;
     overflow: hidden;
     overflow-x: scroll;
-    margin-top: 84px;
+    margin-top: 62px;
 
 }
 .hideNub
