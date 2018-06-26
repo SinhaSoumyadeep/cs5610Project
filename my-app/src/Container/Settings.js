@@ -29,7 +29,11 @@ class Settings extends React.Component {
 
 
     UploadImage(e){
+        const { cookies } = this.props;
+        console.log(cookies.get('profile').id)
+
         e.preventDefault();
+
         console.log("UPLOAD", this.state.file);
 
         let file = this.state.file;
@@ -42,7 +46,7 @@ class Settings extends React.Component {
         const config = {
             headers: { 'content-type': 'multipart/form-data'}
         };
-        return axios.post('https://book-worms-server.herokuapp.com/api/user/'+ this.state.profile.id +'/coverPicture',data,config);
+        return axios.post('http://localhost:8080/api/user/'+ cookies.get('profile').id +'/coverPicture',data,config);
 
 
     }
@@ -177,5 +181,4 @@ class Settings extends React.Component {
         );
     }
 }
-
-export default Settings;
+export default withCookies(Settings);

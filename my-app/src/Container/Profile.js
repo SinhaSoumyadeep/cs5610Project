@@ -152,6 +152,7 @@ class Profile extends React.Component {
        {
            //alert("viewing his own profile")
            console.log(cookies.get('profile'))
+
            this.setState({profilePic: cookies.get('profile').imageURL})
 
            if(cookies.get('isReader')!= undefined){
@@ -168,10 +169,26 @@ class Profile extends React.Component {
 
            if(cookies.get('profile')!= undefined)
            {
-               if(cookies.get('profile').coverPic != null)
-               {
-                   this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+cookies.get('profile').coverPic})
+               if (cookies.get('loggedInFrom') == 'NU'){
+                   this.userService.findUserById(cookies.get('profile').id).then((profile)=>{
+
+                       console.log("************"+profile)
+                       if(profile.coverPic != null)
+                       {
+                           this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+profile.coverPic})
+                       }
+
+                   })
                }
+               else
+               {
+                   if(cookies.get('profile').coverPic != null)
+                   {
+                       this.setState({coverPic: "https://s3.amazonaws.com/bookwormstest/"+cookies.get('profile').coverPic})
+                   }
+               }
+
+
 
                if(cookies.get('profile').role == 'Publisher')
                {
