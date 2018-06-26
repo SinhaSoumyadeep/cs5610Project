@@ -46,7 +46,7 @@ class Settings extends React.Component {
         const config = {
             headers: { 'content-type': 'multipart/form-data'}
         };
-        return axios.post('http://localhost:8080/api/user/'+ cookies.get('profile').id +'/coverPicture',data,config);
+        return axios.post('https://book-worms-server.herokuapp.com/api/user/'+ cookies.get('profile').id +'/coverPicture',data,config);
 
 
     }
