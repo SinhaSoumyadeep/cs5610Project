@@ -516,3 +516,29 @@ a:hover{
     background-color: #ffc107;
     margin-top: -41px;
 }
+
+.eventCard
+{
+    height: 400px;
+    overflow-y: scroll;
+
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box;
+
+}
+
+.scrollHide{
+
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.eventcardContainer
+{
+    height: 204px;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}

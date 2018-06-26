@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import styles from '../Style/Register.css';
 import UserService from '../Services/UserService'
+import  $ from "jquery";
 
 export default class Register
     extends Component{
@@ -42,17 +43,18 @@ export default class Register
         });
     }
 
-    checkUsername(username){
-            this.userService
-                .findByUsername(username)
-                .then(function(response) {
-                    if (response === null) {
-                        alert('Username available');
-                        }
-                        else{
-                        alert('Sorry! Username already taken!');
-                    }
-                });
+    checkUsername(username,callback){
+        var result1;
+        this.userService.findByUsername(username)
+            .then((response)=>{
+                var result = response.exists;
+                if(result == " true" ) {
+                    alert("SORRY! Username already taken. Try a different one!")
+                    result1 = "true"
+                } else {
+                    callback();
+                }
+            });
     }
 
 
@@ -68,24 +70,37 @@ export default class Register
         var role1 = this.refs.role.value;
         var dob1 = this.refs.dob.value;
 
-        this.state.user = {firstName:firstName1,
-                            lastName:lastName1,
-                            username:userName1,
-                            password:password1,
-                            email:email1,
-                            gender:gender1,
-                            role:role1,
-                            dateOfBirth:dob1}
+        //var results = this.checkUsername(this.refs.userName.value)
 
+        //console.log(results);
+
+        if(password1 == verifyPassword1 ) {
+
+            this.state.user = {
+                firstName: firstName1,
+                lastName: lastName1,
+                username: userName1,
+                password: password1,
+                email: email1,
+                gender: gender1,
+                role: role1,
+                dateOfBirth: dob1
+            }
 
 
         return fetch("https://book-worms-server.herokuapp.com/api/user", {
             body: JSON.stringify(this.state.user),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST'
-        }).then(function(response){return response.json()})
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }).then(function (response) {
+                return response.json()
+            }).then(() => {window.location.reload()});
+        }
+        else {
+         alert('SORRY! Password and Confirm Password do not match!')
+         }    
     }
 
     render(){
@@ -116,7 +131,7 @@ export default class Register
                 <label className="col-sm-3 col-form-label"><b>EMAIL</b></label>
                 <div className="col-sm-9">
                     <input className = "form-control"  placeholder = "Email" ref="email"
-                           onChange = {() => this.checkUsername(this.refs.userName.value)}
+
                     />
                 </div></div>
             <div className="form-group row">
@@ -153,8 +168,8 @@ export default class Register
                 </div></div>
                 <div className="form-group">
                     <div className="col-sm-12">
-                        <button className="btn btn-primary btn-block"
-                        onClick={this.createUser}>REGISTER</button>
+                        <button id = "registrationButton" className="btn btn-primary btn-block"
+                                onClick = {() => this.checkUsername(this.refs.userName.value,this.createUser)}>REGISTER</button>
                     </div>
                 </div>
             </form>
