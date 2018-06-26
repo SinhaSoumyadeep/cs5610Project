@@ -113,6 +113,12 @@ export default class UserService{
 
     }
 
+    unfollow(followerId,followingId)
+    {
+        return fetch("https://book-worms-server.herokuapp.com/api/unfollow/"+followerId+"/"+followingId)
+
+    }
+
     findFollower(userId) {
         return fetch("https://book-worms-server.herokuapp.com/api/findfollowers/"+userId)
             .then(function(response){

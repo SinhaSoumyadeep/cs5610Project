@@ -21,6 +21,7 @@ import PublisherWidget from "./PublisherWidget";
 import FooterPage from "./FooterPage";
 import FollowingContainer from "./FollowingContainer";
 import FollowerContainer from "./FollowerContainer";
+import FollowsButton from "./FollowsButton";
 
 
 
@@ -481,7 +482,8 @@ class Profile extends React.Component {
 
 
                                             </ul>
-                                            {(cookies.get('profile').id != this.props.match.params.userId) && <span className="follow" onClick={()=>{this.follow()}}>Follow</span>}
+                                            {(cookies.get('profile').id != this.props.match.params.userId) && <FollowsButton follower={cookies.get('profile').id} following={this.props.match.params.userId}/>}
+
                                             <div className="hideScroll">
 
                                                 {this.state.likedBooks == true &&  (this.state.loggedInFrom == 'NU'||this.state.loggedInFrom == 'GL'||this.state.loggedInFrom == 'FB') && <LikedBooksContainer userId={this.state.userId}/>}
