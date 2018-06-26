@@ -37,7 +37,7 @@ export default class FollowsButton extends React.Component {
     follow(follower,following)
     {
 
-        alert(follower +" is following "+following)
+        //alert(follower +" is following "+following)
 
         if($(".follow-review").text() == "Follow")
         {

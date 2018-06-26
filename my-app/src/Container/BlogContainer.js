@@ -89,7 +89,7 @@ import UserService from "../Services/UserService";
     updateBlogContent(blogID){
 
         var blogTxt = this.state.currentBlog.blog;
-        alert(this.state.coverPic)
+        //alert(this.state.coverPic)
         var blog = {
             bloggerId: String(this.state.profile.id),
             blogger: this.state.profile.firstName+" "+this.state.profile.lastName,

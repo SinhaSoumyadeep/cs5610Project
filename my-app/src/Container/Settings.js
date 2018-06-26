@@ -241,9 +241,9 @@ class Settings extends React.Component {
                     onClick = {()=> {
                             this.updateProfile(this.state.profile.id)
                             .then((response) =>{
-                                alert(response.firstName)
+                              //  alert(response.firstName)
                                 this.setState({profile: response})
-                                alert(this.state.profile.firstName)
+                               // alert(this.state.profile.firstName)
                             })
                             .then(()=>{
                                 window.location.reload()
