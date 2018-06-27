@@ -89,9 +89,14 @@ class Login extends React.Component
 
   responseFacebook = (facebookUser)=>{
     console.log(facebookUser);
-      this.handleNameChange(facebookUser, "FB")
-      console.log({accessToken: facebookUser.accessToken});
-      window.location.reload()
+    if(facebookUser.status == undefined)
+    {
+        return
+    }else {
+        this.handleNameChange(facebookUser, "FB")
+        console.log({accessToken: facebookUser.accessToken});
+        window.location.reload()
+    }
 
   }
 
