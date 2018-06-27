@@ -212,7 +212,7 @@ class Login extends React.Component
       <input onChange={this.emailChanged}
                          className="form-control" 
                          id="emailFld"
-                         placeholder="Username"/>
+                         placeholder="Username" required={true}/>
 
       <label>
       Password
@@ -222,7 +222,7 @@ class Login extends React.Component
              className = "form-control"
              id= "passwordFld"
              type = "password"
-             placeholder =  "Password"/>
+             placeholder =  "Password" required={true}/>
           <br/>
           <Button
             className = "btn btn-block btn-primary"
