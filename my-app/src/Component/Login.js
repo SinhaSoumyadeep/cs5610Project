@@ -118,17 +118,17 @@ class Login extends React.Component
 
 
     if(email == ' '){
-      alert("Username cannot be blank")
+        this.infoMsgs("Username cannot be blank")
     }
 
     if(password == null){
-      alert("Password cannot be blank")
+        this.infoMsgs("Password cannot be blank")
     }
 
     if(email != null  && password != null){
       this.userService.loginUser(this.state.user).then((response)=>{
       if(response.id == 0){
-        alert("Invalid Credentials.")
+          this.infoMsgs("Invalid Credentials.")
 
 
 
@@ -177,6 +177,23 @@ class Login extends React.Component
      password: event.target.value
     })
   }
+
+    infoMsgs(msg)
+    {
+        var x = document.getElementById("info")
+        x.className = "show";
+
+        if(!msg.startsWith("SUCCESSFULLY")){
+            x.style.backgroundColor = "rgb(217, 56, 26)";
+        }
+        else
+        {
+            x.style.backgroundColor = "rgba(113, 217, 41, 1)";
+        }
+        x.innerHTML=msg;
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2600);
+    }
+
 
   render() {
 

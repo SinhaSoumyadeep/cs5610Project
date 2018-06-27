@@ -49,7 +49,7 @@ export default class Register
             .then((response)=>{
                 var result = response.exists;
                 if(result == " true" ) {
-                    alert("SORRY! Username already taken. Try a different one!")
+                    this.infoMsgs("Username Unavailable")
                     result1 = "true"
                 } else {
                     callback();
@@ -73,6 +73,10 @@ export default class Register
         //var results = this.checkUsername(this.refs.userName.value)
 
         //console.log(results);
+        if(this.refs.password.value == ''){
+            this.infoMsgs("Password cannot be blank")
+            return
+        }
 
         if(password1 == verifyPassword1 ) {
 
@@ -99,8 +103,25 @@ export default class Register
             }).then(() => {window.location.reload()});
         }
         else {
-         alert('SORRY! Password and Confirm Password do not match!')
+            this.infoMsgs('Check Password and Confirm Password')
          }    
+    }
+
+
+    infoMsgs(msg)
+    {
+        var x = document.getElementById("info")
+        x.className = "show";
+
+        if(!msg.startsWith("SUCCESSFULLY")){
+            x.style.backgroundColor = "rgb(217, 56, 26)";
+        }
+        else
+        {
+            x.style.backgroundColor = "rgba(113, 217, 41, 1)";
+        }
+        x.innerHTML=msg;
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2600);
     }
 
     render(){
@@ -111,12 +132,12 @@ export default class Register
                 <div className="form-row">
                     <div className="col form-group">
                         <label><b>FIRST NAME</b> </label>
-                        <input type = "text" className="form-control" placeholder="First Name" ref="firstName"
+                        <input type = "text" className="form-control" placeholder="First Name" ref="firstName" required={true}
                         />
                     </div>
                     <div className="col form-group">
                         <label><b>LAST NAME</b></label>
-                        <input className="form-control" placeholder="Last Name"
+                        <input className="form-control" placeholder="Last Name" required={true}
                                ref="lastName"
                                />
                     </div>
@@ -124,7 +145,7 @@ export default class Register
             <div className="form-group row">
                 <label className="col-sm-3 col-form-label"><b>USERNAME</b></label>
             <div className="col-sm-9">
-                <input className = "form-control" placeholder = "Username" ref="userName"/>
+                <input className = "form-control" placeholder = "Username" ref="userName" required={true}/>
             </div></div>
 
             <div className="form-group row">
@@ -137,12 +158,12 @@ export default class Register
             <div className="form-group row">
                 <label className="col-sm-3 col-form-label"><b>PASSWORD</b></label>
                 <div className="col-sm-9">
-                    <input className = "form-control" type="password" placeholder = "Password" ref="password"/>
+                    <input className = "form-control" type="password" placeholder = "Password" ref="password" required={true}/>
                 </div></div>
             <div className="form-group row">
                 <label className="col-sm-3 col-form-label"><b>CONFIRM PASSWORD</b></label>
                 <div className="col-sm-9">
-                    <input className = "form-control"  type="password" placeholder = "Retype Password" ref="verifyPassword"/>
+                    <input className = "form-control"  type="password" placeholder = "Retype Password" ref="verifyPassword" required={true}/>
                 </div></div>
                 <div className="form-group row">
                     <label className="col-sm-3 col-form-label"><b>GENDER</b></label>
@@ -159,7 +180,7 @@ export default class Register
             <div className="form-group row">
                 <label className="col-sm-3 col-form-label"><b>ROLE</b></label>
                 <div className="col-sm-9" >
-                    <select className="custom-select" className="form-control" id="roleFld" ref="role">
+                    <select className="custom-select" className="form-control" id="roleFld" ref="role" required={true}>
                         <option selected="selected" value="Reader">Reader</option>
                         <option value="Author">Author</option>
                         <option value="Reviewer">Reviewer</option>
