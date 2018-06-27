@@ -6,6 +6,7 @@ import { instanceOf } from 'prop-types';
 
 class EventCardList extends Component {
 
+
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
@@ -31,7 +32,7 @@ class EventCardList extends Component {
         }
 
         this.eventCardService
-            .findAllEventCardForPublisher(cookies.get('profile').id)
+            .findAllEventCardForPublisher(this.props.userId)
             .then((response)=>{
                 this.setState({eventCards: response})
             });
@@ -39,7 +40,9 @@ class EventCardList extends Component {
 
     findAllEventCardForPublisher(){
 
-        this.eventCardService.findAllEventCardForPublisher(this.state.profile.id).then((response)=>
+
+
+        this.eventCardService.findAllEventCardForPublisher(this.props.userId).then((response)=>
         {
             this.setState({eventCards: response})
         })
@@ -64,6 +67,7 @@ class EventCardList extends Component {
                             <EventCard eventCard={eventCard}
                                        key={eventCard.id}
                                        delete={this.deleteEventCard}
+                                       userId={this.props.userId}
                             />
 
                     )
@@ -82,8 +86,11 @@ class EventCardList extends Component {
 
 
     render() {
+        const { cookies } = this.props;
         return (
             <div class = "eventCardList">
+                {cookies.get('profile').id == this.props.userId &&
+                    <div>
                 <br/><h3>Add Event Reminders:</h3>
                         <p>DATE:<input onChange={this.dateChanged}
                                className="form-control col-7" id="dateFld"
@@ -95,7 +102,8 @@ class EventCardList extends Component {
                                     className="btn btn-primary"
                                     align="right">
                         Add Event</button></p>
-                <hr/>
+                        <hr/>
+                    </div>}
                 <div className="eventcardContainer">
                 <div className = "card-deck">
 

@@ -1,8 +1,13 @@
 import React from 'react'
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 
 
-export default class EventCard extends React.Component
+class EventCard extends React.Component
 {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
     constructor(props) {
         super(props);
 
@@ -10,6 +15,7 @@ export default class EventCard extends React.Component
 
 
     render() {
+        const { cookies } = this.props;
         return (
 
             <div  className="col-5 row-3">
@@ -19,11 +25,12 @@ export default class EventCard extends React.Component
                         <h5 className="card-title">{this.props.eventCard.title}</h5>
 
                     </div>
+                    {cookies.get('profile').id == this.props.userId &&
 
                         <button onClick={() => {this.props.delete(this.props.eventCard.id)}}
                                 className="btn btn-dark float-right">
                             Delete
-                        </button>
+                        </button>}
 
                 </div>
 
@@ -31,3 +38,4 @@ export default class EventCard extends React.Component
 
         )
     }}
+export default  withCookies(EventCard);

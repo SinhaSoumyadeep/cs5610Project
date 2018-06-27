@@ -538,7 +538,7 @@ a:hover{
 .eventcardContainer
 {
     height: 204px;
-
+    margin-top: 45px;
     overflow: hidden;
     overflow-y: scroll;
 }

@@ -335,7 +335,7 @@ class Profile extends React.Component {
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
-                                                <div className="profileActive"></div>
+                                               
 
 
                                                 {this.state.profile.id!=null && this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
@@ -512,7 +512,7 @@ class Profile extends React.Component {
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
-                                                {this.state.eventCards == true && this.state.loggedInFrom == 'NU' && <EventCardList/>}
+                                                {this.state.eventCards == true && this.state.loggedInFrom == 'NU' && <EventCardList userId={this.state.userId}/>}
 
 
 
