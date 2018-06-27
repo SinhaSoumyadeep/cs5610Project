@@ -56,6 +56,10 @@ class EventCardList extends Component {
         this.eventCardService
             .createEventCard(this.state.eventCard)
             .then(() => { this.findAllEventCardForPublisher(); });
+
+        this.refs.title.value='';
+        this.refs.dateOfEvent.value = '';
+
     }
 
     renderEventCards() {
