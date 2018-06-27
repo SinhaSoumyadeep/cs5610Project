@@ -484,7 +484,7 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(8)").css("border-bottom", "none");
                                                     this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false,eventCards: false })}}>Following/Followers</li>
 
-                                                    <li onClick={()=>{$(".nav li:nth-child(8)").css("border-bottom", "2px solid #999");
+                                                <li hidden={!this.state.isPublisher} onClick={()=>{$(".nav li:nth-child(8)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(3)").css("border-bottom", "none");
@@ -512,7 +512,7 @@ class Profile extends React.Component {
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
-                                                {this.state.eventCards == true && <EventCardList/>}
+                                                {this.state.eventCards == true && this.state.loggedInFrom == 'NU' && <EventCardList/>}
 
 
 
