@@ -13,6 +13,7 @@ import UserService from '../Services/UserService';
 import ReviewService from '../Services/ReviewService';
 import AdverstisementCarousel from "../Container/AdvertisementCarousel";
 import Example from "../Container/AdvertisementCarousel"
+import AllEventCards from "../Container/AllEventCards";
 
 
 class BookList extends React.Component
@@ -412,9 +413,13 @@ class BookList extends React.Component
                                 <i className="fa fa-plus" onClick = {() => this.addPicks(this.state.topic)}>  </i>
                                 </button>
                                 </span>
-
                             </div>
-                            }
+                            }<br/>
+                            <div><hr width ="300px"/>
+                                <h5>Upcoming Events</h5></div>
+                            <div className="list-group">
+                                <AllEventCards/>
+                            </div>
                         </div>
 
                     </div>

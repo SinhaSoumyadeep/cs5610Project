@@ -519,7 +519,7 @@ a:hover{
 
 .eventCard
 {
-    height: 400px;
+    height: 315px;
     overflow-y: scroll;
 
     padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
