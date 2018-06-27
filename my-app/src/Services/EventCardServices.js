@@ -2,7 +2,7 @@
 import React from 'react'
 
 let _singleton = Symbol();
-const EVENT_API_URL = 'http://localhost:8080/api/eventcard';
+const EVENT_API_URL = 'https://book-worms-server.herokuapp.com/api/eventcard';
 
 class EventCardService {
     constructor(singletonToken) {
@@ -52,7 +52,7 @@ class EventCardService {
 
         findAllEventCardForPublisher(publisherId)
         {
-           return fetch(EVENT_API_URL + "/publisher/" + publisherId)
+           return fetch(EVENT_API_URL + "/publisher" + publisherId)
                .then(function(response) {
                    return response.json()})
         }
