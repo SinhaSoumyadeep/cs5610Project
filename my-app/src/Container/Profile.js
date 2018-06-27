@@ -335,7 +335,7 @@ class Profile extends React.Component {
                                                      hidden={!this.state.isLoggedIn}
                                                 />
                                                 }
-                                               
+
 
 
                                                 {this.state.profile.id!=null && this.state.loggedInFrom == 'NU'&& this.state.restrictedView == false &&
@@ -501,7 +501,8 @@ class Profile extends React.Component {
 
 
                                             </ul>
-                                            {(cookies.get('profile').id != this.props.match.params.userId) && <FollowsButton follower={cookies.get('profile').id} following={this.props.match.params.userId}/>}
+
+                                            {(cookies.get('profile').id != this.props.match.params.userId) && (this.state.loggedInFrom == 'NU')&& (cookies.get('loggedInFrom') == 'NU' )&& <FollowsButton follower={cookies.get('profile').id} following={this.props.match.params.userId}/>}
 
                                             <div className="hideScroll">
 
