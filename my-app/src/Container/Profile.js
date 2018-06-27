@@ -43,6 +43,8 @@ class Profile extends React.Component {
             books:'',
             err: false,
             redirectToLogin: false,
+            follower:[],
+            following:[],
 
             isReader: false,
             isReviewer: false,
@@ -80,6 +82,14 @@ class Profile extends React.Component {
         const { cookies } = this.props;
 
         var LoggedinUserId;
+        this.userService.findFollowing(this.props.match.params.userId).then((following)=>{
+
+            this.setState({following: following})
+        })
+        this.userService.findFollower(this.props.match.params.userId).then((follower)=>{
+
+            this.setState({follower: follower})
+        })
 
 
 
@@ -375,17 +385,14 @@ class Profile extends React.Component {
 
                                             <div className="stats row">
                                                 <div className="stat col-xs-4" style={{paddingRight: "50px"}}>
-                                                    <p className="number-stat">3,619</p>
+                                                    <p className="number-stat">{this.state.follower.length}</p>
                                                     <p className="desc-stat">Followers</p>
                                                 </div>
                                                 <div className="stat col-xs-4">
-                                                    <p className="number-stat">42</p>
+                                                    <p className="number-stat">{this.state.following.length}</p>
                                                     <p className="desc-stat">Following</p>
                                                 </div>
-                                                <div className="stat col-xs-4" style={{paddingLeft: "50px"}}>
-                                                    <p className="number-stat">38</p>
-                                                    <p className="desc-stat">Uploads</p>
-                                                </div>
+                                                
                                             </div>
 
 
