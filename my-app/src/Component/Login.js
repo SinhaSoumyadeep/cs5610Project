@@ -89,7 +89,7 @@ class Login extends React.Component
 
   responseFacebook = (facebookUser)=>{
     console.log(facebookUser);
-    if(facebookUser.status == undefined)
+    if(facebookUser.id == undefined)
     {
         return
     }else {
