@@ -52,7 +52,7 @@ class EventCardService {
 
         findAllEventCardForPublisher(publisherId)
         {
-           return fetch(EVENT_API_URL + "/publisher" + publisherId)
+           return fetch(EVENT_API_URL + "/publisher/" + publisherId)
                .then(function(response) {
                    return response.json()})
         }
