@@ -1,46 +1,64 @@
-import React from 'react';
+import React, {Component} from 'react'
 import EventCard from "../Component/EventCard";
 import EventCardService from "../Services/EventCardServices";
-import {Cookies} from "react-cookie";
+import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 
-class EventCardList extends React.Component {
+class EventCardList extends Component {
 
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.eventCardService = EventCardService.instance;
         this.deleteEventCard = this.deleteEventCard.bind(this);
         this.createEventCard = this.createEventCard.bind(this);
-        this.state = {eventCards : []};
+        this.state = {
+            eventCards : [],
+            profile: ''};
 
-    }
-
-    deleteEventCard(eventCardId){
-        this.eventCardService.deleteEventCard(eventCardId).then(() => { this.findAllEventCards(); });
     }
 
     componentDidMount() {
-        this.findAllEventCards();
-    }
-    findAllEventCards() {
-        this.eventCardService
-            .findAllEventCards()
-            .then((response) => {
-                console.log(response);
-                this.setState({eventCards: response});
-            })
-    }
-    renderEventCards() {
-        let eventCards = null;
+        const { cookies } = this.props;
+        this.setState({profile: cookies.get('profile')})
+        console.log(cookies.get('profile'))
+        if(cookies.get('isPublisher')!= undefined)
+        {
+            this.setState({isPublisher: cookies.get('isPublisher')})
+        }
 
-        console.log("Rendering Event cards")
-        console.log(this.state)
-        if(this.state) {
-            eventCards = this.state.eventCards.map(
+        this.eventCardService
+            .findAllEventCardForPublisher(cookies.get('profile').id)
+            .then((response)=>{
+                this.setState({eventCards: response})
+            });
+    }
+
+    findAllEventCardForPublisher(){
+
+        this.eventCardService.findAllEventCardForPublisher(this.state.profile.id).then((response)=>
+        {
+            this.setState({eventCards: response})
+        })
+    }
+    createEventCard() {
+        this.state.eventCard = {
+            title: this.refs.title.value,
+            publisherId: String(this.state.profile.id),
+            dateOfEvent: this.refs.dateOfEvent.value
+    }
+        this.eventCardService
+            .createEventCard(this.state.eventCard)
+            .then(() => { this.findAllEventCardForPublisher(); });
+    }
+
+    renderEventCards() {
+        
+       
+          var  eventCards = this.state.eventCards.map(
                 (eventCard) => {
                     return(
                             <EventCard eventCard={eventCard}
@@ -51,21 +69,18 @@ class EventCardList extends React.Component {
                     )
                 }
             )
-        }
+        
         return (
             eventCards
         )
     }
 
-    createEventCard() {
-        this.state.eventCard = {
-            title: this.refs.title.value,
-            dateOfEvent: this.refs.dateOfEvent.value
-        }
-        this.eventCardService
-            .createEventCard(this.state.eventCard)
-            .then(() => { this.findAllEventCards(); });
+    deleteEventCard(eventCardId){
+        this.eventCardService.deleteEventCard(eventCardId).then(() => { this.findAllEventCardForPublisher(); });
     }
+
+
+
     render() {
         return (
             <div class = "eventCardList">
@@ -91,4 +106,4 @@ class EventCardList extends React.Component {
         )
     }
 }
-export default EventCardList;
+export default  withCookies(EventCardList);

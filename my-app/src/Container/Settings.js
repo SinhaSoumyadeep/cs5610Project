@@ -194,7 +194,7 @@ class Settings extends React.Component {
                     </div>
 
 
-                    <div id="photo" className="tab-pane"><br/>COVER PICTURE
+                    <div id="photo" className="tab-pane"><br/>Profile Picture (*Limit Upload to 1 MB)
                         <div className="previewComponent">
                             <form>
                                 <input

@@ -22,6 +22,7 @@ import FooterPage from "./FooterPage";
 import FollowingContainer from "./FollowingContainer";
 import FollowerContainer from "./FollowerContainer";
 import FollowsButton from "./FollowsButton";
+import EventCardList from "./EventCardList"
 
 
 
@@ -57,6 +58,7 @@ class Profile extends React.Component {
             adcontainer: false,
             reviewscontainer: false,
             allblogscontainer: false,
+            eventCards: false,
 
 
 
@@ -411,7 +413,8 @@ class Profile extends React.Component {
                                                         $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                         $(".nav li:nth-child(6)").css("border-bottom", "none");
                                                         $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                        this.setState({likedBooks: true,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Liked Books</li>
+                                                        $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                        this.setState({likedBooks: true,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false, eventCards: false})}}>Liked Books</li>
 
 
 
@@ -423,7 +426,8 @@ class Profile extends React.Component {
                                                          $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                          $(".nav li:nth-child(6)").css("border-bottom", "none");
                                                          $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                         this.setState({likedBooks: false,reviewedBooks: true, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Reviewed Books</li>
+                                                          $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                         this.setState({likedBooks: false,reviewedBooks: true, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false,eventCards: false })}}>Reviewed Books</li>
 
 
                                                          <li hidden={!this.state.isAdmin} onClick={()=>{$(".nav li:nth-child(3)").css("border-bottom", "2px solid #999");
@@ -433,7 +437,8 @@ class Profile extends React.Component {
                                                          $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                          $(".nav li:nth-child(6)").css("border-bottom", "none");
                                                          $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                         this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:true })}}>AllBlogs</li>
+                                                           $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                         this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:true,eventCards: false })}}>AllBlogs</li>
 
 
 
@@ -445,7 +450,8 @@ class Profile extends React.Component {
                                                 $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                 $(".nav li:nth-child(6)").css("border-bottom", "none");
                                                 $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: true, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Blog</li>
+                                                  $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: true, adcontainer: false, reviewscontainer: false, allblogscontainer:false,eventCards: false })}}>Blog</li>
 
                                                 <li hidden={!this.state.isPublisher} onClick={()=>{$(".nav li:nth-child(5)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
@@ -454,7 +460,8 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(6)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: true, reviewscontainer: false, allblogscontainer:false })}}>Ad</li>
+                                                    $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: true, reviewscontainer: false, allblogscontainer:false,eventCards: false })}}>Ad</li>
 
                                                 <li hidden={!this.state.isAdmin}  onClick={()=>{$(".nav li:nth-child(6)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
@@ -463,7 +470,8 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(7)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: true, allblogscontainer:false })}}>AllReviews</li>
+                                                      $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: true, allblogscontainer:false,eventCards: false })}}>AllReviews</li>
 
 
                                                 <li onClick={()=>{$(".nav li:nth-child(7)").css("border-bottom", "2px solid #999");
@@ -473,7 +481,18 @@ class Profile extends React.Component {
                                                     $(".nav li:nth-child(4)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(5)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(6)").css("border-bottom", "none");
-                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false })}}>Following/Followers</li>
+                                                    $(".nav li:nth-child(8)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: true, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false,eventCards: false })}}>Following/Followers</li>
+
+                                                    <li onClick={()=>{$(".nav li:nth-child(8)").css("border-bottom", "2px solid #999");
+                                                    $(".nav li:nth-child(1)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(2)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(3)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(4)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(5)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(6)").css("border-bottom", "none");
+                                                    $(".nav li:nth-child(7)").css("border-bottom", "none");
+                                                    this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: false, allblogscontainer:false,eventCards: true })}}>Event Widget</li>
 
 
 
@@ -493,6 +512,7 @@ class Profile extends React.Component {
                                                 {this.state.adcontainer == true && this.state.loggedInFrom == 'NU' && <PublisherWidget userId={this.state.userId}/>}
                                                 {this.state.reviewscontainer == true && this.state.loggedInFrom == 'NU' && <ReviewsContainer/>}
                                                 {this.state.allblogscontainer == true && this.state.loggedInFrom == 'NU' && <AllBlogContainer/>}
+                                                {this.state.eventCards == true && <EventCardList/>}
 
 
 

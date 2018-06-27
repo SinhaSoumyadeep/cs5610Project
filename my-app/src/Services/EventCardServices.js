@@ -48,5 +48,14 @@ class EventCardService {
         }).then(function (response) {
             return response.json();
         })}
+
+
+        findAllEventCardForPublisher(publisherId)
+        {
+           return fetch(EVENT_API_URL + "/publisher/" + publisherId)
+               .then(function(response) {
+                   return response.json()})
+        }
+
 }
 export default EventCardService;

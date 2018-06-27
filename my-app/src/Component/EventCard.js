@@ -1,5 +1,5 @@
 import React from 'react'
-import '../CSS/course.css'
+
 
 export default class EventCard extends React.Component
 {
