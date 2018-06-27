@@ -383,7 +383,7 @@ class Profile extends React.Component {
                                             <p className="info">{this.state.profile.email}</p>
                                             }
 
-                                            <div className="stats row">
+                                            {this.state.loggedInFrom == 'NU'&&<div className="stats row">
                                                 <div className="stat col-xs-4" style={{paddingRight: "50px"}}>
                                                     <p className="number-stat">{this.state.follower.length}</p>
                                                     <p className="desc-stat">Followers</p>
@@ -392,8 +392,8 @@ class Profile extends React.Component {
                                                     <p className="number-stat">{this.state.following.length}</p>
                                                     <p className="desc-stat">Following</p>
                                                 </div>
-                                                
-                                            </div>
+
+                                            </div>}
 
 
                                             {this.state.loggedInFrom == 'NU' &&
@@ -481,7 +481,7 @@ class Profile extends React.Component {
                                                     this.setState({likedBooks: false,reviewedBooks: false, wishlist: false, blogcontainer: false, adcontainer: false, reviewscontainer: true, allblogscontainer:false,eventCards: false })}}>AllReviews</li>
 
 
-                                                <li onClick={()=>{$(".nav li:nth-child(7)").css("border-bottom", "2px solid #999");
+                                                <li hidden={this.state.loggedInFrom != 'NU'} onClick={()=>{$(".nav li:nth-child(7)").css("border-bottom", "2px solid #999");
                                                     $(".nav li:nth-child(1)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(2)").css("border-bottom", "none");
                                                     $(".nav li:nth-child(3)").css("border-bottom", "none");
