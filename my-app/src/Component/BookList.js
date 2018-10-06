@@ -61,11 +61,11 @@ class BookList extends React.Component
 
         this.fetchAllNonFictionBooks();
         this.findAllBlogs();
-        
-        
+
+
     }
 
-    
+
 
 
     fetchAllNonFictionBooks()
@@ -131,44 +131,44 @@ class BookList extends React.Component
     find_fictionpreview(books)
     {
 
-            books.results.slice(0, 3).map((book)=>{
+        books.results.slice(1, 4).map((book)=>{
 
 
-                console.log(book)
+            console.log(book)
 
-                var isbn = book.isbns[1].isbn10
+            var isbn = book.isbns[1].isbn10
 
-                $.ajax({
-                    async: false,
-                    type:"GET",
+            $.ajax({
+                async: false,
+                type:"GET",
 
-                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
+                url: "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn+"&key=AIzaSyCnVTtFc33VOdg7DFgq0jNPGIdAmnTdIeM",
 
-                    success: (result)=>{
+                success: (result)=>{
 
-                        try {
-                            console.log(result)
-                            var joined = this.state.ficthumb.concat(result.items[0].id);
-                            this.setState({ ficthumb: joined })
-                        }
-                        catch(err) {
-                            //alert("error3")
-                            this.setState({ err: true })
-                        }
-
-
-                    },
-                    error:(XMLHttpRequest, textStatus, errorThrown) =>{
-
+                    try {
+                        console.log(result)
+                        var joined = this.state.ficthumb.concat(result.items[0].id);
+                        this.setState({ ficthumb: joined })
+                    }
+                    catch(err) {
+                        //alert("error3")
+                        this.setState({ err: true })
                     }
 
 
-                })
+                },
+                error:(XMLHttpRequest, textStatus, errorThrown) =>{
 
-
+                }
 
 
             })
+
+
+
+
+        })
 
 
     }
@@ -178,7 +178,7 @@ class BookList extends React.Component
         books.results.slice(0, 3).map((book)=>{
 
 
-            var isbn = book.isbns[1].isbn10
+            var isbn = book.isbns[0].isbn10
             $.ajax({
                 async: false,
                 type:"GET",
@@ -252,8 +252,8 @@ class BookList extends React.Component
 
 
         var grid = this.state.nonFiction.slice(0, 3).map((book,index)=>{
-            var isbn = book.isbns[1].isbn10
-            console.log(book.isbns[1].isbn10)
+            var isbn = book.isbns[0].isbn10
+            console.log(book.isbns[0].isbn10)
             var img = 'https://books.google.com/books/content?id=:idkeyword:&printsec=frontcover&img=1&zoom=0&edge=curl&source=gbs_api'.replace(":idkeyword:",this.state.nonficthumb[index])
 
 
@@ -280,7 +280,7 @@ class BookList extends React.Component
 
     }
 
-    
+
     setBlogs(blogs){
         this.setState({blogs: blogs})
     }
@@ -306,14 +306,14 @@ class BookList extends React.Component
                 <div id = "blogBoxProfile" >
                     <div style={{float: "left"}}>
                         <a > <img src={blog.bloggerImageUrl}
-                        style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
+                                  style={{height: "61px", width: "61px",borderRadius: "91px"}}/>
                         </a>
                         <h5>{blog.blogger}</h5>
                     </div>
-                      <h6>{blog.blog}</h6>
+                    <h6>{blog.blog}</h6>
                     <div style={{marginTop: "100px"}}>
-                    <hr />
-                    </div>                   
+                        <hr />
+                    </div>
                 </div>
 
             )
@@ -335,7 +335,7 @@ class BookList extends React.Component
         this.userService.addTopic(topic).then(()=>{
             this.findAlltopics();
             window.location.reload();
-            
+
 
         })
     }
@@ -350,11 +350,11 @@ class BookList extends React.Component
         return(
 
             <div className="pageView">
-                
 
-                    <div>
-                        <SearchContainer/>
-                    </div>
+
+                <div>
+                    <SearchContainer/>
+                </div>
 
                 <div>
 
@@ -383,12 +383,12 @@ class BookList extends React.Component
                             </div>
 
                             <div className = "hideScrollStyle">
-                            <div className="galleryStyle">
-                                {this.showBlogs()}
+                                <div className="galleryStyle">
+                                    {this.showBlogs()}
+                                </div>
                             </div>
-                            </div>
-                            
-                            
+
+
 
                         </div>
                         <div className="col-sm-4 asideSec">
@@ -400,12 +400,12 @@ class BookList extends React.Component
                                 <NewOpenings/>
                             </div>
                             {this.state.profile != undefined &&
-                                 this.state.profile.role == 'admin' &&
+                            this.state.profile.role == 'admin' &&
                             <div>
                                 <span style={{float: "left"}}>
                                 <input style={{width: "281px"}} id = "topicInput" onChange = {this.changePick}
-                                className = "form-control"
-                                placeholder = "Picks">
+                                       className = "form-control"
+                                       placeholder = "Picks">
                                 </input>
                                 </span>
                                 <span style={{float: "left"}}>
